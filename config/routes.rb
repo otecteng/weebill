@@ -1,7 +1,8 @@
 Weebill::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
+  match 'site_workers/wx' => 'site_workers#index'
+  match 'tb_customers/wx' => 'tb_customers#index'
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
