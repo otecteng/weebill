@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  mobile: MyString
+  province: MyString
+  city: MyString
+  county: MyString
+  nickname: MyString
+  blacklist: false
+
+two:
+  name: MyString
+  mobile: MyString
+  province: MyString
+  city: MyString
+  county: MyString
+  nickname: MyString
+  blacklist: false

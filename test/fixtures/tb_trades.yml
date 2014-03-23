@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tid: 1
+  num_iid: MyString
+  tb_customer_id: 1
+  title: MyString
+  price: MyString
+  status: MyString
+  memo: MyText
+
+two:
+  tid: 1
+  num_iid: MyString
+  tb_customer_id: 1
+  title: MyString
+  price: MyString
+  status: MyString
+  memo: MyText

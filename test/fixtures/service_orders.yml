@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cname: MyString
+  cmobile: MyString
+  site_id: 1
+  tb_trade_id: 1
+  status: MyString
+  price: 1.5
+  site_pix: MyString
+  site_worker_id: 1
+  user_id: 1
+  uid: MyString
+  alipay_id: MyString
+  alipay_pix: MyString
+
+two:
+  cname: MyString
+  cmobile: MyString
+  site_id: 1
+  tb_trade_id: 1
+  status: MyString
+  price: 1.5
+  site_pix: MyString
+  site_worker_id: 1
+  user_id: 1
+  uid: MyString
+  alipay_id: MyString
+  alipay_pix: MyString
