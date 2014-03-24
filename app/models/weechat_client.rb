@@ -1,12 +1,12 @@
 class WeechatClient
-	@@client_customer
-	@@client_siteworker
-	def self.get_intance name
+	@@client_customer = nil
+	@@client_siteworker = nil
+	def self.get_instance name
 		if name == :client_customer then
-			@@client_customer = WeechatClient.new ('','') if !@@client_customer
+			@@client_customer = WeechatClient.new '','' if !@@client_customer
 			return @@client_customer
 		else
-			@@client_siteworker = WeechatClient.new ('','') if !@@client_siteworker
+			@@client_siteworker = WeechatClient.new '','' if !@@client_siteworker
 			return @@client_siteworker
 		end
 	end
@@ -17,7 +17,7 @@ class WeechatClient
 		@access_token = nil
 	end
 
-	def download_media
+	def download_media media_id
 		#http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
 	end
 

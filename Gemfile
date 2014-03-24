@@ -2,6 +2,9 @@ source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.17'
 gem 'unicorn'
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+end
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
