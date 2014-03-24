@@ -6,6 +6,11 @@ class SiteWorkersController < ApplicationController
   end
 	
   def wx_create
+    msg = params[:xml]
+    fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
+    msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
+    #client = WeechatClient.get_intance :client_siteworker
+    #client.download_media mediaId
   	@content = "hello site!"
     render :text,:formats => :xml   
   end
