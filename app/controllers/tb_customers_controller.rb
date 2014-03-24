@@ -1,11 +1,12 @@
 class TbCustomersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :require_login
-  def index
+  def wx_index
     render :text => params[:echostr]
   end
 	
-  def create
+  def wx_create
+  	p "===========>"
   	@content = "hello c!"
     render :text,:formats => :xml   
   end
