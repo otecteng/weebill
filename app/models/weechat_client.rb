@@ -100,18 +100,25 @@ class WeechatClient
 	def api_post(url,body)
 	    get_api_token unless @access_token
 	    conn = Faraday.new(:url => @@host_api)
-	    response = conn.post "#{URL_ADVANCED[url]}?access_token=#{@access_token}" do |req|
-	      req.body = body
-	    end
-	    p response.body
-	    return (JSON.parse(response.body)["errcode"] == 0)
+	    1.times do 
+		    response = conn.post "#{URL_ADVANCED[url]}?access_token=#{@access_token}" do |req|
+		      req.body = body
+		    end
+		    if JSON.parse(response.body)["errcode"]=="42001" then
+		    	get_api_token
+		    	redo
+		    end 
+		end
+	    return response
 	end
 	def download_media media_id
 		res=api_get(:media,{"media_id"=>media_id})
 		open("#{DOWNLOAD_DIR}#{res.headers["content-disposition"].split("\"")[1]}","w+"){ |f| f.write(res.body)} if res	
 	end
 
-	def send_message
+	def send_message body
+		res=api_post(:send,body)
+		p res
 	end
 
 

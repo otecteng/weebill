@@ -8,15 +8,14 @@ class SiteWorkersController < ApplicationController
   end
 	
   def wx_create
-    #client = WeechatClient.get_instance "siteworker"
     msg = params[:xml]
     fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
     self.send "do_#{msg_type}",params
-    #client.get_token if (client connect return 40001 which means the access_token is invalid)
+    client=WeechatClient.get_instance "siteworker"
     #client.download_media mediaId
   	@content = "hello site!"
-    render :text,MSG_TYPE[msg_type]  #:formats => :xml   
+    render :text , :formats => :xml   
   end
 
 
@@ -31,5 +30,8 @@ class SiteWorkersController < ApplicationController
     content=param[:Content]
   end
 
-
+  # def send_text msg
+  #   client=WeechatClient.get_instance "siteworker"
+  #   client.send_message msg
+  # end
 end
