@@ -28,16 +28,20 @@ class SiteWorkersController < ApplicationController
         if "st" == content then
           @content = "upload your pix,session = #{worker.start_session.id}!"
         else
-          if worker.site_session.pix.blank? then
-            @content = "pls upload pix first !"
+          if !worker.site_session then
+            @content = "no session avaliable, input st to start a session"
           else
-            service_order = ServiceOrder.find(param[:Content].to_i)
-            if !service_order then
-              @content = "bad service order id , check again?"
+            if worker.site_session.pix.blank? then
+              @content = "pls upload pix first !"
             else
-              service_order.update_attributes（:site_worker_id=>worker.id, :site_pix=>worker.site_session.pix,:status=>"SUBMITTED")
-              worker.site_session.update_attributes(:uid => param[:Content],:status =>"OFF")
-              @content = "session  done!bill: #{worker.site_session.pix}-#{service_order.id}"
+              service_order = ServiceOrder.find(param[:Content].to_i)
+              if !service_order then
+                @content = "bad service order id , check again?"
+              else
+                service_order.update_attributes（:site_worker_id=>worker.id, :site_pix=>worker.site_session.pix,:status=>"SUBMITTED")
+                worker.site_session.update_attributes(:uid => param[:Content],:status =>"OFF")
+                @content = "session  done!bill: #{worker.site_session.pix}-#{service_order.id}"
+              end
             end
           end
         end
