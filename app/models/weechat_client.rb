@@ -2,8 +2,9 @@ class WeechatClient
 	@@client_customer = nil
 	@@client_siteworker = nil
 	HOST_API = 'https://api.weixin.qq.com'
-	DOWNLOAD_DIR="/home/wjj/" #set the dir of the download file here
-	MAP={
+	DOWNLOAD_DIR="/home/tli" #set the dir of the download file here
+
+	MAP = {
 		"customer_appid"=>"wxea2ce7f47689a346",
 		"customer_secret"=>"6768e51d3dbd253e264de342847067d2",
 		"siteworker_appid"=>"",
@@ -11,20 +12,20 @@ class WeechatClient
 	}
 
 	CLIENT_MAP={
-		"customer"=>@@client_customer,
-		"siteworker"=>@@client_siteworker
+		:customer => @@client_customer,
+		:siteworker => @@client_siteworker
 	}
 
 	URL_ADVANCED = {
-    :user_info  => "/cgi-bin/user/info",
-    :menu       => "/cgi-bin/menu/create",
-    :menu_get   => "/cgi-bin/menu/get",
-    :user_list  => "/cgi-bin/user/get",
-    :group_list => "/cgi-bin/groups/get",
-    :user_change_group => "/cgi-bin/groups/members/update",
-    :send => "/cgi-bin/message/custom/send",
-    :media => "/cgi-bin/media/get"
-  }
+	    :user_info  => "/cgi-bin/user/info",
+	    :menu       => "/cgi-bin/menu/create",
+	    :menu_get   => "/cgi-bin/menu/get",
+	    :user_list  => "/cgi-bin/user/get",
+	    :group_list => "/cgi-bin/groups/get",
+	    :user_change_group => "/cgi-bin/groups/members/update",
+	    :send => "/cgi-bin/message/custom/send",
+	    :media => "/cgi-bin/media/get"
+  	}
 	# def self.client_customer= customer_instance
 	# 	@@client_customer=customer_instance
 	# end
@@ -52,14 +53,16 @@ class WeechatClient
 		@access_token = nil
 	end
 
-    def get_api_token
-      conn = Faraday.new(:url =>"http://file.api.weixin.qq.com") 
-      response = conn.get "/cgi-bin/token?grant_type=client_credential" do |req|
-        req.params['appid'] = @appid
-        req.params['secret'] = @secret
-      end
-      @access_token = JSON.parse(response.body)["access_token"]
-    end
+	def download_media media_id
+		res=api_get(:media,{"media_id"=>media_id})
+		open("#{DOWNLOAD_DIR}#{res.headers["content-disposition"].split("\"")[1]}","w+"){ |f| f.write(res.body)} if res	
+	end
+
+	def send_message body
+		res=api_post(:send,body)
+		p res
+	end
+
 
     def api_get_user_list(next_openid=nil)
       args = {}
@@ -111,15 +114,14 @@ class WeechatClient
 		end
 	    return response
 	end
-	def download_media media_id
-		res=api_get(:media,{"media_id"=>media_id})
-		open("#{DOWNLOAD_DIR}#{res.headers["content-disposition"].split("\"")[1]}","w+"){ |f| f.write(res.body)} if res	
-	end
 
-	def send_message body
-		res=api_post(:send,body)
-		p res
-	end
-
+    def get_api_token
+      conn = Faraday.new(:url =>"http://file.api.weixin.qq.com") 
+      response = conn.get "/cgi-bin/token?grant_type=client_credential" do |req|
+        req.params['appid'] = @appid
+        req.params['secret'] = @secret
+      end
+      @access_token = JSON.parse(response.body)["access_token"]
+    end
 
 end

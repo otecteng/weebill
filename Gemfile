@@ -4,6 +4,7 @@ gem 'rails', '3.2.17'
 gem 'unicorn'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'thin'
 end
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
