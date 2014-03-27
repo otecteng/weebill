@@ -10,7 +10,7 @@ class SiteWorkersController < ApplicationController
     msg = params[:xml]
     fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
-    self.send "on_#{msg_type}",params
+    self.send "on_#{msg_type}",msg
   end
 
 
@@ -18,10 +18,10 @@ class SiteWorkersController < ApplicationController
   def on_text param
     content = param[:Content]
     if "reg" == content then
-      SiteWorker.find_or_create_by_wid(params[:FromUserName])
+      SiteWorker.find_or_create_by_wid(param[:FromUserName])
       @content = "ok registered!" # we need a reg session here
     else
-      worker = SiteWorker.find_by_wid(params[:FromUserName])
+      worker = SiteWorker.find_by_wid(param[:FromUserName])
       if !worker then
         @content = "sorry, no worker,  use reg to regsiter"
       else
@@ -47,7 +47,7 @@ class SiteWorkersController < ApplicationController
         end
       end
     end
-    render :text , :formats => :xml        
+    render  :xml => {:ToUserName=>param[:FromUserName],:FromUserName=>param[:ToUserName],:CreateTime=>Time.now.to_i,:MsgType=>"text",:Content=>@content}.to_xml(:root=> "xml")     
   end
 
   def on_image param
