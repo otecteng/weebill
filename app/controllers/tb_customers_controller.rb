@@ -20,3 +20,4 @@ end
 
 
 
+'<xml><FromUserName>from</FromUserName><ToUserName>to</ToUserName><MsgType>text</MsgType><Content>reg</Content></xml>'

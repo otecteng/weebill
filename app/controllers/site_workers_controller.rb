@@ -3,6 +3,7 @@ class SiteWorkersController < ApplicationController
   skip_before_filter :require_login
 
   def wx_index
+    p params[:echostr]
     render :text => params[:echostr]
   end
 	
@@ -38,7 +39,7 @@ class SiteWorkersController < ApplicationController
               if !service_order then
                 @content = "bad service order id , check again?"
               else
-                service_order.update_attributes（:site_worker_id=>worker.id, :site_pix=>worker.site_session.pix,:status=>"SUBMITTED")
+                service_order.update_attributes(:site_worker_id=>worker.id, :site_pix=>worker.site_session.pix,:status=>"SUBMITTED")
                 worker.site_session.update_attributes(:uid => param[:Content],:status =>"OFF")
                 @content = "session  done!bill: #{worker.site_session.pix}-#{service_order.id}"
               end
@@ -47,7 +48,8 @@ class SiteWorkersController < ApplicationController
         end
       end
     end
-    render  :xml => {:ToUserName=>param[:FromUserName],:FromUserName=>param[:ToUserName],:CreateTime=>Time.now.to_i,:MsgType=>"text",:Content=>@content}.to_xml(:root=> "xml")     
+    render  :text=>@content
+    #:xml => {:ToUserName=>param[:FromUserName],:FromUserName=>param[:ToUserName],:CreateTime=>Time.now.to_i,:MsgType=>"text",:Content=>@content}.to_xml(:root=> "xml")     
   end
 
   def on_image param
@@ -70,10 +72,12 @@ class SiteWorkersController < ApplicationController
 
   def on_location param
     content = param[:Content]
+    render :text=>content
   end
 
   def on_link param
     content = param[:Content]
+    render :text=>content
   end       
   # def send_text msg
   #   client=WeechatClient.get_instance "siteworker"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140323142143) do
+ActiveRecord::Schema.define(:version => 20140326143405) do
 
   create_table "service_orders", :force => true do |t|
     t.string   "cname"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(:version => 20140323142143) do
     t.string   "uid"
     t.string   "alipay_id"
     t.string   "alipay_pix"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "site_sessions", :force => true do |t|
+    t.integer  "status"
+    t.integer  "site_worker_id"
+    t.string   "pix"
+    t.string   "uid"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end

@@ -26,21 +26,6 @@ class WeechatClient
 	    :send => "/cgi-bin/message/custom/send",
 	    :media => "/cgi-bin/media/get"
   	}
-	# def self.client_customer= customer_instance
-	# 	@@client_customer=customer_instance
-	# end
-	
-	def self.client_customer
-		@@client_customer
-	end
-
-	# def self.client_siteworker= site_work_instance
-	# 	@@client_siteworker=site_work_instance
-	# end
-	
-	def self.client_siteworker
-		@@client_siteworker
-	end
 
 	def self.get_instance name
 		CLIENT_MAP[name] = WeechatClient.new name if !CLIENT_MAP[name]
