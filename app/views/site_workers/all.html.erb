@@ -1,0 +1,17 @@
+
+<table>
+	<tr>
+	<th></th>
+	<th></th>
+	<th>昵称</th>
+	<th>全称</th>
+	<th>手机</th>
+	<tr>
+<% @workers.each do |worker|  %>
+<tr><tb><%= worker.wid%></tb>
+<tb><%= worker.wuid%></tb>
+<tb><%= worker.nickname%></tb>
+<tb><%= worker.name%></tb>
+<tb><%= worker.phone%></tb></tr>
+<% end%>
+</table>

@@ -11,3 +11,36 @@
  *= require_self
  *= require_tree .
  */
+.title {
+	background: #978d8d;
+	margin:20px auto;
+	width:604px;
+	border-radius:5px;
+	overflow: hidden;
+}
+.title ul {
+	padding : 0;
+	margin:0;
+}
+.title li {
+	background: #978d8d;
+	display:inline-block;
+	width:200px;
+	height:30px;
+	font-size:18px;
+	text-align: center;
+	border-width:0px 1px 0px 0px;
+	border-style:solid;
+	border-color:#bbb;
+}
+.title li:last-child{
+	border-right-width:0px ;
+}
+.title li a {
+	color: white;
+	text-decoration: none;
+}
+.title li span {
+	line-height: 30px;
+	padding:6px 64px;
+}

@@ -7,8 +7,23 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+<div class="title">
+	<ul>
+		<li>
+			<a href="#">
+				<span>网点管理</span>
+			</a>
+		</li><li>
+			<a href="#">
+				<span>任务管理</span>
+			</a>
+		</li><li style="border-width:0px;">
+			<a href="#">
+				<span>导入客户</span>
+			</a>
+		</li>
+	<ul>
+</div>
+	<%= yield %>
 </body>
 </html>

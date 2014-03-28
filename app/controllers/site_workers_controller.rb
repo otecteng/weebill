@@ -2,6 +2,9 @@ class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :require_login
 
+  def all
+    @workers=SiteWorker.all
+  end 
   def wx_index
     p params[:echostr]
     render :text => params[:echostr]
