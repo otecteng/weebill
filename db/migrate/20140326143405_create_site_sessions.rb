@@ -5,6 +5,7 @@ class CreateSiteSessions < ActiveRecord::Migration
       t.integer :site_worker_id
       t.string 	:pix
       t.string	:uid
+      t.string  :state
       t.timestamps
     end
   end

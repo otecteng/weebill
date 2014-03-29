@@ -1,16 +1,16 @@
 class SiteWorker < ActiveRecord::Base
-  attr_accessible :name, :nickname, :phone, :wid
+  attr_accessible :name, :nickname, :phone, :wid,:uid
   has_many :site_sessions
 
   def site_session
-  	site_sessions.find{|s| s.status == "ON"}
+  	site_sessions.find{|s| s.status == 1}
   end
 
   def start_session
-  	site_sessions.select{|s| s.status == "ON"}.each do |s|
-  		s.status = 'OFF'
+  	site_sessions.select{|s| s.status == 1}.each do |s|
+  		s.status = 0
   		s.save!
   	end
-  	site_sessions.create(:status => 'ON')
+  	site_sessions.create(:status => 1)
   end
 end

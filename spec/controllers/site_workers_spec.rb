@@ -1,43 +1,44 @@
 require 'spec_helper'
 
-hash={:FromUserName=>"from",:ToUserName=>"to"}
-
 describe SiteWorkersController do
-	describe "GET wx_index" do
-	    it "return the text" do
-	        get :wx_index, {:echostr=>"wahhh"}   
-	        expect(response.body).to eq("wahhh")
+	describe "test reg" do
+		params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
+	    xit "register" do
+	        params[:xml][:MsgType] = "text"
+	        params[:xml][:Content] = "reg"
+	        post :wx_create,params
+	        response.body.should == "ok registered!"
+
 	    end
+
+	    xit "random input should check worker" do
+	        params[:xml][:MsgType] = "text"
+	        params[:xml][:Content] = "text"
+	        post :wx_create,params
+	    end
+
+	    it "a full session" do
+	    	worker = SiteWorker.create(:wid=>"12345",:name=>'test user')
+	    	order = ServiceOrder.create()
+	        params[:xml][:MsgType] = "text"
+	        params[:xml][:Content] = "st"
+	        params[:xml][:FromUserName] = worker.wid
+	        post :wx_create,params
+	        p response.body
+	        response.body.match(/^upload your pix/)
+	        worker = SiteWorker.find worker.id
+	        params[:xml][:MsgType] = "image"
+	        params[:xml][:MediaId] = "1234"
+	        post :wx_create,params
+	        p response.body
+
+	        worker = SiteWorker.find worker.id
+	        p worker.site_session
+			params[:xml][:MsgType] = "text"
+	        params[:xml][:Content] = "#{order.id}"
+	        post :wx_create,params
+	        p response.body
+	    end	    
     end
 
-
-    describe "POST wx_create" do
-	    it "Text (deal with the reg)" do
-	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"text",:Content=>"reg"}}
-	        p response.body
-	    end
-
-	    it "Text (deal with the st)" do
-	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"text",:Content=>"reg"}}
-	        p response.body
-	    end
-
-	    it "deal with the image" do
-	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"image",:Content=>"reg"}}
-	        p response.body
-	    end
-
-
-	    it "deal with the locaton" do
-	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"location",:Content=>"wahhh"}}
-	        expect(response.body).to eq("wahhh")
-	    end
-
-
-	    it "deal with the link" do
-	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"link",:Content=>"wahhh"}}
-	        expect(response.body).to eq("wahhh")
-	    end
-
-    end
 end
