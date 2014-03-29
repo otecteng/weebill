@@ -6,7 +6,7 @@ describe SiteWorkersController do
 	describe "GET wx_index" do
 	    it "return the text" do
 	        get :wx_index, {:echostr=>"wahhh"}   
-	        expect(response.body).should eq("wahhh")
+	        expect(response.body).to eq("wahhh")
 	    end
     end
 
@@ -30,13 +30,13 @@ describe SiteWorkersController do
 
 	    it "deal with the locaton" do
 	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"location",:Content=>"wahhh"}}
-	        expect(response.body).should eq("wahhh")
+	        expect(response.body).to eq("wahhh")
 	    end
 
 
 	    it "deal with the link" do
 	    	post :wx_create, {:xml=>{:FromUserName=>"from",:ToUserName=>"to",:MsgType=>"link",:Content=>"wahhh"}}
-	        expect(response.body).should eq("wahhh")
+	        expect(response.body).to eq("wahhh")
 	    end
 
     end

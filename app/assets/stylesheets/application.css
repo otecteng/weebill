@@ -13,10 +13,11 @@
  */
 .title {
 	background: #978d8d;
-	margin:20px auto;
+	margin:40px auto;
 	width:604px;
 	border-radius:5px;
 	overflow: hidden;
+	box-shadow: 5px 5px 3px #ccc;
 }
 .title ul {
 	padding : 0;
@@ -43,4 +44,39 @@
 .title li span {
 	line-height: 30px;
 	padding:6px 64px;
+}
+.body {
+	width:1000px;
+	margin:10px auto;
+}
+th {
+	font-size: 16px;
+	font-weight: 500;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+td {
+	padding:5px 25px;
+}
+.table  {
+	padding: 5px;
+	font-size:17px;
+	text-align: center;
+	margin:10px auto;
+}
+th {
+	background-color: #443f3f;
+	color:white;
+}
+th:first-child {
+	border-top-left-radius: 5px;
+}
+th:last-child {
+	border-top-right-radius: 5px;
+}
+.tr_0 {
+	background-color: #eed;
+}
+.tr_1 {
+	background-color: white;
 }
