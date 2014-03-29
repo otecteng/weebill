@@ -1,0 +1,101 @@
+
+<script type="text/javascript">
+	$(function(){
+		$("#check_all").change(function(){
+			var all_sub_checkbox=$("tbody input[type='checkbox']")
+			if(this.checked){
+				all_sub_checkbox.prop("checked",true);
+			}else{
+				all_sub_checkbox.prop("checked",false);
+			}
+		});
+		$('.city_selector').CitySelector();
+		$('.city_selector_add').CitySelector();
+	})
+
+	function save(){
+		$.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
+			if(json.success){
+				$("#save_success").show().next().next().hide();
+				setTimeout(function(){$("#save_success").hide();},3000);
+			}else{
+				$("#save_fail").show();
+				setTimeout(function(){$("#save_fail").hide();},3000);
+			}
+		})
+	}
+	function change(){
+		var chosen=$("td > input:checked");
+		if (chosen.length!=1){
+			$("#warn").show();
+			setTimeout(function(){$("#warn").hide();},3000);
+			return;
+		}
+		
+	}
+</script>
+<div>
+	<div class="msg" id="save_success">保存成功</div>
+	<div class="msg" id="save_fail">保存失败</div>
+	<div class="msg" id="warn">请选择一条数据</div>
+	<div id="add_site">
+		<form>
+			<div class="city_selector_add">	
+				名称:<input type="text" name="name" />
+    			<div class="dropdown address">
+    			  省:<select class="province" data-role="province" data-value="" id="			entry_field_4_province" name="province"></select>
+    			  <span class="dropdown-trigger"></span>
+    			</div>
+    			<div class="dropdown address">
+    			  市:<select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
+    			  <span class="dropdown-trigger"></span>
+    			</div>
+			</div>
+			地点:<input type="text" name="location" />
+			<input onclick="save()" type="button" class="btn btn-success" value="添加" />
+		</form>
+	</div>
+</div>
+<form action="/sites">
+<div class="city_selector">	
+	名称:<input type="text" name="name" />
+    <div class="dropdown address">
+      <select class="province" data-role="province" data-value="" id="entry_field_4_province" name="province"></select>
+      <span class="dropdown-trigger"></span>
+    </div>
+    <div class="dropdown address">
+      <select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
+      <span class="dropdown-trigger"></span>
+    </div>
+</div>
+    <input id="query" class="btn btn-info" type="submit" value="查询" />
+</form>
+<table class="table" cellspacing="0px">
+	<thead>
+	<tr>
+	<th><input type="checkbox" id="check_all"/></th>
+	<th>名称</th>
+	<th>省</th>
+	<th>市</th>
+	<th>地点</th>
+	<th>星级</th>
+	</tr>
+	</thead><tdody>
+<% @sites.each_with_index do |site,ind|  %>
+<tr <%="class=tr_#{ind%2}"%>>
+	<td><input type="checkbox" name=<%=site.id %>/></td>
+	<td><%= site.name%></td>
+	<td><%= site.province%></td>
+	<td><%= site.city%></td>
+	<td><%= site.location%></td>
+	<td><%= site.star%></td>
+</tr>
+<% end%>
+<tr>
+</tdody>
+</table>
+<div class="buttons">
+	<%= will_paginate @sites, renderer: BootstrapPagination::Rails %>
+	<input onclick="change()" type="button" value="修改" class="btn btn-warning" />
+	<input onclick="$('#add_site').show();" type="button" value="增加" class="btn btn-success" />
+</div>
