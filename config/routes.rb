@@ -4,7 +4,11 @@ Weebill::Application.routes.draw do
   post 'site_workers/wx' => 'site_workers#wx_create'
   post 'tb_customers/wx' => 'tb_customers#wx_create'
   match 'sites/add' => 'sites#add'
-  resources :sites,:site_workers,:tb_customers,:tb_trades,:service_orders
+  resources :sites,:site_workers,:tb_customers,:tb_trades
+
+  resources :service_orders do
+  	get "new_mobile", :on=>:collection
+  end
   
   root :to => 'users#welcome'
 end

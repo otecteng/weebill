@@ -1,15 +1,39 @@
 class TbCustomersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :require_login
+
   def wx_index
     render :text => params[:echostr]
   end
 	
   def wx_create
-  	p "===========>"
-  	@content = "hello c!"
+    msg = params[:xml]
+    fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
+    msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
+    self.send "on_#{msg_type}"
+    respond_to do |format|
+      format.html { render :text=>@content }
+      format.xml { render :text,:formats => :xml  }
+    end
+  end
+
+  def on_text 
+    msg = params[:xml]
+    content = msg[:Content]
+    if "1" == content then
+      @content = "请填写预约表格：http://weebill.goxplanet.com/service_orders/new_m.html"
+    end
+  end
+
+  def on_link 
+    @content = ""
     render :text,:formats => :xml   
   end
+
+  def on_location 
+    @content = ""
+    render :text,:formats => :xml   
+  end  
 
   private
   def check_weixin_legality
@@ -18,6 +42,3 @@ class TbCustomersController < ApplicationController
   end	
 end
 
-
-
-'<xml><FromUserName>from</FromUserName><ToUserName>to</ToUserName><MsgType>text</MsgType><Content>reg</Content></xml>'

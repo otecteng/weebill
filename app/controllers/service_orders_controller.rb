@@ -15,6 +15,12 @@ class ServiceOrdersController < ApplicationController
 
 	def create
 		@obj = ServiceOrder.new(params[:service_order])
+		if params[:time_service] then
+	      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
+	      	args_time_hour = params[:time_service][:time_time][:hour].to_i
+	      	args_time_minute = params[:time_service][:time_time][:minute].to_i
+			@obj.time_service = DateTime.new(args_date[0],args_date[1],args_date[2],args_time_hour,args_time_minute)
+		end
   		if @obj.save
   			redirect_to '/service_orders'
   		else
@@ -37,4 +43,8 @@ class ServiceOrdersController < ApplicationController
 		redirect_to '/service_orders'
 	end
 
+	def new_mobile
+		@service_order = ServiceOrder.new
+		render :layout=>false
+	end
 end

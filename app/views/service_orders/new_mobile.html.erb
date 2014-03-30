@@ -25,7 +25,6 @@
 
 
 <%=form_tag '/service_orders/',:method=>'post' do%>
-<input id="" name="service_order[cid]" type="hidden" value="<%=params[:cid]%>">
 <div class="field  " data-api-code="field_3">
 <div class="control-group ">
   <div class="field_content">
@@ -78,22 +77,14 @@
   <div class="field_content">
     <div class="help-block">门店</div>
     <div class="controls">
-      <input size="30" value="<%=@site.name%>">
-      <input id="site_id" name="service_order[site_id]" size="30" type="hidden" value="<%=@site.id%>">
+      <%= collection_select("service_order","site_id", Site.all, :id, :name) %>
     </div>
   </div>
 </div>
 </div>
 
 <div class="field  " data-api-code="field_6">
-<div class="control-group ">
-  <div class="field_content">
-    <div class="help-block">备注</div>
-    <div class="controls">
-      <textarea class="input-xxlarge" cols="40" id="entry_field_6" name="service_order[comment]" rows="3"></textarea>
-    </div>
-  </div>
-</div>
+
 </div>
 <div class="field submit-field">
 <input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="预约">
