@@ -1,0 +1,29 @@
+<!-- :alipay_id, :alipay_pix, :cmobile, :cname, :price, :site_id, 
+            :site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
+            :time_service
+ -->
+<%= form_for(@service_order) do |f| %>
+
+  <div class="field">
+     预约人：<%= f.text_field :cname %><br>
+     电话   <%= f.text_field :cmobile %>
+  </div><p>
+  <div class="field">
+  日期：<input type="text" value="" data-date-format="yyyy-mm-dd" class="datepicker" >
+  </div>
+  <div class="field">
+    门店:<%= collection_select("service_order","site_id", Site.all, :id, :name) %>
+  </div>
+  <div class="field">
+    订单:<%= collection_select("service_order","tb_trade_id", TbTrade.all, :id, :cname) %>
+  </div>
+
+
+  <div class="actions">
+    <%= submit_tag '保存',class: "btn btn-primary",style:"margin-top: 30px;width: 100px;"%>
+  </div>
+<% end %>
+<script type="text/javascript">
+$('.datepicker').datepicker();
+
+</script>

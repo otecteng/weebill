@@ -1,0 +1,106 @@
+  <header data-role="header" class="">
+      <h1>
+        设备安装申请表
+      </h1>
+  </header>
+  <div class="main" data-role="content">
+  <div class="main-content">
+    <div class="form-content">
+
+    <div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+      <div class="help-block">请输入订货单号或者送货预留电话</div>
+
+    <div class="controls">
+      <input id="entry_field_3" name="q" size="30" type="tel" value="">
+    </div>
+
+  </div>
+</div>
+</div>
+<div class="field submit-field">
+<input id="btn_search" data-disabled-with="提交中..." name="commit" type="submit" value="查询">
+</div>
+
+
+<%=form_tag '/service_orders/',:method=>'post' do%>
+<input id="" name="service_order[cid]" type="hidden" value="<%=params[:cid]%>">
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">联系人</div>
+    <div class="controls">
+      <input id="customer_name" name="service_order[cname]" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">联系电话</div>
+    <div class="controls">
+      <input id="customer_telephone" name="service_order[cmobile]" size="30" type="tel" value="">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_1">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">预约日期</div>
+    <div class="controls">
+      <input class="input_date " data-date-enddate="null" data-date-startdate="null" data-role="date" id="entry_field_1" name="time_service[time_date]" size="30" type="date"><span class="day_of_week"><span class="day_name"></span><i class="icon calendar"></i></span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_2">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">时间</div>
+    <div class="controls">
+    <div class="time-field ">
+    <input class="input-mini" id="entry_field_2_hour" max="23" min="0" name="time_service[time_time][hour]" placeholder="时" type="number">
+    <span class="time-separator">:</span>
+    <input class="input-mini" id="entry_field_2_minute" max="59" min="0" name="time_service[time_time][minute]" placeholder="分" type="number">
+  </div>
+  </div>
+  </div>
+</div>
+
+<div class="field  " data-api-code="field_5">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">门店</div>
+    <div class="controls">
+      <input size="30" value="<%=@site.name%>">
+      <input id="site_id" name="service_order[site_id]" size="30" type="hidden" value="<%=@site.id%>">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_6">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">备注</div>
+    <div class="controls">
+      <textarea class="input-xxlarge" cols="40" id="entry_field_6" name="service_order[comment]" rows="3"></textarea>
+    </div>
+  </div>
+</div>
+</div>
+<div class="field submit-field">
+<input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="预约">
+</div>
+<%end%>
+
+</div>
+</div>
+</div>
+</div>

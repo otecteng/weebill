@@ -1,0 +1,17 @@
+<%= form_for(@tb_trade) do |f| %>
+  <div class="field">
+     预约人：<%= f.text_field :cname %><br>
+     电话   <%= f.text_field :cmobile %>
+  </div><p>
+  <div class="field">
+  日期：<input type="text" value="" data-date-format="yyyy-mm-dd" class="datepicker" >
+  </div>
+  <div class="field">
+    货物:<%= f.text_field :title %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag '保存',class: "btn btn-primary",style:"margin-top: 30px;width: 100px;"%>
+  </div>
+<% end %>
+

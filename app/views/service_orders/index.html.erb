@@ -1,0 +1,28 @@
+<%= link_to 'New', new_service_order_path %>
+<table class="table" cellspacing="0px">
+	<thead>
+	<tr>
+	<td>客户</td>
+	<td>电话</td>
+	<td>预约时间</td>
+	<td>安装内容</td>
+	<td>安装点</td>
+	<td>状态</td>
+	</tr>
+	</thead><tdody>
+<% @service_orders.each do |service_order|  %>
+<tr> 
+	<td><%= service_order.cname%></td>
+	<td><%= service_order.cmobile%></td>
+	<td><%= service_order.time_service%></td>	
+	<td><%= service_order.tb_trade.title if service_order.tb_trade%></td>
+	<td><%= service_order.site.name%></td>	
+	<td><%= service_order.status%></td>
+	<td><%= link_to 'Show', service_order %></td>
+ 	<td><%= link_to 'Edit', edit_service_order_path(service_order) %></td>
+ 	<td><%= link_to 'Destroy', service_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
+</tr>
+<% end%>
+<tr>
+</tdody>
+</table>

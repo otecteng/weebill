@@ -1,0 +1,22 @@
+<%= link_to 'New', new_tb_trade_path %>
+<!-- :memo, :num_iid, :price, :status, :tb_customer_id, :tid, :title -->
+ <!-- time_trade:datetime cname:string cmobile:string caddress:string -->
+<table class="table" cellspacing="0px">
+	<thead>
+	<tr>
+	</tr>
+	</thead><tdody>
+<% @tb_trades.each do |tb_trades|  %>
+<tr> 
+	<td><%= tb_trades.title%></td>
+	<td><%= tb_trades.cname%></td>
+	<td><%= tb_trades.cmobile%></td>	
+	<td><%= tb_trades.time_trade%></td>
+	<td><%= link_to 'Show', tb_trades %></td>
+ 	<td><%= link_to 'Edit', edit_tb_trade_path(tb_trades) %></td>
+ 	<td><%= link_to 'Destroy', tb_trades, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
+</tr>
+<% end%>
+<tr>
+</tdody>
+</table>
