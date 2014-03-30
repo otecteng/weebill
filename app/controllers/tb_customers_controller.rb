@@ -11,10 +11,12 @@ class TbCustomersController < ApplicationController
     fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
     self.send "on_#{msg_type}"
-    respond_to do |format|
-      format.html { render :text=>@content }
-      format.xml { render :text,:formats => :xml  }
-    end
+    return render :text,:formats => :xml  
+    #respond_to do |format|
+    #  format.html { render :text=>@content }
+    #  format.xml { render :text,:formats => :xml  }
+
+    #end
   end
 
   def on_text 
