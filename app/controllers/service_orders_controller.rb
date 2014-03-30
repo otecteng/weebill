@@ -42,6 +42,10 @@ class ServiceOrdersController < ApplicationController
 		@obj.destroy
 		redirect_to '/service_orders'
 	end
+	
+	def show
+		@service_order = ServiceOrder.find(params[:id])
+	end
 
 	def new_mobile
 		@service_order = ServiceOrder.new
