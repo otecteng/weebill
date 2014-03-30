@@ -19,7 +19,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
+  adapter: mysql2
+  host: us-cdbr-east-04.cleardb.com
+  database: ad_d80m3be0efc6529
+  username: b9d593088124eb
+  password: eec23012
+  pool: 2
   timeout: 5000
