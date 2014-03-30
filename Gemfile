@@ -6,11 +6,11 @@ gem 'unicorn'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'thin'
+  gem 'sqlite3'
 end
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
+gem 'mysql2'
 
 
 # Gems used only for assets and not required
