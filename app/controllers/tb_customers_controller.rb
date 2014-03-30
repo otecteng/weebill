@@ -23,7 +23,7 @@ class TbCustomersController < ApplicationController
     msg = params[:xml]
     content = msg[:Content]
     if "1" == content then
-      @content = "please fill form:http://weebill.goxplanet.com/service_orders/new_m.html"
+      @content = "please fill form:http://weebill.goxplanet.com/service_orders/new_mobile.html"
     end
   end
 
