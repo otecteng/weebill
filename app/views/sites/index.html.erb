@@ -79,6 +79,11 @@
 	<th>市</th>
 	<th>地点</th>
 	<th>星级</th>
+	<th>修改</th>
+
+	<th>安装工</th>
+	<th>安装单</th>
+	
 	</tr>
 	</thead><tdody>
 <% @sites.each_with_index do |site,ind|  %>
@@ -89,6 +94,10 @@
 	<td><%= site.city%></td>
 	<td><%= site.location%></td>
 	<td><%= site.star%></td>
+	<td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
+	<td><%= link_to "查看","/site_workers?site_id=#{site.id}"%></td>
+	<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td>
+
 </tr>
 <% end%>
 <tr>

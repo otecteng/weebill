@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140326143405) do
+ActiveRecord::Schema.define(:version => 20140330073208) do
 
   create_table "service_orders", :force => true do |t|
     t.string   "cname"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20140326143405) do
     t.string   "alipay_pix"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.datetime "time_service"
   end
 
   create_table "site_sessions", :force => true do |t|
@@ -79,15 +80,20 @@ ActiveRecord::Schema.define(:version => 20140326143405) do
   end
 
   create_table "tb_trades", :force => true do |t|
-    t.integer  "tid",            :limit => 8
+    t.integer  "tid",              :limit => 8
     t.string   "num_iid"
     t.integer  "tb_customer_id"
     t.string   "title"
     t.string   "price"
     t.string   "status"
     t.text     "memo"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.datetime "time_trade"
+    t.string   "cname"
+    t.string   "cmobile"
+    t.string   "cadddress"
+    t.integer  "service_order_id"
   end
 
   create_table "users", :force => true do |t|

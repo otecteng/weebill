@@ -4,15 +4,7 @@ Weebill::Application.routes.draw do
   post 'site_workers/wx' => 'site_workers#wx_create'
   post 'tb_customers/wx' => 'tb_customers#wx_create'
   match 'sites/add' => 'sites#add'
-  resources :site_workers do
-    
-  end
-  resources :tb_customers do
-    
-  end
-  resources :sites do
-    
-  end
-
+  resources :sites,:site_workers,:tb_customers,:tb_trades,:service_orders
+  
   root :to => 'users#welcome'
 end
