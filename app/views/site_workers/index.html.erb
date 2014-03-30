@@ -1,0 +1,29 @@
+<!-- :name, :nickname, :phone, :wid,:uid -->
+<%= link_to 'New', new_site_worker_path %>
+<table class="table" cellspacing="0px">
+	<thead>
+	<tr>
+	<td>编号</td>
+	<td>姓名</td>
+	<td>wid</td>
+	<td>微信昵称</td>
+	<td>安装点</td>
+	<td>状态</td>
+	</tr>
+	</thead><tdody>
+<% @site_workers.each do |site_worker|  %>
+<tr>
+	<td><%= site_worker.id%></td> 
+	<td><%= site_worker.name%></td>
+	<<td><%= site_worker.wid%></td> 
+	<td><%= site_worker.nickname%></td>	
+	<!-- <td><%= site_worker.wuid%></td> -->
+	<td><%= site_worker.site.name if site_worker.site%></td>
+	<td><%= link_to 'Show', site_worker %></td>
+ 	<td><%= link_to 'Edit', edit_site_worker_path(site_worker) %></td>
+ 	<td><%= link_to 'Destroy', site_worker, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
+</tr>
+<% end%>
+<tr>
+</tdody>
+</table>

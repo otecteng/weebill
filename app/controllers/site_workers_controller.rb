@@ -4,6 +4,10 @@ class SiteWorkersController < ApplicationController
 
   before_filter :confirm_worker,:only=>[:site_session_text,:on_image]
 
+  def index
+    @site_workers = SiteWorker.all
+  end
+
   def wx_index
     p params[:echostr]
     render :text => params[:echostr]
