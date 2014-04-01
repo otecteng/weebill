@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140330073208) do
+ActiveRecord::Schema.define(:version => 20140401085951) do
 
   create_table "service_orders", :force => true do |t|
     t.string   "cname"
@@ -61,8 +61,10 @@ ActiveRecord::Schema.define(:version => 20140330073208) do
     t.string   "county"
     t.string   "star"
     t.integer  "cert"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "alipay_account"
+    t.string   "caifu_account"
   end
 
   create_table "tb_customers", :force => true do |t|

@@ -15,6 +15,7 @@ class ServiceOrdersController < ApplicationController
 
 	def create
 		@obj = ServiceOrder.new(params[:service_order])
+		@obj.price = 0
 		if params[:time_service] then
 	      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
 	      	args_time_hour = params[:time_service][:time_time][:hour].to_i
@@ -50,5 +51,15 @@ class ServiceOrdersController < ApplicationController
 	def new_mobile
 		@service_order = ServiceOrder.new
 		render :layout=>false
+	end
+
+	def confirm_pay
+		@obj = ServiceOrder.find(params[:id])
+		@obj.update_attributes(:status=>'PAID')
+		current_user.pay(@obj.site,price)
+	end
+
+	def current_user
+		User.find 1
 	end
 end

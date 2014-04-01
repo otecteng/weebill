@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weebill</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="title">
+	<ul>
+		<li>
+			<a href="/sites">
+				<span>网点管理</span>
+			</a>
+		</li><li>
+			<a href="/service_orders">
+				<span>任务管理</span>
+			</a>
+		</li><li style="border-width:0px;">
+			<a href="/tb_trades">
+				<span>导入订单</span>
+			</a>
+		</li>
+	<ul>
+</div>
+<div class="body">
+	<%= yield %>
+</div>
+</body>
+</html>
