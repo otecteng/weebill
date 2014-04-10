@@ -11,6 +11,8 @@
 		});
 		$('.city_selector').CitySelector();
 		$('.city_selector_add').CitySelector();
+		www=$("#add_site").dialog();
+		console.log(www);
 	})
 
 	function save(){
@@ -35,9 +37,6 @@
 	}
 </script>
 <div>
-	<div class="msg" id="save_success">保存成功</div>
-	<div class="msg" id="save_fail">保存失败</div>
-	<div class="msg" id="warn">请选择一条数据</div>
 	<div id="add_site">
 		<form>
 			<div class="city_selector_add">	
@@ -50,8 +49,8 @@
     			  市:<select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
     			  <span class="dropdown-trigger"></span>
     			</div>
-			</div>
 			地点:<input type="text" name="location" />
+			</div>
 			<input onclick="save()" type="button" class="btn btn-success" value="添加" />
 		</form>
 	</div>

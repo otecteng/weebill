@@ -121,9 +121,6 @@ select,input[type="text"] {
 #save_fail ,#warn{
 	background-color: #c66;
 }
-.city_selector_add > div {
-	display: inline-block;
-}
-#add_site {
-	display: none;
+input[type="text"] {
+	height:30px!important;
 }
