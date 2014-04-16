@@ -11,21 +11,37 @@
 		});
 		$('.city_selector').CitySelector();
 		$('.city_selector_add').CitySelector();
-		www=$("#add_site").dialog();
-		console.log(www);
+		$("#add_site").dialog({
+			panel:{
+				title:"添加用户",
+				left:"35%"
+			},
+			buttons:[{
+				text:"关闭",
+				class:"btn btn-danger",
+				onclick:function(){
+					$("#add_site").close();
+				}
+			},{
+				text:"保存",
+				class:"btn btn-info",
+				onclick:function save(){
+					$("#add_site > form").submit()
+					// $.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
+					// 	if(json.success){
+					// 		$("#save_success").show().next().next().hide();
+					// 		setTimeout(function(){$("#save_success").hide();},3000);
+					// 	}else{
+					// 		$("#save_fail").show();
+					// 		setTimeout(function(){$("#save_fail").hide();},3000);
+					// 	}
+					// })
+				}
+			}]
+		});
 	})
 
-	function save(){
-		$.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
-			if(json.success){
-				$("#save_success").show().next().next().hide();
-				setTimeout(function(){$("#save_success").hide();},3000);
-			}else{
-				$("#save_fail").show();
-				setTimeout(function(){$("#save_fail").hide();},3000);
-			}
-		})
-	}
+	
 	function change(){
 		var chosen=$("td > input:checked");
 		if (chosen.length!=1){
@@ -38,20 +54,29 @@
 </script>
 <div>
 	<div id="add_site">
-		<form>
+		<form action="/sites/add">
 			<div class="city_selector_add">	
-				名称:<input type="text" name="name" />
-    			<div class="dropdown address">
-    			  省:<select class="province" data-role="province" data-value="" id="			entry_field_4_province" name="province"></select>
-    			  <span class="dropdown-trigger"></span>
-    			</div>
-    			<div class="dropdown address">
-    			  市:<select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
-    			  <span class="dropdown-trigger"></span>
-    			</div>
-			地点:<input type="text" name="location" />
+				<table>
+					<tr>
+						<td>名称:<input type="text" name="name" /></td>
+						<td>
+							<div class="dropdown address">
+    						  省:<select class="province" data-role="province" data-value="" id="						entry_field_4_province" name="province"></select>
+    						  <span class="dropdown-trigger"></span>
+    						</div>
+						</td>
+					</tr>
+					<tr>
+						<td>地点:<input type="text" name="location" /></td>
+						<td>
+							<div class="dropdown address">
+    						  市:<select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
+    						  <span class="dropdown-trigger"></span>
+    						</div>
+    					</td>
+					</tr>
+				</table>				
 			</div>
-			<input onclick="save()" type="button" class="btn btn-success" value="添加" />
 		</form>
 	</div>
 </div>
@@ -104,6 +129,5 @@
 </table>
 <div class="buttons">
 	<%= will_paginate @sites, renderer: BootstrapPagination::Rails %>
-	<input onclick="change()" type="button" value="修改" class="btn btn-warning" />
-	<input onclick="$('#add_site').show();" type="button" value="增加" class="btn btn-success" />
+	<input onclick="$('#add_site').open();" type="button" value="增加" class="btn btn-success" />
 </div>
