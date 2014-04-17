@@ -9,7 +9,7 @@ class SitesController < ApplicationController
 		params.delete("action")
 		@site = Site.new(params)
 		if @site.save then
-			redirect_to '/sites'
+			render :json=>{:success=>true}
 		else
 			render :json=>{:success=>false}
 		end

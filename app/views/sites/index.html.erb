@@ -17,25 +17,22 @@
 				left:"35%"
 			},
 			buttons:[{
+				text:"保存",
+				class:"btn btn-info",
+				onclick:function save(){
+					$.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
+						if(json.success){
+							location.reload();
+						}else{
+							alert("保存失败!");
+						}
+					})
+				}
+			},{
 				text:"关闭",
 				class:"btn btn-danger",
 				onclick:function(){
 					$("#add_site").close();
-				}
-			},{
-				text:"保存",
-				class:"btn btn-info",
-				onclick:function save(){
-					$("#add_site > form").submit()
-					// $.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
-					// 	if(json.success){
-					// 		$("#save_success").show().next().next().hide();
-					// 		setTimeout(function(){$("#save_success").hide();},3000);
-					// 	}else{
-					// 		$("#save_fail").show();
-					// 		setTimeout(function(){$("#save_fail").hide();},3000);
-					// 	}
-					// })
 				}
 			}]
 		});

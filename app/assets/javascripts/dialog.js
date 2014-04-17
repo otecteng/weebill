@@ -30,6 +30,7 @@
 
 		title_panel.append(title).append(self_close_button);
 		var button;
+		settings.buttons.reverse();
 		for (var i=0;i<settings.buttons.length;i++){
 			button=settings.buttons[i];
 			$("<input />").attr({type:"button",value:button.text}).addClass(button.class?button.class:"").css({float:"right","margin-right":"5px"}).click(settings.buttons[i].onclick).appendTo(buttons_panel);
