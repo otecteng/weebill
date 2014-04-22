@@ -1,83 +1,27 @@
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/bootstrap-glyphicons.css" />
+<link rel="stylesheet" href="assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="assets/css/icheck/flat/blue.css" />
+<link rel="stylesheet" href="assets/css/select2.css" />		
+<link rel="stylesheet" href="assets/css/unicorn.main.css" />
+<link rel="stylesheet" href="assets/css/unicorn.grey.css" class="skin-color" />
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery-ui.custom.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.icheck.min.js"></script>
+<script src="assets/js/select2.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="assets/js/jquery.jpanelmenu.min.js"></script>
+<script src="assets/js/unicorn.js"></script>
+<script src="assets/js/unicorn.tables.js"></script>
+ <script type="text/javascript">
+// 	$(function(){
+// 		$('.city_selector').CitySelector();
+// 		$('.city_selector_add').CitySelector();
+// 	})
 
-<script type="text/javascript">
-	$(function(){
-		$("#check_all").change(function(){
-			var all_sub_checkbox=$("tbody input[type='checkbox']")
-			if(this.checked){
-				all_sub_checkbox.prop("checked",true);
-			}else{
-				all_sub_checkbox.prop("checked",false);
-			}
-		});
-		$('.city_selector').CitySelector();
-		$('.city_selector_add').CitySelector();
-		$("#add_site").dialog({
-			panel:{
-				title:"添加用户",
-				left:"35%"
-			},
-			buttons:[{
-				text:"保存",
-				class:"btn btn-info",
-				onclick:function save(){
-					$.getJSON("/sites/add?"+$("#add_site > form").serialize(),function(json){
-						if(json.success){
-							location.reload();
-						}else{
-							alert("保存失败!");
-						}
-					})
-				}
-			},{
-				text:"关闭",
-				class:"btn btn-danger",
-				onclick:function(){
-					$("#add_site").close();
-				}
-			}]
-		});
-	})
-
-	
-	function change(){
-		var chosen=$("td > input:checked");
-		if (chosen.length!=1){
-			$("#warn").show();
-			setTimeout(function(){$("#warn").hide();},3000);
-			return;
-		}
-		
-	}
-</script>
-<div>
-	<div id="add_site">
-		<form action="/sites/add">
-			<div class="city_selector_add">	
-				<table>
-					<tr>
-						<td>名称:<input type="text" name="name" /></td>
-						<td>
-							<div class="dropdown address">
-    						  省:<select class="province" data-role="province" data-value="" id="						entry_field_4_province" name="province"></select>
-    						  <span class="dropdown-trigger"></span>
-    						</div>
-						</td>
-					</tr>
-					<tr>
-						<td>地点:<input type="text" name="location" /></td>
-						<td>
-							<div class="dropdown address">
-    						  市:<select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
-    						  <span class="dropdown-trigger"></span>
-    						</div>
-    					</td>
-					</tr>
-				</table>				
-			</div>
-		</form>
-	</div>
-</div>
-<form action="/sites">
+ </script>
+<!-- <form action="/sites">
 <div class="city_selector">	
 	名称:<input type="text" name="name" />
     <div class="dropdown address">
@@ -90,41 +34,47 @@
     </div>
 </div>
     <input id="query" class="btn btn-info" type="submit" value="查询" />
-</form>
-<table class="table" cellspacing="0px">
-	<thead>
-	<tr>
-	<th><input type="checkbox" id="check_all"/></th>
-	<th>名称</th>
-	<th>省</th>
-	<th>市</th>
-	<th>地点</th>
-	<th>星级</th>
-	<th>修改</th>
+</form> -->
 
-	<th>安装工</th>
-	<th>安装单</th>
-	
-	</tr>
-	</thead><tdody>
-<% @sites.each_with_index do |site,ind|  %>
-<tr <%="class=tr_#{ind%2}"%>>
-	<td><input type="checkbox" name=<%=site.id %>/></td>
-	<td><%= site.name%></td>
-	<td><%= site.province%></td>
-	<td><%= site.city%></td>
-	<td><%= site.location%></td>
-	<td><%= site.star%></td>
-	<td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
-	<td><%= link_to "查看","/site_workers?site_id=#{site.id}"%></td>
-	<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td>
-
-</tr>
-<% end%>
-<tr>
-</tdody>
-</table>
-<div class="buttons">
-	<%= will_paginate @sites, renderer: BootstrapPagination::Rails %>
-	<input onclick="$('#add_site').open();" type="button" value="增加" class="btn btn-success" />
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-th"></i>
+		</span>
+		<h5>Dynamic table</h5>
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped	hover data-table">
+			<thead>
+				<th>名称</th>
+				<th>省</th>
+				<th>市</th>
+				<th>地点</th>
+				<th>星级</th>
+				<th>修改</th>
+				<th>安装工</th>
+				<th>安装单</th>
+			</tr>
+			</thead>
+			<tbody>
+				<% @sites.each_with_index do |site,ind|  %>
+				<tr>
+					<td><%= site.name%></td>
+					<td><%= site.province%></td>
+					<td><%= site.city%></td>
+					<td><%= site.location%></td>
+					<td><%= site.star%></td>
+					<td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
+					<td><%= link_to "查看","/site_workers?site_id=#{site.id}"%></td>
+					<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td>
+				
+				</tr>
+				<% end%>
+			</tbody>
+		</table>
+	</div>
 </div>
+
+
+
+

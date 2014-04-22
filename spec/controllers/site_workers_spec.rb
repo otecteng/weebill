@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SiteWorkersController do
 	describe "test reg" do
 		params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
-	    xit "register" do
+	    it "register" do
 	        params[:xml][:MsgType] = "text"
 	        params[:xml][:Content] = "reg"
 	        post :wx_create,params
@@ -11,7 +11,7 @@ describe SiteWorkersController do
 
 	    end
 
-	    xit "random input should check worker" do
+	    it "random input should check worker" do
 	        params[:xml][:MsgType] = "text"
 	        params[:xml][:Content] = "text"
 	        post :wx_create,params
