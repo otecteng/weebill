@@ -8,15 +8,13 @@ class SitesController < ApplicationController
 		@site = Site.new
 	end
 
-	def add
-		params.delete("controller")
-		params.delete("action")
-		@site = Site.new(params)
-		if @site.save then
-			render :json=>{:success=>true}
-		else
-			render :json=>{:success=>false}
-		end
+	def create
+		@site = Site.new(params[:site])
+		if @site.save
+  			redirect_to '/sites'
+  		else
+  			render action: "new"
+  		end
 	end
 
 	def edit

@@ -1,17 +1,57 @@
-<%= form_for(@tb_trade) do |f| %>
-  <div class="field">
-     预约人：<%= f.text_field :cname %><br>
-     电话   <%= f.text_field :cmobile %>
-  </div><p>
-  <div class="field">
-  日期：<input type="text" value="" data-date-format="yyyy-mm-dd" class="datepicker" >
-  </div>
-  <div class="field">
-    货物:<%= f.text_field :title %>
-  </div>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap-glyphicons.css" />
+    <link rel="stylesheet" href="/assets/css/colorpicker.css" />
+    <link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
+    <link rel="stylesheet" href="/assets/css/select2.css" />    
+    <link rel="stylesheet" href="/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="/assets/css/unicorn.main.css" />
+    <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
+    <script src="/assets/js/bootstrap-datepicker.js"></script>
 
-  <div class="actions">
-    <%= submit_tag '保存',class: "btn btn-primary",style:"margin-top: 30px;width: 100px;"%>
-  </div>
-<% end %>
 
+<div class="widget-box">
+              <div class="widget-title">
+                <span class="icon">
+                  <i class="glyphicon glyphicon-align-justify"></i>                 
+                </span>
+                <h5>New tb_trade</h5>
+              </div>
+              <div class="widget-content nopadding">
+                <%= form_for @tb_trade,:html=>{:class=>"form-horizontal"} do |f| %>
+                  <div class="form-group">
+                    <label class="control-label">预约人</label>
+                    <div class="controls">
+                      <%= f.text_field :cname , :class => "form-control input-small" %>
+                   </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">电话</label>
+                    <div class="controls">
+                      <%= f.text_field :cmobile , :class => "form-control input-small"%>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">日期</label>
+                    <div class="controls">
+                      <input type="text" name="tb_trade[time_trade]" data-date-format="yyyy-mm-dd" class="datepicker form-control input-small" >
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">货物</label>
+                    <div class="controls">
+                      <%= f.text_field :title , :class => "form-control input-small"%>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <%= submit_tag 'Save',:class => "btn btn-primary btn-small" %>
+                    or <a class="text-danger" href="/tb_trades">Cancel</a>
+                  </div>
+                  <% end%>
+              </div>
+            </div>
+
+<script>
+  $(function(){
+    $('.datepicker').datepicker();
+  })
+</script>

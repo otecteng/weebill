@@ -1,6 +1,31 @@
 <!-- :name, :nickname, :phone, :wid,:uid -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="assets/css/bootstrap-glyphicons.css" />
+<link rel="stylesheet" href="assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="assets/css/icheck/flat/blue.css" />
+<link rel="stylesheet" href="assets/css/select2.css" />		
+<link rel="stylesheet" href="assets/css/unicorn.main.css" />
+<link rel="stylesheet" href="assets/css/unicorn.grey.css" class="skin-color" />
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery-ui.custom.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.icheck.min.js"></script>
+<script src="assets/js/select2.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="assets/js/jquery.jpanelmenu.min.js"></script>
+<script src="assets/js/unicorn.js"></script>
+<script src="assets/js/unicorn.tables.js"></script>
+ <script type="text/javascript"></script>
 <%= link_to 'New', new_site_worker_path %>
-<table class="table" cellspacing="0px">
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-th"></i>
+		</span>
+		<h5>Dynamic table</h5>
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped	hover data-table">
 	<thead>
 	<tr>
 	<td>编号</td>
@@ -9,13 +34,15 @@
 	<td>微信昵称</td>
 	<td>安装点</td>
 	<td>状态</td>
+	<td>编辑</td>
+	<td>删除</td>
 	</tr>
-	</thead><tdody>
+	</thead><tbody>
 <% @site_workers.each do |site_worker|  %>
 <tr>
 	<td><%= site_worker.id%></td> 
 	<td><%= site_worker.name%></td>
-	<<td><%= site_worker.wid%></td> 
+	<td><%= site_worker.wid%></td> 
 	<td><%= site_worker.nickname%></td>	
 	<!-- <td><%= site_worker.wuid%></td> -->
 	<td><%= site_worker.site.name if site_worker.site%></td>
@@ -24,6 +51,8 @@
  	<td><%= link_to 'Destroy', site_worker, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
 </tr>
 <% end%>
-<tr>
-</tdody>
+
+</tbody>
 </table>
+	</div>
+</div>

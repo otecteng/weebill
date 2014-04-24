@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/assets/css/select2.css" />    
     <link rel="stylesheet" href="/assets/css/unicorn.main.css" />
     <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
+    <script src="/assets/js/bootstrap-datepicker.js"></script>
+
 
     <style>
       .controls > select {
@@ -21,7 +23,7 @@
                 <span class="icon">
                   <i class="glyphicon glyphicon-align-justify"></i>                 
                 </span>
-                <h5>Text inputs</h5>
+                <h5>New service_order</h5>
               </div>
               <div class="widget-content nopadding">
                 <%= form_for @service_order,:html=>{:class=>"form-horizontal"} do |f| %>
@@ -40,7 +42,7 @@
                   <div class="form-group">
                     <label class="control-label">日期</label>
                     <div class="controls">
-                      <input type="text" value="" data-date-format="yyyy-mm-dd" class="datepicker" class="form-control input-small">
+                      <input type="text" value="" name="service_order[time_service]" data-date-format="yyyy-mm-dd" class="datepicker form-control input-small">
                     </div>
                   </div>
                   <div class="form-group">
@@ -63,7 +65,9 @@
                   <% end%>
               </div>
             </div>
-<script type="text/javascript">
-$('.datepicker').datepicker();
 
+<script>
+  $(function(){
+    $('.datepicker').datepicker();
+  })
 </script>

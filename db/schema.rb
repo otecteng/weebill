@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(:version => 20140401085951) do
     t.integer  "site_worker_id"
     t.string   "pix"
     t.string   "uid"
-    t.string   "state"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
