@@ -24,41 +24,40 @@
                 <h5>Text inputs</h5>
               </div>
               <div class="widget-content nopadding">
-                <%= form_for @service_order,:html=>{:class=>"form-horizontal"} do |f| %>
+                <%= form_for @site,:html=>{:class=>"form-horizontal"} do |f| %>
                   <div class="form-group">
-                    <label class="control-label">预约人</label>
+                    <label class="control-label">名称</label>
                     <div class="controls">
-                      <%= f.text_field :cname , :class => "form-control input-small" %>
+                      <%= f.text_field :name , :class => "form-control input-small" %>
                    </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">电话</label>
                     <div class="controls">
-                      <%= f.text_field :cmobile , :class => "form-control input-small"%>
+                      <%= f.text_field :province , :class => "form-control input-small"%>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">日期</label>
                     <div class="controls">
-                      <input type="text" value="" data-date-format="yyyy-mm-dd" class="datepicker" class="form-control input-small">
+                      <%= f.text_field :location , :class => "form-control input-small"%>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">门店</label>
                     <div class="controls">
-                      <%= collection_select "service_order","site_id", Site.all, :id, :name , :class =>"form-control input-small" %>
-<!--                       <input type="text" class="form-control input-small" placeholder="This is a placeholder..." />
- -->                    </div>
+                      <%= f.text_field :city , :class => "form-control input-small"%>
+                   </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">订单</label>
                     <div class="controls">
-                      <%= collection_select("service_order","tb_trade_id", TbTrade.all, :id, :cname ,:class =>"form-control input-small") %>
+                      <%= f.text_field :cert , :class => "form-control input-small"%>
                     </div>
                   </div>
                   <div class="form-actions">
                     <%= submit_tag 'Save',:class => "btn btn-primary btn-small" %>
-                    or <a class="text-danger" href="/service_orders">Cancel</a>
+                    or <a class="text-danger" href="/sites">Cancel</a>
                   </div>
                   <% end%>
               </div>

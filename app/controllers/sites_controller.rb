@@ -4,6 +4,10 @@ class SitesController < ApplicationController
 		# @sites = Site.where("name like ? and province like ? and city like ?", "%#{params[:name] || ''}%","%#{params[:province] || ''}%", "%#{params[:city] || ''}%").paginate(:page => params[:page], :per_page => 10)
 	end
 
+	def new
+		@site = Site.new
+	end
+
 	def add
 		params.delete("controller")
 		params.delete("action")

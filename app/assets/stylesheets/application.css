@@ -81,9 +81,7 @@ th:last-child {
 .tr_1 {
 	background-color: white;
 }
-form >div {
-	display:inline-block;
-}
+
 .city_selector > div {
 	display:inline-block;
 }
