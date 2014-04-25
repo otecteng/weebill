@@ -11,7 +11,7 @@
  *= require_self
  *= require_tree .
  */
-.title {
+/*.title {
 	background: #978d8d;
 	margin:40px auto;
 	width:604px;
@@ -50,25 +50,7 @@
 	width:1000px;
 	margin:10px auto;
 }
-.table th {
-	font-size: 16px;
-	font-weight: 500;
-	padding-bottom: 10px;
-	padding-top: 10px;
-	background-color: #443f3f;
-	text-align: center!important;
-	color:white;
-}
-.table td {
-	padding:5px 25px;
-	text-align: center!important;
 
-}
-.table  {
-	padding: 5px;
-	font-size:17px;
-	margin:10px auto;
-}
 th:first-child {
 	border-top-left-radius: 5px;
 }
@@ -121,4 +103,4 @@ select,input[type="text"] {
 }
 input[type="text"] {
 	height:30px!important;
-}
+}*/

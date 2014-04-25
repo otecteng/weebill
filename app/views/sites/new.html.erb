@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="/assets/css/select2.css" />    
     <link rel="stylesheet" href="/assets/css/unicorn.main.css" />
     <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
+    <script rel="text/javascript" src="/assets/js/ac.js"/></script>
+    <script>
+      $(function(){
+        $().CitySelector();
+      })
+    </script>
 
     <style>
+      .controls > select {
+        width:80%;
+      }
     </style>
+
 <div class="widget-box">
               <div class="widget-title">
                 <span class="icon">
@@ -30,8 +40,14 @@
                   <div class="form-group">
                     <label class="control-label">province</label>
                     <div class="controls">
-                      <%= f.text_field :province , :class => "form-control input-small"%>
+                      <select id="site_province" name="site[province]" class="province form-control input-small"></select>
                     </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">city</label>
+                    <div class="controls">
+                      <select id="site_city" name="site[city]" class="city form-control input-small"></select>
+                   </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">location</label>
@@ -40,25 +56,15 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">city</label>
-                    <div class="controls">
-                      <%= f.text_field :city , :class => "form-control input-small"%>
-                   </div>
-                  </div>
-                  <div class="form-group">
                     <label class="control-label">cert</label>
                     <div class="controls">
                       <%= f.text_field :cert , :class => "form-control input-small"%>
                     </div>
                   </div>
                   <div class="form-actions">
-                    <%= submit_tag 'Save',:class => "btn btn-primary btn-small" %>
-                    or <a class="text-danger" href="/sites">Cancel</a>
+                    <%= submit_tag '保存',:class => "btn btn-primary btn-small" %>
+                    or <a class="text-danger" href="/sites">取消</a>
                   </div>
                   <% end%>
               </div>
             </div>
-<script type="text/javascript">
-$('.datepicker').datepicker();
-
-</script>
