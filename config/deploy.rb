@@ -8,8 +8,8 @@ set :repo_url, 'https://github.com/otecteng/weebill.git'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
- set :deploy_to, '/var/www/weebill'
-
+ set :deploy_to, '/home/liteng/app/weebill'
+ set :tmp_dir, '/home/liteng/tmp/capistrano'
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -40,7 +40,9 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      #execute :sudo, 'mkdir -p tmp/pids'
+      execute "mkdir -p #{current_path}/tmp/pids"
+      execute '/etc/init.d/weebill restart'
     end
   end
 
