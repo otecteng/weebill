@@ -29,6 +29,7 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     arel (3.0.3)
+    bcrypt (3.1.7)
     builder (3.0.4)
     capistrano (3.2.1)
       i18n
@@ -48,6 +49,12 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     daemons (1.1.9)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -69,6 +76,7 @@ GEM
     net-scp (1.2.0)
       net-ssh (>= 2.6.5)
     net-ssh (2.8.0)
+    orm_adapter (0.5.0)
     polyglot (0.3.4)
     rack (1.4.5)
     rack-cache (1.2)
@@ -131,6 +139,7 @@ GEM
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
     thor (0.19.0)
+    thread_safe (0.3.3)
     tilt (1.4.1)
     tins (1.1.0)
     treetop (1.4.15)
@@ -149,6 +158,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    warden (1.2.3)
+      rack (>= 1.0)
     will_paginate (3.0.4)
     will_paginate-bootstrap (0.2.3)
       will_paginate (>= 3.0.3)
@@ -160,6 +171,7 @@ DEPENDENCIES
   capistrano (~> 3.2.0)
   capistrano-rails
   coffee-rails (~> 3.2.1)
+  devise
   jquery-rails
   mysql2
   rails (= 3.2.17)

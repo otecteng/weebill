@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weebill</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/assets/css/bootstrap-glyphicons.css" />
+		<link rel="stylesheet" href="/assets/css/fullcalendar.css" />	
+		<link rel="stylesheet" href="/assets/css/unicorn.main.css" />
+		<link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />  
+		<style>
+			td {
+				text-align: center!important;
+			}
+		</style>
+</head>
+
+	<body>
+		<div id="header">
+			<h1><a href="./dashboard.html">Unicorn Admin</a></h1>	
+		</div>
+
+
+            
+
+				
+		<div id="content">
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 center" style="text-align: center;">					
+						<%=yield%>
+					</div>	
+				</div>
+			</div>	
+				</div>
+				
+			</div>
+
+		</div>
+		<div class="row">
+			<div id="footer" class="col-12">
+				2012 - 2013 &copy; Unicorn Admin. Brought to you by <a href="https://wrapbootstrap.com/user/diablo9983">diablo9983</a>
+			</div>
+		</div>
+	</body>
+</html>
+

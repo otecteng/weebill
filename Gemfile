@@ -3,6 +3,7 @@ source 'http://ruby.taobao.org'
 gem 'rails', '3.2.17'
 gem 'state_machine'
 gem 'unicorn'
+gem 'devise'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'thin'

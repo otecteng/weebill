@@ -22,9 +22,18 @@
 	<body>
 		<div id="header">
 			<h1><a href="./dashboard.html">Unicorn Admin</a></h1>	
-			<a id="menu-trigger" href="#"><i class="glyphicon glyphicon-align-justify"></i></a>	
 		</div>
-
+<div id="user-nav" class="navbar navbar-inverse">
+      <ul class="nav btn-group">
+        <li class="btn btn-inverse" >
+          <a title="" href=''>
+            <i class="icon icon-user"></i><span class="text"><%=t :profile%></span></a>
+        </li>
+        <li class="btn btn-inverse">
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+        </li>        
+      </ul>
+    </div>
 <%
 @menus = {'/sites'=>'网点管理','/service_orders'=>'任务管理','/tb_trades'=>'导入订单'}
 %>
