@@ -21,6 +21,20 @@
 // 	})
 
  </script>
+ <style>
+ 	.btn-default {
+ 		color:#474749;
+ 	}
+
+ 	.btn:hover {
+ 		background-color:#575759;
+ 		background-position: 0 -38px;
+ 	}
+ 	.btn:focus {
+ 		background-color:#404343;
+ 		background-position: 0 -38px;
+ 	}
+ </style>
 <!-- <form action="/sites">
 <div class="city_selector">	
 	名称:<input type="text" name="name" />
@@ -35,7 +49,6 @@
 </div>
     <input id="query" class="btn btn-info" type="submit" value="查询" />
 </form> -->
-<%= link_to 'New', new_site_path %>
 <div class="widget-box">
 	<div class="widget-title">
 		<span class="icon">
@@ -51,9 +64,7 @@
 				<th>市</th>
 				<th>地点</th>
 				<th>星级</th>
-				<th>修改</th>
-				<th>安装工</th>
-				<th>安装单</th>
+				<th>操作</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -64,9 +75,15 @@
 					<td><%= site.city%></td>
 					<td><%= site.location%></td>
 					<td><%= site.star%></td>
-					<td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
+					<td>
+					<div class="btn-group">
+						<a class="btn btn-default" href=<%="/sites/#{site.id}/edit"%> ><i class="glyphicon glyphicon-pencil">编辑</i></a>
+						<a class="btn btn-default" href=<%="/site_workers?site_id=#{site.id}"%> ><i class="glyphicon glyphicon-eye-open">工人</i></a>
+						<a class="btn btn-default" href=<%="/service_orders?site_id=#{site.id}"%> ><i class="glyphicon glyphicon-eye-open">订单</i></a>
+								</div>	</td>
+					<!-- <td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
 					<td><%= link_to "查看","/site_workers?site_id=#{site.id}"%></td>
-					<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td>
+					<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td> -->
 				
 				</tr>
 				<% end%>

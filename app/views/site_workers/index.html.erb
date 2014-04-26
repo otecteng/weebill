@@ -16,7 +16,20 @@
 <script src="assets/js/unicorn.js"></script>
 <script src="assets/js/unicorn.tables.js"></script>
  <script type="text/javascript"></script>
-<%= link_to 'New', new_site_worker_path %>
+  <style>
+ 	.btn-default {
+ 		color:#474749;
+ 	}
+
+ 	.btn:hover {
+ 		background-color:#575759;
+ 		background-position: 0 -38px;
+ 	}
+ 	.btn:focus {
+ 		background-color:#404343;
+ 		background-position: 0 -38px;
+ 	}
+ </style>
 <div class="widget-box">
 	<div class="widget-title">
 		<span class="icon">
@@ -33,9 +46,7 @@
 	<td>wid</td>
 	<td>微信昵称</td>
 	<td>安装点</td>
-	<td>状态</td>
-	<td>编辑</td>
-	<td>删除</td>
+	<td>操作</td>
 	</tr>
 	</thead><tbody>
 <% @site_workers.each do |site_worker|  %>
@@ -46,9 +57,13 @@
 	<td><%= site_worker.nickname%></td>	
 	<!-- <td><%= site_worker.wuid%></td> -->
 	<td><%= site_worker.site.name if site_worker.site%></td>
-	<td><%= link_to 'Show', site_worker %></td>
- 	<td><%= link_to 'Edit', edit_site_worker_path(site_worker) %></td>
- 	<td><%= link_to 'Destroy', site_worker, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
+	<td>
+		<div class="btn-group">
+			<a class="btn btn-default" href=<%="/site_workers/#{site_worker.id}"%> ><i class="glyphicon glyphicon-search">状态</i></a>
+			<a class="btn btn-default" href=<%="/site_workers/#{site_worker.id}/edit"%> ><i class="glyphicon glyphicon-pencil">编辑</i></a>
+			<a class="btn btn-default" href=<%="/site_workers/#{site_worker.id}"%> data-confirm="Are you sure?" data-method="delete" rel="nofollow"><i class="glyphicon glyphicon-remove">删除</i></a>
+		</div>	
+	</td>
 </tr>
 <% end%>
 
