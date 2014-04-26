@@ -64,7 +64,7 @@
                   <div class="form-group">
                     <label class="control-label">地址</label>
                     <div class="controls">
-                      <%= f.text_field :location , :class => "form-control input-small"%>
+                      <%= f.text_field :address , :class => "form-control input-small"%>
                   </div>
                   </div>
                   <div class="form-group">
@@ -74,7 +74,7 @@
                       <button id="btn_geo" class="btn btn-primary btn-choose" style="float:left;" type="button">地址定位
                   </div>
                   </div>
-
+                  <%= f.hidden_field :location%>
                   <div class="form-actions">
                     <%= submit_tag '保存',:class => "btn btn-primary btn-small" %>
                     or <a class="text-danger" href="/sites">取消</a>
@@ -85,8 +85,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
     var map = new BMap.Map("allmap"); 
-    point = new BMap.Point(116.404, 39.915)
-    if($('#site_location').val() != null){
+    point = new BMap.Point(116.404, 39.915);
+    if($('#site_location').val() != ""){
       pos = $('#site_location').val().split(',');
       point = new BMap.Point(pos[1],pos[0]);
       var marker = new BMap.Marker(point); 
