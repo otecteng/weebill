@@ -24,6 +24,7 @@ set :pty, true
 
 # Default value for :linked_files is []
 set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -41,7 +42,6 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       #execute :sudo, 'mkdir -p tmp/pids'
-      execute "mkdir -p #{current_path}/tmp/pids"
       execute '/etc/init.d/weebill restart'
     end
   end
