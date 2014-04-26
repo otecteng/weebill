@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Weebill</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 		<meta charset="UTF-8" />
@@ -23,17 +22,14 @@
 		<div id="header">
 			<h1><a href="./dashboard.html">Unicorn Admin</a></h1>	
 		</div>
-<div id="user-nav" class="navbar navbar-inverse">
-      <ul class="nav btn-group">
-        <li class="btn btn-inverse" >
-          <a title="" href=''>
-            <i class="icon icon-user"></i><span class="text"><%=t :profile%></span></a>
-        </li>
-        <li class="btn btn-inverse">
-        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-        </li>        
-      </ul>
-    </div>
+    	<div id="user-nav">
+            <ul class="btn-group">
+                <li class="btn" ><a title="" href="#"><i class="glyphicon glyphicon-envelope"></i> <span class="text">消息</span></a></li>              
+                <li class="btn"><a title="" href="#"><i class="glyphicon glyphicon-cog"></i> <span class="text">帐号管理</span></a></li>
+
+                <li class="btn"><a href="/users/sign_out" data-method="delete" rel="nofollow"><i class="glyphicon glyphicon-share-alt"></i> <span class="text">退出</span></a></li>
+            </ul>
+        </div>
 <%
 @menus = {'/sites'=>'网点管理','/service_orders'=>'任务管理','/tb_trades'=>'导入订单'}
 %>
