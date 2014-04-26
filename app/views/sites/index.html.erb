@@ -1,10 +1,74 @@
-<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="assets/css/bootstrap-glyphicons.css" />
-<link rel="stylesheet" href="assets/css/jquery-ui.css" />
-<link rel="stylesheet" href="assets/css/icheck/flat/blue.css" />
 <link rel="stylesheet" href="assets/css/select2.css" />		
-<link rel="stylesheet" href="assets/css/unicorn.main.css" />
-<link rel="stylesheet" href="assets/css/unicorn.grey.css" class="skin-color" />
+
+ <style>
+ 	.btn-default {
+ 		color:#474749;
+ 	}
+
+ 	.btn:hover {
+ 		background-color:#575759;
+ 		background-position: 0 -38px;
+ 	}
+ 	.btn:focus {
+ 		background-color:#404343;
+ 		background-position: 0 -38px;
+ 	}
+ </style>
+
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-th"></i>
+		</span>
+		<h5>网点列表</h5>
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table">
+			<thead>
+				<th width="200px">名称</th>
+				<th width="80px">省</th>
+				<th width="100px">市</th>
+				<th width="200px">地点</th>
+				<th width="60px">星级</th>
+				<th width="100px">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+				<% @sites.each_with_index do |site,ind|  %>
+				<tr>
+					<td><%= site.name%></td>
+					<td><%= site.province%></td>
+					<td><%= site.city%></td>
+					<td><%= site.location%></td>
+					<td><%= site.star%></td>
+
+
+
+					<td>
+					<div>
+						<%= link_to edit_site_path(site),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <% end %>
+						<%= link_to "/site_workers?site_id=#{site.id}",:class => "btn-mini tip-bottom",:title=>"员工列表"  do %>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <% end %>
+						<%= link_to "/service_orders?site_id=#{site.id}",:class => "btn-mini tip-bottom",:title=>"服务单" do %>
+                        <i class="glyphicon glyphicon-list"></i>
+                        <% end %>
+
+					</div>	</td>
+
+				
+				</tr>
+				<% end%>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery-ui.custom.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
@@ -21,77 +85,3 @@
 // 	})
 
  </script>
- <style>
- 	.btn-default {
- 		color:#474749;
- 	}
-
- 	.btn:hover {
- 		background-color:#575759;
- 		background-position: 0 -38px;
- 	}
- 	.btn:focus {
- 		background-color:#404343;
- 		background-position: 0 -38px;
- 	}
- </style>
-<!-- <form action="/sites">
-<div class="city_selector">	
-	名称:<input type="text" name="name" />
-    <div class="dropdown address">
-      <select class="province" data-role="province" data-value="" id="entry_field_4_province" name="province"></select>
-      <span class="dropdown-trigger"></span>
-    </div>
-    <div class="dropdown address">
-      <select class="city" data-role="city" data-value="" id="entry_field_4_city" name="city"></select>
-      <span class="dropdown-trigger"></span>
-    </div>
-</div>
-    <input id="query" class="btn btn-info" type="submit" value="查询" />
-</form> -->
-<div class="widget-box">
-	<div class="widget-title">
-		<span class="icon">
-			<i class="glyphicon glyphicon-th"></i>
-		</span>
-		<h5>Dynamic table</h5>
-	</div>
-	<div class="widget-content nopadding">
-		<table class="table table-bordered table-striped	hover data-table">
-			<thead>
-				<th>名称</th>
-				<th>省</th>
-				<th>市</th>
-				<th>地点</th>
-				<th>星级</th>
-				<th>操作</th>
-			</tr>
-			</thead>
-			<tbody>
-				<% @sites.each_with_index do |site,ind|  %>
-				<tr>
-					<td><%= site.name%></td>
-					<td><%= site.province%></td>
-					<td><%= site.city%></td>
-					<td><%= site.location%></td>
-					<td><%= site.star%></td>
-					<td>
-					<div class="btn-group">
-						<a class="btn btn-default" href=<%="/sites/#{site.id}/edit"%> ><i class="glyphicon glyphicon-pencil">编辑</i></a>
-						<a class="btn btn-default" href=<%="/site_workers?site_id=#{site.id}"%> ><i class="glyphicon glyphicon-eye-open">工人</i></a>
-						<a class="btn btn-default" href=<%="/service_orders?site_id=#{site.id}"%> ><i class="glyphicon glyphicon-eye-open">订单</i></a>
-								</div>	</td>
-					<!-- <td><%= link_to 'Edit', "/sites/#{site.id}/edit" %></td>
-					<td><%= link_to "查看","/site_workers?site_id=#{site.id}"%></td>
-					<td><%= link_to "查看","/service_orders?site_id=#{site.id}"%></td> -->
-				
-				</tr>
-				<% end%>
-			</tbody>
-		</table>
-	</div>
-</div>
-
-
-
-
