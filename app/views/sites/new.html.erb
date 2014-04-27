@@ -16,17 +16,15 @@
       })
     </script>
 
-    <style>
+    <style type="text/css">
       .controls > select {
         width:80%;
       }
+      #allmap {
+      width: 80%;height: 280px;overflow: hidden;margin:0;}
+
     </style>
-
-<style type="text/css">
-#allmap {width: 80%;height: 280px;overflow: hidden;margin:0;}
-</style>
-
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=A1e659ec5ab4bffae1287db98219f599"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A1e659ec5ab4bffae1287db98219f599"></script>
 
 <div class="widget-box">
               <div class="widget-title">
@@ -71,7 +69,7 @@
                     <label class="control-label">定位</label>
                     <div class="controls">
                       <div id="allmap"></div>
-                      <button id="btn_geo" class="btn btn-primary btn-choose" style="float:left;" type="button">地址定位
+                      <button id="btn_geo" class="btn btn-primary btn-choose" style="float:left;" type="button">地址定位</button>
                   </div>
                   </div>
                   <%= f.hidden_field :location%>
@@ -84,23 +82,23 @@
             </div>
 <script type="text/javascript">
 $(document).ready(function(){
-    var map = new BMap.Map("allmap"); 
-    point = new BMap.Point(116.404, 39.915);
-    if($('#site_location').val() != ""){
-      pos = $('#site_location').val().split(',');
-      point = new BMap.Point(pos[1],pos[0]);
-      var marker = new BMap.Marker(point); 
-      map.addOverlay(marker); 
+  var map = new BMap.Map("allmap");
+  var point = new BMap.Point(116.331398,39.897445);
+  map.centerAndZoom(point,12);
+
+  geolocation = new BMap.Geolocation();
+  console.log(geolocation);
+  geolocation.getCurrentPosition(function(r){
+    console.log("1111");
+    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        var mk = new BMap.Marker(r.point);
+        map.addOverlay(mk);
+        map.panTo(r.point);
+        $("#site_address").val(r.point.lng+','+r.point.lat);
     }
-    map.centerAndZoom(point, 14);
-    map.enableScrollWheelZoom();
-    map.addEventListener("dragend", function showInfo(){
-      if ($('#edit_map').is(':checked')){
-        map.clearOverlays();
-        var marker = new BMap.Marker(map.getCenter());      
-        map.addOverlay(marker); 
-        $('#site_location').val(map.getCenter().lat+','+map.getCenter().lng); 
-      }
-    });
+    else {
+        alert('地点获取失败');
+    }        
+  },{enableHighAccuracy: true})
 });
 </script>
