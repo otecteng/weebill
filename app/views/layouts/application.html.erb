@@ -55,12 +55,7 @@
 					<%end%>
 				</div>
 			</div>
-			<div id="breadcrumb">
-				<a href="#" title="Go to Home" class="tip-bottom"><i class="glyphicon glyphicon-home"></i> Home</a>
-				<a href="#" class="current"><%= params[:controller] %></a>
-				<a href="#" class="current"><%= params[:action] %></a>
-
-			</div>
+			<%=breadcrumb%>
 
 			<div class="container-fluid">
 				<div class="row">

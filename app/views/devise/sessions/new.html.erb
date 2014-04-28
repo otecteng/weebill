@@ -1,11 +1,9 @@
 <h2>登录</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div>邮箱<br />
-  <%= f.email_field :email, autofocus: true %></div>
+  <div>邮箱:<%= f.email_field :email, autofocus: true %></div>
 
-  <div>密码<br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+  <div>密码:<%= f.password_field :password, autocomplete: "off" %></div>
 
   <% if devise_mapping.rememberable? -%>
     <div><%= f.check_box :remember_me %> 记住帐号</div>

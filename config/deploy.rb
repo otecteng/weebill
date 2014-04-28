@@ -1,6 +1,6 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
-
+set :assets_role, [:web, :worker]
 set :application, 'weebill'
 set :repo_url, 'https://github.com/otecteng/weebill.git'
 
@@ -33,7 +33,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 2
 
 namespace :deploy do
 
@@ -41,8 +41,10 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      #execute :sudo, 'mkdir -p tmp/pids'
-      execute '/etc/init.d/weebill restart'
+      execute '/etc/init.d/weebill stop'
+      execute :sudo,'/etc/init.d/nginx stop'
+      execute '/etc/init.d/weebill start'
+      execute :sudo,'/etc/init.d/nginx start'
     end
   end
 
