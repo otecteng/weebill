@@ -7,6 +7,8 @@ gem 'devise'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'thin'
+  gem 'capistrano', '~> 3.2.0'
+  gem "capistrano-rails"
 end
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,10 +28,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :deploy do 
-	gem 'capistrano', '~> 3.2.0'
-	gem 'capistrano-rails'
-end
 
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails"
