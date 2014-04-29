@@ -63,8 +63,9 @@
                     <label class="control-label">地址</label>
                     <div class="controls">
                       <%= f.text_field :address , :class => "form-control input-small"%>
-                      <%= f.hidden_field :location %>
+                      
                   </div>
+                  <%= f.hidden_field :location %>
                   </div>
                   <div class="form-group">
                     <label class="control-label">定位</label>
@@ -91,13 +92,29 @@ map.addEventListener("dragend",set_marker);
 set_marker();
 $("#site_city").change(function(){
   map.centerAndZoom(this.value,11);
+  //setTimeout(set_marker,1000);
 })
+var myGeo = new BMap.Geocoder();
+var p=$("#site_province");
+var c=$("#site_city");
+var a=$("#site_address");
+var l=$("#site_location");
 $("#btn_geo").click(function(){
-  var local = new BMap.LocalSearch(map, {
-  renderOptions:{map: map}
-  });
-  local.search("景点");
-  map.addOverlay(marker);
+  // var local = new BMap.LocalSearch(map, {
+  // renderOptions:{map: map}
+  // });
+  // local.search("景点");
+  // map.addOverlay(marker);
+
+  console.log(p.val()+c.val()+a.val());
+  myGeo.getPoint(p.val()+c.val()+a.val(), function(point){    
+    if (point) {
+      l.val(point.lng+","+point.lat);    
+      map.centerAndZoom(point, 16);    
+      map.addOverlay(new BMap.Marker(point));  
+      console.log(point);  
+    }    
+  }, p.val()); 
 })
 });
 
