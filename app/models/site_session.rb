@@ -1,4 +1,3 @@
-#encoding: UTF-8
 class SiteSession < ActiveRecord::Base
   attr_accessible :site_worker_id,:status,:pix,:uid
   belongs_to :site_worker
@@ -21,15 +20,15 @@ class SiteSession < ActiveRecord::Base
     before_transition :pending => :pix_uploaded do |site_session,transition|
     	param = transition.args[0]
     	client = WeechatClient.get_instance "siteworker"
-     #    client.download_media param[:MediaId]
-        site_session.update_attributes(:pix => param[:MediaId])
+      client.download_media param[:MediaId]
+      site_session.update_attributes(:pix => param[:MediaId])
     end
 
     before_transition :pix_uploaded => :complished do |site_session,transition|
     	param = transition.args[0]
     	service_order = ServiceOrder.find_by_id(param[:Content].to_i)
         if !service_order then
-            site_session.log "安装单编号错误： #{param[:Content]}, 请检查后重新输入"
+            site_session.log "bad service order id #{param[:Content]}, check again?"
            throw :halt
         else
             worker = site_session.site_worker
@@ -41,17 +40,17 @@ class SiteSession < ActiveRecord::Base
 
     state :pending do
         def message
-            "请上传施工图片"  
+            "please upload a picture"  
         end
     end
     state :pix_uploaded do
         def message
-            @message + "请输入安装单编号"  
+            @message + "please submit a service order id"  
         end
     end
     state :complished do
         def message
-            @message + "安装报告已提交，服务人员将尽快完成审核，谢谢！" 
+            @message + "service order submitted,ainavi will confirm it as soon as possible" 
         end
     end
   end

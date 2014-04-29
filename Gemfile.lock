@@ -59,6 +59,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     hike (1.2.3)
     i18n (0.6.9)
     journey (1.0.4)
@@ -71,7 +73,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    multi_json (1.9.2)
+    multi_json (1.9.3)
+    multipart-post (2.0.0)
     mysql2 (0.3.15)
     net-scp (1.2.0)
       net-ssh (>= 2.6.5)
@@ -101,7 +104,7 @@ GEM
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.13.0)
-    rake (10.1.1)
+    rake (10.3.1)
     rdoc (3.12.2)
       json (~> 1.4)
     rspec-core (2.14.8)
@@ -116,7 +119,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    sass (3.3.4)
+    sass (3.3.6)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -138,14 +141,14 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
-    thor (0.19.0)
+    thor (0.19.1)
     thread_safe (0.3.3)
     tilt (1.4.1)
     tins (1.1.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.2.7)
+    twitter-bootstrap-rails (2.2.8)
       actionpack (>= 3.1)
       execjs
       rails (>= 3.1)
@@ -160,8 +163,8 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
-    will_paginate (3.0.4)
-    will_paginate-bootstrap (0.2.3)
+    will_paginate (3.0.5)
+    will_paginate-bootstrap (1.0.0)
       will_paginate (>= 3.0.3)
 
 PLATFORMS
@@ -172,6 +175,7 @@ DEPENDENCIES
   capistrano-rails
   coffee-rails (~> 3.2.1)
   devise
+  faraday
   jquery-rails
   mysql2
   rails (= 3.2.17)

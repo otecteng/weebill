@@ -1,4 +1,7 @@
+require 'faraday'
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 class WeechatClient
+	@@host_api = 'https://api.weixin.qq.com'
 	@@client_customer = nil
 	@@client_siteworker = nil
 	HOST_API = 'https://api.weixin.qq.com'
@@ -7,8 +10,8 @@ class WeechatClient
 	MAP = {
 		"customer_appid"=>"wxea2ce7f47689a346",
 		"customer_secret"=>"6768e51d3dbd253e264de342847067d2",
-		"siteworker_appid"=>"",
-		"siteworker_secret"=>""
+		"siteworker_appid"=>"wxea2ce7f47689a346",
+		"siteworker_secret"=>"6768e51d3dbd253e264de342847067d2"
 	}
 
 	CLIENT_MAP={
@@ -39,12 +42,12 @@ class WeechatClient
 	end
 
 	def download_media media_id
-		res=api_get(:media,{"media_id"=>media_id})
+		res = api_get(:media,{"media_id"=>media_id})
 		open("#{DOWNLOAD_DIR}#{res.headers["content-disposition"].split("\"")[1]}","w+"){ |f| f.write(res.body)} if res	
 	end
 
 	def send_message body
-		res=api_post(:send,body)
+		res = api_post(:send,body)
 		p res
 	end
 
@@ -65,23 +68,22 @@ class WeechatClient
         if !@access_token then
           get_api_token
           return nil unless @access_token
-          fire_update = true
         end
     
         conn = Faraday.new(:url =>@@host_api) 
-        response = conn.get url + "&access_token=#{@access_token}"
+        req = url + "&access_token=#{@access_token}"
+        p req
+        response = conn.get req
         ret = JSON.parse(response.body)
         if ret["errcode"] then #expired
           p ret
           if "42001"==ret["errcode"] then
             return nil unless get_api_token
             response = conn.get url + "&access_token=#{@access_token}"
-            fire_update = true
           else
             return nil
           end
         end
-        @update_block.call(@access_token) if (@update_block and fire_update)
         return ret 
     end
 
@@ -101,12 +103,14 @@ class WeechatClient
 	end
 
     def get_api_token
-      conn = Faraday.new(:url =>"http://file.api.weixin.qq.com") 
+      conn = Faraday.new(:url =>@@host_api) 
       response = conn.get "/cgi-bin/token?grant_type=client_credential" do |req|
         req.params['appid'] = @appid
         req.params['secret'] = @secret
       end
+      p response.body
       @access_token = JSON.parse(response.body)["access_token"]
     end
 
 end
+
