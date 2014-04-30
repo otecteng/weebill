@@ -1,7 +1,6 @@
 class SitesController < ApplicationController
 	def index
 		@sites=Site.all
-		# @sites = Site.where("name like ? and province like ? and city like ?", "%#{params[:name] || ''}%","%#{params[:province] || ''}%", "%#{params[:city] || ''}%").paginate(:page => params[:page], :per_page => 10)
 	end
 
 	def new
