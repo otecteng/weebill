@@ -1,3 +1,7 @@
+<!-- :alipay_id, :alipay_pix, :cmobile, :cname, :price, :site_id, 
+            :site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
+            :time_service
+ -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap-glyphicons.css" />
     <link rel="stylesheet" href="/assets/css/colorpicker.css" />
@@ -12,18 +16,22 @@
       })
     </script>
 
-    <style>
+    <style type="text/css">
       .controls > select {
         width:80%;
       }
+      #allmap {
+      width: 80%;height: 280px;overflow: hidden;margin:0;}
+
     </style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A1e659ec5ab4bffae1287db98219f599"></script>
 
 <div class="widget-box">
               <div class="widget-title">
                 <span class="icon">
                   <i class="glyphicon glyphicon-align-justify"></i>                 
                 </span>
-                <h5>New site</h5>
+                <h5>编辑网点</h5>
               </div>
               <div class="widget-content nopadding">
                 <%= form_for @site,:html=>{:class=>"form-horizontal"} do |f| %>
@@ -34,28 +42,38 @@
                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">province</label>
+                    <label class="control-label">cert</label>
+                    <div class="controls">
+                      <%= f.text_field :cert , :class => "form-control input-small"%>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">省份/直辖市</label>
                     <div class="controls">
                       <select id="site_province" name="site[province]" class="province form-control input-small"></select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">city</label>
+                    <label class="control-label">市/区</label>
                     <div class="controls">
                       <select id="site_city" name="site[city]" class="city form-control input-small"></select>
                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">location</label>
+                    <label class="control-label">地址</label>
                     <div class="controls">
-                      <%= f.text_field :location , :class => "form-control input-small"%>
-                    </div>
+                      <%= f.text_field :address , :class => "form-control input-small"%>
+                      
+                  </div>
+                  <%= f.hidden_field :location %>
                   </div>
                   <div class="form-group">
-                    <label class="control-label">cert</label>
+                    <label class="control-label">定位</label>
                     <div class="controls">
-                      <%= f.text_field :cert , :class => "form-control input-small"%>
-                    </div>
+                      <div id="allmap"></div>
+                      <div id="r-result"></div>
+                      <button id="btn_geo" class="btn btn-primary btn-choose" style="float:left;" type="button">地址定位</button>
+                  </div>
                   </div>
                   <div class="form-actions">
                     <%= submit_tag '保存',:class => "btn btn-primary btn-small" %>
@@ -64,3 +82,48 @@
                   <% end%>
               </div>
             </div>
+<script type="text/javascript">
+$(document).ready(function(){
+map = new BMap.Map("allmap");
+map.centerAndZoom(new BMap.Point(<%= @site.location.blank? ? "116.404, 39.915" : @site.location%>), 16);
+map.enableScrollWheelZoom(true);
+map.addEventListener("dragend",set_marker);
+set_marker();
+$("#site_city").change(function(){
+  map.centerAndZoom(this.value,11);
+  //setTimeout(set_marker,1000);
+})
+var myGeo = new BMap.Geocoder();
+var p=$("#site_province");
+var c=$("#site_city");
+var a=$("#site_address");
+var l=$("#site_location");
+$("#btn_geo").click(function(){
+  // var local = new BMap.LocalSearch(map, {
+  // renderOptions:{map: map}
+  // });
+  // local.search("景点");
+  // map.addOverlay(marker);
+
+  console.log(p.val()+c.val()+a.val());
+  myGeo.getPoint(p.val()+c.val()+a.val(), function(point){    
+    if (point) {
+      l.val(point.lng+","+point.lat);    
+      map.centerAndZoom(point, 16);    
+      map.addOverlay(new BMap.Marker(point));  
+      console.log(point);  
+    }    
+  }, p.val()); 
+})
+p.find("option[value=<%=@site.province%>]").attr("selected",true).trigger("change");
+c.find("option[value=<%=@site.city%>]").attr("selected",true);
+});
+
+var set_marker=function() {
+  var cp = map.getCenter();
+  $("#site_location").val(cp.lng+","+cp.lat);
+  map.clearOverlays();
+  var marker = new BMap.Marker(new BMap.Point(cp.lng,cp.lat));  // 创建标注
+  map.addOverlay(marker);
+}
+</script>
