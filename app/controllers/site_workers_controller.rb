@@ -1,6 +1,6 @@
 class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :authenticate_user,:only=>[:wx_create]
+  skip_before_filter :authenticate_user!,:only=>[:wx_create]
 
   before_filter :confirm_worker,:only=>[:site_session_text,:on_image]
 
