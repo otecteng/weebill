@@ -1,14 +1,9 @@
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/bootstrap-glyphicons.css" />
     <link rel="stylesheet" href="/assets/css/colorpicker.css" />
     <link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
     <link rel="stylesheet" href="/assets/css/select2.css" />    
-    <link rel="stylesheet" href="/assets/css/unicorn.main.css" />
-    <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
     <script rel="text/javascript" src="/assets/js/ac.js"/></script>
     <script>
     </script>
-<% flag = params[:action]=="edit" ? true : false %>
     <style type="text/css">
       .controls > select {
         width:80%;
@@ -24,7 +19,7 @@
                 <span class="icon">
                   <i class="glyphicon glyphicon-align-justify"></i>                 
                 </span>
-                <h5><%= flag ? "编辑" : "新建" %>网点</h5>
+                <h5><%= params[:action]=="edit" ? "编辑" : "新建" %>网点</h5>
               </div>
               <div class="widget-content nopadding">
                 <%= form_for @site,:html=>{:class=>"form-horizontal"} do |f| %>
@@ -80,7 +75,7 @@
 $(document).ready(function(){
 $().CitySelector();
 map = new BMap.Map("allmap");
-map.centerAndZoom(new BMap.Point(<%= flag && !@site.location.blank? ? @site.location : "116.404, 39.915" %>), 16);
+map.centerAndZoom(new BMap.Point(<%= !@site.location.blank? ? @site.location : "116.404, 39.915" %>), 16);
 map.enableScrollWheelZoom(true);
 map.addEventListener("dragend",set_marker);
 set_marker();
@@ -103,7 +98,7 @@ $("#btn_geo").click(function(){
     }    
   }, p.val()); 
 })
-<% if flag%>
+<% if params[:action]=="edit"%>
   p.find("option[value=<%=@site.province%>]").attr("selected",true).trigger("change");
   c.find("option[value=<%=@site.city%>]").attr("selected",true);
 <% end %>
