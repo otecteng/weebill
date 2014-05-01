@@ -1,4 +1,4 @@
-<form action="upload" ENCTYPE="multipart/form-data">
-	<input name="mfile" type="file" >
-	<input type='submit' value="submit" />
-<form>
+<%= form_tag({:action => 'upload'}, :multipart => true) do %>  
+Upload your file: <%= file_field("file", "file") %>  
+<%= submit_tag("上传") %>  
+<% end %>  

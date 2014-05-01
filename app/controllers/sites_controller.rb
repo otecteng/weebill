@@ -33,8 +33,7 @@ class SitesController < ApplicationController
 	end
 
 	def upload
-		uploader = AvatarUploader.new
-		uploader.store!(params[:mfile])
+		File.open("#{Rails.root}/public/upload/#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}", "wb") { |f| f.write(params[:file]['file'].read) }
 		@sites=Site.all
 		render action: "index" 
 	end

@@ -1,7 +1,7 @@
 Weebill::Application.routes.draw do
   devise_for :users
   get  'sites/import' => 'sites#import'
-  get  'sites/upload' => 'sites#upload'
+  post  'sites/upload' => 'sites#upload'
   get  'site_workers/wx' => 'site_workers#wx_index'
   get  'tb_customers/wx' => 'tb_customers#wx_index'
   post 'site_workers/wx' => 'site_workers#wx_create'
