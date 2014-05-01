@@ -44,6 +44,10 @@ GEM
     capistrano-rvm (0.1.1)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -166,9 +170,6 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
-    will_paginate (3.0.5)
-    will_paginate-bootstrap (1.0.0)
-      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
@@ -177,6 +178,7 @@ DEPENDENCIES
   capistrano (~> 3.2.0)
   capistrano-rails
   capistrano-rvm
+  carrierwave
   coffee-rails (~> 3.2.1)
   devise
   faraday
@@ -191,4 +193,3 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   unicorn
-  will_paginate-bootstrap

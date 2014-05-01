@@ -28,4 +28,15 @@ class SitesController < ApplicationController
 			format.html { render action: "edit" }
 		end
 	end
+
+	def import
+	end
+
+	def upload
+		uploader = AvatarUploader.new
+		uploader.store!(params[:mfile])
+		@sites=Site.all
+		render action: "index" 
+	end
+
 end
