@@ -1,11 +1,6 @@
 <link rel="stylesheet" href="assets/css/select2.css" />		
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.icheck.min.js"></script>
-<script src="assets/js/select2.min.js"></script>
-<script src="assets/js/jquery.dataTables.min.js"></script>
-<script src="assets/js/jquery.jpanelmenu.min.js"></script>
-<script src="assets/js/unicorn.js"></script>
-<script src="assets/js/unicorn.tables.js"></script>
+
+
  <style>
  	.btn-default {
  		color:#474749;
@@ -62,6 +57,9 @@
                         <i class="glyphicon glyphicon-list"></i>
                         <% end %>
 
+						<%= link_to site, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <% end %>
 					</div>	</td>
 
 				
@@ -71,6 +69,7 @@
 		</table>
 	</div>
 </div>
+<script src="/assets/js/select2.min.js"></script>
 
 
 

@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
 	def index
-		@sites=Site.all
+		@sites = current_user.sites
 	end
 
 	def new
@@ -8,7 +8,7 @@ class SitesController < ApplicationController
 	end
 
 	def create
-		@site = Site.new(params[:site])
+		@site = current_user.sites.build(params[:site])
 		if @site.save
   			redirect_to '/sites'
   		else
@@ -37,5 +37,11 @@ class SitesController < ApplicationController
 		@sites=Site.all
 		render action: "index" 
 	end
+
+	def destroy
+		@obj = Site.find(params[:id])
+		@obj.destroy
+		redirect_to '/sites'
+	end	
 
 end
