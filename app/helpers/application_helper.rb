@@ -6,6 +6,7 @@ module ApplicationHelper
 		"site"=>"网点",
 		"service_orders"=>"安装任务",
 		"tb_trades"=>"订单",
+		"brands"=>"车型",
 	}
 	@@action_dic = {
 		"index"=>"列表",
