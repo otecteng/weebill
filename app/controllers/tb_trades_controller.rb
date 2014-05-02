@@ -1,6 +1,6 @@
 class TbTradesController < ApplicationController
 	def index
-		@tb_trades = TbTrade.all
+		@tb_trades = current_user.tb_trades
 		respond_to do |format|
         	format.html 
         	format.json { render json: @tb_trades }
@@ -14,7 +14,7 @@ class TbTradesController < ApplicationController
 	end
 
 	def create
-		@obj = TbTrade.new(params[:tb_trade])
+		@obj = current_user.tb_trades.build(params[:tb_trade])
   		if @obj.save
   			redirect_to '/tb_trades'
   		else

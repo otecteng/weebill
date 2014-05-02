@@ -1,7 +1,9 @@
 class Site < ActiveRecord::Base
-  attr_accessible :address, :cert, :city, :contactor, :county, :location, :name, :province, :star,:alipay_account,:tencent_account
+  attr_accessible :address, :cert, :city, :contactor, :county, :location, :name, :province, :star,:alipay_account,:tencent_account,
+  					:phone
   has_many :service_orders
   has_many :site_workers
+<<<<<<< HEAD
 
   def self.import file_name
  #  	s = Roo::OpenOffice.new("myspreadsheet.ods")       loads an OpenOffice Spreadsheet
@@ -15,4 +17,7 @@ class Site < ActiveRecord::Base
   	site_list.shift
   	site_list.each {|site| Site.create(site)}
   end
+=======
+  belongs_to :user
+>>>>>>> ec49c9da64c1f26eff819aaed9665a91ffd5c050
 end

@@ -4,4 +4,5 @@ class ServiceOrder < ActiveRecord::Base
   					:time_service
   has_one :tb_trade
   belongs_to :site
+  belongs_to :user
 end

@@ -4,17 +4,24 @@ class ServiceOrdersController < ApplicationController
 		if params[:site_id] then
 			@service_orders = ServiceOrder.where(:site_id=>params[:site_id].to_i)
 		else
-			@service_orders = ServiceOrder.all
+			@service_orders = current_user.service_orders
 		end
 
 	end
 
 	def new
 		@service_order = ServiceOrder.new
+		if params[:id_tb_trade] then
+			trade = TbTrade.find params[:id_tb_trade]
+			@service_order.cname = trade.cname
+			@service_order.cmobile = trade.cmobile
+			@service_order.tb_trade_id = trade.id
+		end
 	end
 
 	def create
-		@obj = ServiceOrder.new(params[:service_order])
+		@obj = current_user.service_orders.build(params[:service_order])
+
 		@obj.price = 0
 		if params[:time_service] then
 	      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
@@ -27,6 +34,10 @@ class ServiceOrdersController < ApplicationController
   		else
   			render action: "new"
   		end
+	end
+	
+	def edit
+		@service_order = ServiceOrder.find(params[:id])
 	end
 
 	def update
