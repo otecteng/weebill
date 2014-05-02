@@ -1,28 +1,56 @@
-<!-- :memo, :num_iid, :price, :status, :tb_customer_id, :tid, :title -->
- <!-- time_trade:datetime cname:string cmobile:string caddress:string -->
-<table class="table" cellspacing="0px">
-	<thead>
-	<tr>
-	</tr>
-	</thead><tdody>
+<link rel="stylesheet" href="assets/css/select2.css" />		
+
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-th"></i>
+		</span>
+		<h5>订单</h5>
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table">
+			<thead>
+				<th width="100px">客户</th>
+				<th width="160px">电话</th>
+				<th width="200px">订单日期</th>
+				<th width="200px">订单</th>
+				<th width="100px">安装网点</th>
+				<th width="100px">操作</th>
+			</tr>
+			</thead>
+			<tbody>
 <% @tb_trades.each do |tb_trades|  %>
 <tr> 
-	<td><%= tb_trades.title%></td>
 	<td><%= tb_trades.cname%></td>
-	<td><%= tb_trades.cmobile%></td>	
-	<td><%= tb_trades.time_trade%></td>
+	<td><%= tb_trades.cmobile%></td>
+
+	<td><%=l tb_trades.time_trade %></td>
+	<td><%= tb_trades.title%></td>
 	<td>
-		<% if tb_trades.service_order then %>
-		<%= link_to "#{tb_trades.service_order.site.name}", "/service_orders/#{tb_trades.service_order.id}/edit" %>
-		<% else %>
-		<%= link_to '指派', "/service_orders/new?id_tb_trade=#{tb_trades.id}" %>
-		<% end %>
+		<%if tb_trades.service_order then%>
+		<%= link_to "#{tb_trades.service_order.site.name}","/service_orders/#{tb_trades.service_order.id}/edit"%>
+		<%else%>
+		<%= "未指定"%>
+		<%end%>
 	</td>
-	<td><%= link_to 'Show', tb_trades %></td>
- 	<td><%= link_to 'Edit', edit_tb_trade_path(tb_trades) %></td>
- 	<td><%= link_to 'Destroy', tb_trades, method: :delete, data: { confirm: 'Are you sure?' } %></td>	
+	<td>
+					<div>
+						<%= link_to tb_trades.service_order ? "/service_orders/#{tb_trades.service_order.id}/edit" : "/service_orders/new?id_tb_trade=#{tb_trades.id}" ,:class => "btn-mini tip-bottom",:title=>"指派" do %>
+                        <i class="glyphicon glyphicon-wrench"></i>
+                        <% end %>
+
+						<%= link_to tb_trades, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <% end %>
+					</div>	
+
+
+	</td>
+
 </tr>
 <% end%>
-<tr>
-</tdody>
+
 </table>
+	</div>
+</div>
+<script src="/assets/js/select2.min.js"></script>
