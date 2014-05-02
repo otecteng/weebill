@@ -16,8 +16,7 @@ end
 gem 'sqlite3'
 gem 'mysql2'
 gem 'faraday'
-# gem 'carrierwave'
-
+gem 'carrierwave'
 gem 'roo'
 gem 'china_sms'
 gem 'sidekiq'

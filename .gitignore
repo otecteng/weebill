@@ -14,5 +14,6 @@ dump.rdb
 /log/*.log
 /tmp
 /public/assets/*
+/public/uploads/*
 /public/upload/*
 /public/.DS_Store

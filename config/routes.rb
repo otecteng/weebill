@@ -18,6 +18,7 @@ Weebill::Application.routes.draw do
     resources :service_orders
   end
 
+  resources :brands
   
   root :to => 'users#welcome'
 end

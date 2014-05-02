@@ -39,7 +39,12 @@
             </ul>
         </div>
 <%
-@menus = {'/sites'=>'网点管理','/service_orders'=>'任务管理','/tb_trades'=>'订单管理'}
+@menus=	{
+	'/sites'=>{text:'网点管理',icon:'glyphicon-home'},
+	'/service_orders'=>{text:'任务管理',icon:'glyphicon-hand-right'},
+	'/tb_trades'=>{text:'订单管理',icon:'glyphicon-tasks'},
+	'/brands'=>{text:'车型列表',icon:'glyphicon-tag'},
+		}
 %>
             
 		<div id="sidebar">
@@ -47,7 +52,7 @@
 			<ul>
 
 <%  @menus.each do |k,v|%>
-<li <%="class=active" if request.path =~ /#{k}/ %>><a href="<%=k%>"><i class="glyphicon glyphicon-home"></i> <span><%=v%></span></a></li>
+<li <%="class=active" if request.path =~ /#{k}/ %>><a href="<%=k%>"><i class="glyphicon <%=v[:icon]%>"></i> <span><%=v[:text]%></span></a></li>
 <%end%>				
 						
 			</ul>

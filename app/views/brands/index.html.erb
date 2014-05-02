@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/assets/css/select2.css" />		
+
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-th"></i>
+		</span>
+		<h5>车型列表</h5>
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table">
+			<thead>
+				<th width="200px">ICON</th>
+				<th width="200px">品牌</th>
+				<th width="80px">厂商</th>
+				<th width="100px">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+				<% @brands.each do |brand|  %>
+				<tr>
+					<td><%= image_tag(brand.avatar_url,size:"64x64") if brand.avatar? %></td>
+					<td><%= brand.name%></td>
+					<td><%= brand.producer.name%></td>
+					<td>
+					<div>
+						<%= link_to edit_brand_path(brand),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <% end %>
+<!--	
+						<%= link_to brand, brand: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <% end %> -->
+					</div>	</td>
+				</tr>
+				<% end%>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script src="/assets/js/select2.min.js"></script>
+<script src="/assets/js/unicorn.tables.js"></script>
+
+
+
