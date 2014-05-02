@@ -11,6 +11,7 @@ module ApplicationHelper
 		"index"=>"列表",
 		"new"=>"新建",
 		"edit"=>"编辑",
+		"import"=>"导入"
 	}	
 	def breadcrumb
 		ret = "<div id='breadcrumb'>\
