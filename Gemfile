@@ -17,8 +17,10 @@ gem 'sqlite3'
 gem 'mysql2'
 gem 'faraday'
 # gem 'carrierwave'
-gem 'roo'
 
+gem 'roo'
+gem 'china_sms'
+gem 'sidekiq'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

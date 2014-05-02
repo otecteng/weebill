@@ -11,6 +11,7 @@ Weebill::Application.routes.draw do
   
   resources :service_orders do
     get "new_mobile", :on=>:collection
+    get "send_sms", :on=>:member
   end
 
   resources :sites do

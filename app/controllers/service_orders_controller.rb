@@ -6,7 +6,6 @@ class ServiceOrdersController < ApplicationController
 		else
 			@service_orders = current_user.service_orders
 		end
-
 	end
 
 	def new
@@ -70,7 +69,10 @@ class ServiceOrdersController < ApplicationController
 		current_user.pay(@obj.site,price)
 	end
 
-	def current_user
-		User.find 1
+	def send_sms
+		@obj = ServiceOrder.find(params[:id])
+		@obj.send_sms 
+		redirect_to '/service_orders'
 	end
+
 end

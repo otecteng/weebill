@@ -9,9 +9,10 @@
 config/database.yml
 # Ignore the default SQLite database.
 /db/*.sqlite3
-
+dump.rdb
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
 /public/assets/*
 /public/upload/*
+/public/.DS_Store

@@ -1,6 +1,4 @@
-    <link rel="stylesheet" href="/assets/css/colorpicker.css" />
-    <link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
-    <link rel="stylesheet" href="/assets/css/select2.css" />    
+
     <script rel="text/javascript" src="/assets/js/ac.js"/></script>
     <script>
     </script>
@@ -72,31 +70,31 @@
 
         <script type="text/javascript">
 $(document).ready(function(){
-// $().CitySelector();
-map = new BMap.Map("allmap");
-map.centerAndZoom(new BMap.Point(<%= !@site.location.blank? ? @site.location : "116.404, 39.915" %>), 16);
-map.enableScrollWheelZoom(true);
-map.addEventListener("dragend",set_marker);
-set_marker();
-$("#site_city").change(function(){
-  map.centerAndZoom(this.value,11);
-  //setTimeout(set_marker,1000);
-})
-var myGeo = new BMap.Geocoder();
-var p=$("#site_province");
-var c=$("#site_city");
-var a=$("#site_address");
-var l=$("#site_location");
-$("#btn_geo").click(function(){
-  myGeo.getPoint(p.val()+c.val()+a.val(), function(point){    
-    if (point) {
-      l.val(point.lng+","+point.lat);    
-      map.centerAndZoom(point, 16);    
-      map.addOverlay(new BMap.Marker(point));  
-      console.log(point);  
-    }    
-  }, p.val()); 
-})
+  $().CitySelector();
+  map = new BMap.Map("allmap");
+  map.centerAndZoom(new BMap.Point(<%= !@site.location.blank? ? @site.location : "116.404, 39.915" %>), 16);
+  map.enableScrollWheelZoom(true);
+  map.addEventListener("dragend",set_marker);
+  set_marker();
+  $("#site_city").change(function(){
+    map.centerAndZoom(this.value,11);
+    //setTimeout(set_marker,1000);
+  })
+  var myGeo = new BMap.Geocoder();
+  var p=$("#site_province");
+  var c=$("#site_city");
+  var a=$("#site_address");
+  var l=$("#site_location");
+  $("#btn_geo").click(function(){
+    myGeo.getPoint(p.val()+c.val()+a.val(), function(point){    
+      if (point) {
+        l.val(point.lng+","+point.lat);    
+        map.centerAndZoom(point, 16);    
+        map.addOverlay(new BMap.Marker(point));  
+        console.log(point);  
+      }    
+    }, p.val()); 
+  });
 <% if params[:action]=="edit"%>
   p.find("option[value=<%=@site.province%>]").attr("selected",true).trigger("change");
   c.find("option[value=<%=@site.city%>]").attr("selected",true);

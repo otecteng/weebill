@@ -9,21 +9,21 @@
 	<div class="widget-content nopadding">
 		<table class="table table-bordered table-striped hover data-table">
 			<thead>
+				<th width="200px">预约时间</th>
 				<th width="100px">客户</th>
 				<th width="100px">电话</th>
-				<th width="200px">预约时间</th>
-				<th width="200px">任务内容</th>
-				<th width="60px">网点</th>
+				<th width="150px">订单</th>
+				<th width="100px">网点</th>
 				<th width="100px">状态</th>
 				<th width="100px">操作</th>
 			</tr>
 			</thead>
 <tdody>
 <% @service_orders.each do |service_order|  %>
-<tr> 
+<tr>
+	<td><%=l service_order.time_service%></td>	 
 	<td><%= service_order.cname%></td>
 	<td><%= service_order.cmobile%></td>
-	<td><%=l service_order.time_service%></td>	
 	<td><%= service_order.tb_trade.title if service_order.tb_trade%></td>
 	<td><%= service_order.site.name%></td>	
 	<td><%= service_order.status%></td>
@@ -32,7 +32,9 @@
 				<%= link_to edit_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
                 <i class="glyphicon glyphicon-pencil"></i>
                 <% end %>
-
+				<%= link_to send_sms_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"发送短信" do %>
+                <i class="glyphicon glyphicon-envelope"></i>
+                <% end %>
 				<%= link_to service_order, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
                 <i class="glyphicon glyphicon-remove"></i>
                 <% end %>
@@ -45,4 +47,6 @@
 </table>
 </div>
 </div>
+
 <script src="/assets/js/select2.min.js"></script>
+<script src="/assets/js/unicorn.tables.js"></script>
