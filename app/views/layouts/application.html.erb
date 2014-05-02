@@ -46,7 +46,7 @@
 			<ul>
 
 <%  @menus.each do |k,v|%>
-<li <%="class=active" if request.original_url.index(k.to_s)%>><a href="<%=k%>"><i class="glyphicon glyphicon-home"></i> <span><%=v%></span></a></li>
+<li <%="class=active" if request.path =~ /#{k}/ %>><a href="<%=k%>"><i class="glyphicon glyphicon-home"></i> <span><%=v%></span></a></li>
 <%end%>				
 						
 			</ul>

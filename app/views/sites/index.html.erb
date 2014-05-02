@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="assets/css/select2.css" />		
+<link rel="stylesheet" href="/assets/css/select2.css" />		
 
 
  <style>
@@ -53,7 +53,7 @@
 						<%= link_to "/site_workers?site_id=#{site.id}",:class => "btn-mini tip-bottom",:title=>"员工列表"  do %>
                         <i class="glyphicon glyphicon-user"></i>
                         <% end %>
-						<%= link_to "/service_orders?site_id=#{site.id}",:class => "btn-mini tip-bottom",:title=>"服务单" do %>
+						<%= link_to site_service_orders_path(:site_id=>site.id),:class => "btn-mini tip-bottom",:title=>"服务单" do %>
                         <i class="glyphicon glyphicon-list"></i>
                         <% end %>
 

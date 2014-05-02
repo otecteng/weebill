@@ -42,14 +42,14 @@
                   <div class="form-group">
                     <label class="control-label">门店</label>
                     <div class="controls">
-                      <%= collection_select "service_order","site_id", Site.all, :id, :name , :class =>"form-control input-small" %>
+                      <%= collection_select "service_order","site_id", current_user.sites, :id, :name , :class =>"form-control input-small" %>
 <!--                       <input type="text" class="form-control input-small" placeholder="This is a placeholder..." />
  -->                    </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label">订单</label>
                     <div class="controls">
-                      <%= collection_select("service_order","tb_trade_id", TbTrade.all, :id, :cname ,:class =>"form-control input-small") %>
+                      <%= collection_select("service_order","tb_trade_id", current_user.tb_trades, :id, :cname ,:class =>"form-control input-small") %>
                     </div>
                   </div>
                   <div class="form-actions">
