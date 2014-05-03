@@ -24,7 +24,7 @@
 	<td><%= tb_trades.cname%></td>
 	<td><%= tb_trades.cmobile%></td>
 
-	<td><%=l tb_trades.time_trade %></td>
+	<td><%= tb_trades.time_trade ? tb_trades.time_trade.localtime.to_s(:db) : ""%></td>
 	<td><%= tb_trades.title%></td>
 	<td>
 		<%if tb_trades.service_order then%>

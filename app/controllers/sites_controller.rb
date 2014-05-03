@@ -33,7 +33,7 @@ class SitesController < ApplicationController
 	end
 
 	def upload
-		file_name="#{Rails.root}/public/upload/#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
+		file_name="#{Rails.root}/public/upload/sites#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
 		File.open(file_name, "wb") { |f| f.write(params[:file]['file'].read) }
 		Site.import current_user,file_name
 		redirect_to '/sites'
