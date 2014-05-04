@@ -14,9 +14,9 @@ class TbTrade < ActiveRecord::Base
         Roo::Excelx.new("myspreadsheet.xlsx")
       end
     s.default_sheet = s.sheets.last
-  	tb_trade_list=s.parse(MAP)
+  	tb_trade_list = s.parse(MAP)
   	tb_trade_list.shift
-  	time_base=Date.new(1900,1,1)
+  	time_base = Date.new(1900,1,1)
   	tb_trade_list.each do |tb_trade| 
   		tb_trade[:time_trade]=time_base+tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
   		tb_trade[:title]="#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
