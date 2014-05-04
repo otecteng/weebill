@@ -43,7 +43,7 @@ class TbTradesController < ApplicationController
 	def upload
 		file_name="#{Rails.root}/public/upload/tb_trades/#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
 		File.open(file_name, "wb") { |f| f.write(params[:file]['file'].read) }
-		TbTrade.import current_user,file_name
+		current_user.import_tb_trades file_name		
 		redirect_to '/tb_trades'
 	end
 end
