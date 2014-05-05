@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def import_sites file_name
-    read(file_name,SITE_MAP).each { |site| sites.create(site)} 
+    read(file_name,SITE_MAP).each { |site| p sites;sites.create(site)} 
   end
 
   def import_tb_trades file_name
@@ -41,7 +41,7 @@ private
       when "xls"
         Roo::Excel.new(file_name)
       when "xlsx"
-        Roo::Excelx.new("myspreadsheet.xlsx")
+        Roo::Excelx.new(file_name)
      end
     s.default_sheet = s.sheets.last
     tb_trade_list = s.parse(map)

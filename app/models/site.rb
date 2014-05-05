@@ -1,6 +1,5 @@
  # encoding: utf-8
 class Site < ActiveRecord::Base
-  include RooHelper
   attr_accessible :address, :cert, :city, :contactor, :county, :location, :name, :province, :star,:alipay_account,:tencent_account,
   					:phone
   has_many :service_orders
