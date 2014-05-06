@@ -1,5 +1,5 @@
 class SiteWorker < ActiveRecord::Base
-  attr_accessible :name, :nickname, :phone, :wid,:wuid
+  attr_accessible :name, :nickname, :phone, :wid,:wuid,:site_id
   belongs_to :site
   has_many :site_sessions
   has_many :sessions

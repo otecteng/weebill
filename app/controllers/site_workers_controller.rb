@@ -10,13 +10,13 @@ class SiteWorkersController < ApplicationController
 
   def new
     @site_worker = SiteWorker.new
-    render layout:m_form
+    render layout:"m_form"
   end
 
   def register
     @site_worker = SiteWorker.build(params[:siteworker])
     @site_worker.save!
-    render layout:m_form
+    render layout:"m_form"
   end
 
   def wx_index
@@ -72,7 +72,7 @@ class SiteWorkersController < ApplicationController
       args = params[:xml][:EventKey].split('_')
         case args[0]
         when "REGIST"
-          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?site='+args[1]+'">register</a>'
+          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&site='+args[1]+'">register</a>'
         when "REPORT"
           @content = I18n.t("tip_upload_pix")+ "_" + args[1]
         end
