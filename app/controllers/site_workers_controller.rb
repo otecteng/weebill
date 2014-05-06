@@ -81,11 +81,8 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_image 
-    # return if confirm_worker
-    param = params[:xml]
-    return unless confirm_session
-    current_session.image param
-    @content = current_session.message
+    return if confirm_worker
+    @content = @worker.upload_image params[:xml][:MediaId]
   end
 
   def on_location 

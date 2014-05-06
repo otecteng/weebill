@@ -64,10 +64,11 @@ ActiveRecord::Schema.define(:version => 20140506133203) do
     t.string   "nickname"
     t.string   "name"
     t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "site_id"
     t.string   "state"
+    t.string   "picture_uploaded"
   end
 
   create_table "sites", :force => true do |t|

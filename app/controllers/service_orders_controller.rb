@@ -75,4 +75,8 @@ class ServiceOrdersController < ApplicationController
 		redirect_to '/service_orders'
 	end
 
+	def report
+		@service_order = ServiceOrder.find(params[:id])
+	    render layout:"m_form"
+	end
 end

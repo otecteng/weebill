@@ -1,0 +1,44 @@
+<header data-role="header" class="">
+      <h1>
+        安装单
+      </h1>
+</header>
+  <div class="main" data-role="content">
+  <div class="main-content">
+    <div class="form-content">
+
+<%=form_tag '/service_orders/report',:method=>'post' do%>
+<input id="" name="site_worker[site_worker_id]" type="hidden" value="<%=params[:worker]%>">
+<input id="" name="site_worker[site_id]" type="hidden" value="<%=params[:site]%>">
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">联系人</div>
+    <div class="controls">
+      <input id="customer_name" name="service_order[cname]" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">价格</div>
+    <div class="controls">
+      <input id="customer_name" name="service_order[price]" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field submit-field">
+<input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="提交">
+</div>
+<%end%>
+
+</div>
+</div>
+</div>
+</div>
+
+
