@@ -16,6 +16,16 @@ describe SiteWorkersController do
 	        response.body.should == I18n.t("tip_upload_pix")+ "_1"
 	    end
 
+	    it "register-page" do
+	    	worker = SiteWorker.new(:name=>"tengli",:phone=>"123")
+	    	get "new"
+      		response.should render_template :new
+      		post "register" , :site_worker=>worker
+      		response.should render_template :register
+      		p assigns[:site_worker]
+      		assigns[:site_worker].name.should == worker.name
+	    end
+
 	    xit "worker can worker upload" do
 	    	worker = SiteWorker.create(:wid=>"from")
 	    	params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}

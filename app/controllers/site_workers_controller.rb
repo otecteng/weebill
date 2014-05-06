@@ -13,9 +13,42 @@ class SiteWorkersController < ApplicationController
     render layout:"m_form"
   end
 
+  def edit
+    @site_worker = SiteWorker.find(params[:id])
+    @sites = current_user.sites
+  end
+
+  def destroy
+    @obj = SiteWorker.find(params[:id])
+    @obj.destroy
+    redirect_to '/site_workers'
+  end 
+
+  def lock_worker
+    @site_worker = SiteWorker.find(params[:id])
+    @site_worker.update_attributes(:state=>"disable")
+    redirect_to '/site_workers'
+  end
+
+  def update
+    @site_worker = SiteWorker.find(params[:id])
+    @site_worker.state = "enable"
+    if @site_worker.update_attributes(params[:site_worker])
+      redirect_to '/site_workers'
+    else
+      format.html { render action: "edit" }
+    end
+  end
+
+
   def register
-    @site_worker = SiteWorker.build(params[:siteworker])
-    @site_worker.save!
+    @site_worker = SiteWorker.create(params[:site_worker])
+    render layout:"m_form"
+  end
+
+
+  def lock
+    @site_worker = SiteWorker.create(params[:site_worker])
     render layout:"m_form"
   end
 
@@ -72,7 +105,7 @@ class SiteWorkersController < ApplicationController
       args = params[:xml][:EventKey].split('_')
         case args[0]
         when "REGIST"
-          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&site='+args[1]+'">register</a>'
+          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&user='+args[1]+'">register</a>'
         when "REPORT"
           @content = I18n.t("tip_upload_pix")+ "_" + args[1]
         end
