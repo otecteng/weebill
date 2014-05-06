@@ -5,18 +5,18 @@ describe SiteWorkersController do
 		params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
 	    it "register" do
 	        params[:xml][:MsgType] = "event"
-	        params[:xml][:EventKey] = "reg"
+	        params[:xml][:EventKey] = "REGIST_1"
 	        post :wx_create,params
-	        response.body.should == I18n.t("register")
+	        response.body.should == I18n.t("register")+ "_1"
 
 	        params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
-	        params[:xml][:MsgType] = "text"
-	        params[:xml][:Content] = "13816368831"
+	        params[:xml][:MsgType] = "event"
+	        params[:xml][:EventKey] = "REPORT_1"
 	        post :wx_create,params
-	        response.body.should == I18n.t("need_confirmed")
+	        response.body.should == I18n.t("tip_upload_pix")+ "_1"
 	    end
 
-	    it "worker can worker upload" do
+	    xit "worker can worker upload" do
 	    	worker = SiteWorker.create(:wid=>"from")
 	    	params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
 	        params[:xml][:MsgType] = "event"

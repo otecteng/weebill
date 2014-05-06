@@ -1,11 +1,22 @@
 class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :authenticate_user!,:only=>[:wx_create]
+  skip_before_filter :authenticate_user!,:only=>[:wx_create,:new,:register]
 
   # before_filter :confirm_worker,:only=>[:on_event,:on_text,:on_image]
 
   def index
     @site_workers = SiteWorker.all
+  end
+
+  def new
+    @site_worker = SiteWorker.new
+    render layout:m_form
+  end
+
+  def register
+    @site_worker = SiteWorker.build(params[:siteworker])
+    @site_worker.save!
+    render layout:m_form
   end
 
   def wx_index
@@ -17,7 +28,7 @@ class SiteWorkersController < ApplicationController
     msg = params[:xml]
     fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
-    self.send "on_#{msg_type}" if confirm_worker
+    self.send "on_#{msg_type}" 
     respond_to do |format|
       format.html { return render :text=>@content }
       format.xml { return render :text,:formats => :xml  }
@@ -25,6 +36,7 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_text 
+    return if confirm_worker
     msg = params[:xml]
     content = msg[:Content]
     if @worker == content then
@@ -36,6 +48,7 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_image 
+    # return if confirm_worker
     param = params[:xml]
     return unless confirm_session
     current_session.image param
@@ -53,9 +66,16 @@ class SiteWorkersController < ApplicationController
   end       
 
   def on_event
-    @content = case params[:xml][:EventKey]
-      when "xls"        
-      when "xlsx"
+    if params[:xml][:EventKey] =~ /^http/ then
+      @content = "not support it"
+    else
+      args = params[:xml][:EventKey].split('_')
+        case args[0]
+        when "REGIST"
+          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?site='+args[1]+'">register</a>'
+        when "REPORT"
+          @content = I18n.t("tip_upload_pix")+ "_" + args[1]
+        end
     end 
   end
 

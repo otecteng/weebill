@@ -30,14 +30,13 @@ class WxHackClient
     @username = username
     @password = password
     @cookie = ""
-    @conn = Faraday.new(:url => 'https://mp.weixin.qq.com')
-    @conn_multipart = Faraday.new(:url => 'https://mp.weixin.qq.com') do |faraday|
+    @conn = Faraday.new(url:'https://mp.weixin.qq.com',headers: { accept_encoding: 'none' })
+    @conn_multipart = Faraday.new(url:'https://mp.weixin.qq.com',headers: { accept_encoding: 'none' }) do |faraday|
       faraday.request :multipart
       faraday.adapter :net_http      
     end
   end
   
-
   def login(username=nil,password=nil)
     @username = username if username
     @password = password if password
@@ -50,8 +49,11 @@ class WxHackClient
     ret.headers["set-cookie"].split(',').each do |c|
       @cookie << c.split(';')[0] <<";"
     end
-    msg = JSON.parse(ret.body)["ErrMsg"]
+    p ret.body
+    msg = JSON.parse(ret.body)["redirect_url"]
+    p msg
     @token = msg[msg =~ /token/..-1].split('=')[1]
+    p @token
     ret = request(:get,URL_LIST[:home],{},@@host)
     return ret.status.to_s
   end
@@ -60,10 +62,6 @@ class WxHackClient
     @conn.headers["Cookie"] = @cookie
     @conn.headers["Referer"] = referer if referer
     begin
-    p "==================>"
-    p @conn
-    p url
-    p params
     #https://mp.weixin.qq.com/cgi-bin/login?lang=zh_CN
     if method == :post then
       ret = @conn.post do |req|
@@ -73,13 +71,15 @@ class WxHackClient
       end
     else
       ret = @conn.get do |req|
+        url = "#{url}&token=#{@token}&lang=zh_CN"
         @conn.params = params
         req.url url
-        @conn.params['token']=@token
-        @conn.params['lang']="zh_CN"
+        p "========#{url}==========>"
+        p @conn
       end
     end
   rescue=>e
+    p e
     p "**************->>>>>wrong"
     return nil
   end

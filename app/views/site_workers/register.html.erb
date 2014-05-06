@@ -1,0 +1,51 @@
+<header data-role="header" class="">
+      <h1>
+        网点注册
+      </h1>
+</header>
+  <div class="main" data-role="content">
+  <div class="main-content">
+    <div class="form-content">
+
+<%=form_tag '/site_workers/register',:method=>'post' do%>
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">联系人</div>
+    <div class="controls">
+      <input id="customer_name" name="site_worker[name]" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">联系电话</div>
+    <div class="controls">
+      <input id="customer_telephone" name="site_worker[phone]" size="30" type="tel" value="">
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="field  " data-api-code="field_6">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">备注(可填写门店信息)</div>
+    <div class="controls">
+      <textarea class="input-xxlarge" cols="40" id="entry_field_6" name="site_worker[nickname]" rows="3"></textarea>
+    </div>
+  </div>
+</div>
+</div>
+<div class="field submit-field">
+<input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="提交">
+</div>
+<%end%>
+
+</div>
+</div>
+</div>
+</div>
