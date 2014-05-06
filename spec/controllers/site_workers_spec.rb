@@ -4,20 +4,36 @@ describe SiteWorkersController do
 	describe "test reg" do
 		params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
 	    it "register" do
-	        params[:xml][:MsgType] = "text"
-	        params[:xml][:Content] = "reg"
+	        params[:xml][:MsgType] = "event"
+	        params[:xml][:EventKey] = "reg"
 	        post :wx_create,params
-	        response.body.should == "ok registered!"
+	        response.body.should == I18n.t("register")
 
+	        params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
+	        params[:xml][:MsgType] = "text"
+	        params[:xml][:Content] = "13816368831"
+	        post :wx_create,params
+	        response.body.should == I18n.t("need_confirmed")
 	    end
 
-	    it "random input should check worker" do
-	        params[:xml][:MsgType] = "text"
-	        params[:xml][:Content] = "text"
+	    it "worker can worker upload" do
+	    	worker = SiteWorker.create(:wid=>"from")
+	    	params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
+	        params[:xml][:MsgType] = "event"
+	        params[:xml][:Content] = "report"
 	        post :wx_create,params
+	        response.body.should == I18n.t("tip_upload_pix")
+
+	        params = {:xml=>{:FromUserName=>"from",:ToUserName=>"to"}}
+	        params[:xml][:MsgType] = "image"
+	        params[:xml][:MediaId] = "1234"
+	        post :wx_create,params
+	        p response.body
+
+	        # response.body.should == I18n.t("tip_upload_bill") 
 	    end
 
-	    it "a full session" do
+	    xit "a full session" do
 	    	worker = SiteWorker.create(:wid=>"12345",:name=>'test user')
 	    	order = ServiceOrder.create()
 	        params[:xml][:MsgType] = "text"

@@ -2,7 +2,7 @@ class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :authenticate_user!,:only=>[:wx_create]
 
-  before_filter :confirm_worker,:only=>[:site_session_text,:on_image]
+  # before_filter :confirm_worker,:only=>[:on_event,:on_text,:on_image]
 
   def index
     @site_workers = SiteWorker.all
@@ -17,17 +17,17 @@ class SiteWorkersController < ApplicationController
     msg = params[:xml]
     fromUserName,toUserName = msg[:FromUserName],msg[:ToUserName]
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
-    self.send "on_#{msg_type}"
+    self.send "on_#{msg_type}" if confirm_worker
     respond_to do |format|
-      format.html { render :text=>@content }
-      format.xml { render :text,:formats => :xml  }
+      format.html { return render :text=>@content }
+      format.xml { return render :text,:formats => :xml  }
     end
   end
 
   def on_text 
     msg = params[:xml]
     content = msg[:Content]
-    if "reg" == content then
+    if @worker == content then
       SiteWorker.find_or_create_by_wid(msg[:FromUserName])
       @content = "ok registered!" # we need a reg session here
     else
@@ -36,7 +36,6 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_image 
-    return unless confirm_worker
     param = params[:xml]
     return unless confirm_session
     current_session.image param
@@ -52,6 +51,13 @@ class SiteWorkersController < ApplicationController
     @content = ""
     render :text,:formats => :xml   
   end       
+
+  def on_event
+    @content = case params[:xml][:EventKey]
+      when "xls"        
+      when "xlsx"
+    end 
+  end
 
   def site_session_text 
     return unless confirm_worker
@@ -77,10 +83,16 @@ class SiteWorkersController < ApplicationController
     end
 
     def confirm_worker 
-      param = params[:xml]
-      @worker = SiteWorker.find_by_wid(param[:FromUserName])
-      @content = "sorry, not reg , refused" unless @worker
-      @worker 
+      param = params[:xml] 
+      @worker = SiteWorker.find_or_create_by_wid(param[:FromUserName])
+      unless @worker.site
+        if param[:EventKey] == "reg" then
+          @content = I18n.t("register")
+        else
+          @content = I18n.t("need_confirmed")
+        end
+      end
+      return @worker.site
     end
 
     def confirm_session

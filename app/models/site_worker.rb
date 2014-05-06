@@ -2,6 +2,7 @@ class SiteWorker < ActiveRecord::Base
   attr_accessible :name, :nickname, :phone, :wid,:wuid
   belongs_to :site
   has_many :site_sessions
+  has_many :sessions
   
   def site_session
   	site_sessions.find{|s| s.status == 1}

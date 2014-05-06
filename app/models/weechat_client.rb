@@ -51,6 +51,13 @@ class WeechatClient
 		p res
 	end
 
+	def api_set_menu(menu)
+	  api_post(:menu,menu.to_json)
+	end
+
+	def api_get_menu
+	  data = api_get(:menu_get)
+	end
 
     def api_get_user_list(next_openid=nil)
       args = {}
@@ -75,8 +82,8 @@ class WeechatClient
         p req
         response = conn.get req
         ret = JSON.parse(response.body)
+        p ret
         if ret["errcode"] then #expired
-          p ret
           if "42001"==ret["errcode"] then
             return nil unless get_api_token
             response = conn.get url + "&access_token=#{@access_token}"
@@ -90,15 +97,14 @@ class WeechatClient
 	def api_post(url,body)
 	    get_api_token unless @access_token
 	    conn = Faraday.new(:url => @@host_api)
-	    1.times do 
-		    response = conn.post "#{URL_ADVANCED[url]}?access_token=#{@access_token}" do |req|
-		      req.body = body
-		    end
-		    if JSON.parse(response.body)["errcode"]=="42001" then
-		    	get_api_token
-		    	redo
-		    end 
+	    
+		response = conn.post "#{URL_ADVANCED[url]}?access_token=#{@access_token}" do |req|
+		    req.body = body
 		end
+		# if JSON.parse(response.body)["errcode"]=="42001" then
+		#     @access_token = nil
+		#     redo
+		# end 
 	    return response
 	end
 

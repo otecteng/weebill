@@ -7,3 +7,6 @@ en:
       default: "%Y-%m-%d %H:%M:%S"
 
   hello: "Hello world"
+  need_confirmed: "you are waiting for being confirmed, or you can use regsiter menu to reg"
+  register: "please input your mobile to register:" 
+  tip_upload_pix: "please upload a picture of your work"
