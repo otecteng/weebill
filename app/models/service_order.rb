@@ -13,13 +13,13 @@ class ServiceOrder < ActiveRecord::Base
     event :assign  do
       transition [:pending,:assigned]=>:assigned
     end
-    event install:  do
+    event :install  do
       transition :assigned=>:installation
     end
-    event pay:  do
+    event :pay  do
       transition :installation=>:payed
     end
-    event cancle:  do
+    event :cancle  do
       transition [:assigned,:installation]=>:cancled
     end
   end
