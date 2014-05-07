@@ -69,7 +69,7 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_text 
-    return if confirm_worker
+    return if !confirm_worker
     msg = params[:xml]
     content = msg[:Content]
     if @worker == content then
@@ -81,7 +81,7 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_image 
-    return if confirm_worker
+    return if !confirm_worker
     @content = @worker.upload_image params[:xml][:MediaId]
   end
 

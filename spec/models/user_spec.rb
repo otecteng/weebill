@@ -1,11 +1,12 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe User do
-  subject {User.create(:name=>"wjj",:email=>"wjj@wjj.com",:password=>"wjj1q2w3e4r")}
   it "import site excel file" do
-    p subject
-  	subject.import_sites "sites.xls"
-  	site = subject.sites.first
+    user = User.create(:email=>"wjj@wjj.com",:password=>"password",:password_confirmation=>"password")    
+  	user.import_sites "sites.xls"
+  	site = user.sites.first
   	site.name.should == "小吴测试店"
   	site.address.should == "杭州"
   	site.contactor.should == "骚驴"

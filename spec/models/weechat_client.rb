@@ -16,8 +16,8 @@ describe WeechatClient do
 	menu = {
 	    "button"=>
 	    [
-			{"type" => "click","name"=> "REG","key"=> "REGIST_1"},
-			{"type" => "click","name"=> "REPORT","key"=> "REPORT_1"},
+			{"type" => "click","name"=> "REG","key"=> "REGIST_5"},
+			{"type" => "click","name"=> "REPORT","key"=> "REPORT_5"},
 	    ]
 	}
 	p w.api_set_menu menu
