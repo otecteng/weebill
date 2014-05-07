@@ -1,4 +1,5 @@
 class ServiceOrdersController < ApplicationController
+	skip_before_filter :authenticate_user!,:only=>[:fill,:report]
 
 	def index
 		if params[:site_id] then
@@ -42,6 +43,7 @@ class ServiceOrdersController < ApplicationController
 	def update
 		@obj = ServiceOrder.find(params[:id])
 		if @obj.update_attributes(params[:service_order])
+			@service_order.assign
 			redirect_to '/service_orders'
 		else
 			format.html { render action: "edit" }
@@ -65,7 +67,7 @@ class ServiceOrdersController < ApplicationController
 
 	def confirm_pay
 		@obj = ServiceOrder.find(params[:id])
-		@obj.update_attributes(:status=>'PAID')
+		@service_order.pay
 		current_user.pay(@obj.site,price)
 	end
 
@@ -75,8 +77,16 @@ class ServiceOrdersController < ApplicationController
 		redirect_to '/service_orders'
 	end
 
-	def report
+	def fill
 		@service_order = ServiceOrder.find(params[:id])
 	    render layout:"m_form"
 	end
+
+	def report
+		@service_order = ServiceOrder.find(params[:id])
+		@service_order.update_attributes(params[:service_order])
+		@service_order.install
+	    render layout:"m_form"
+	end
+
 end
