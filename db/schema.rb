@@ -53,7 +53,6 @@ ActiveRecord::Schema.define(:version => 20140506133203) do
     t.integer  "site_worker_id"
     t.string   "pix"
     t.string   "uid"
-    t.string   "state"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
@@ -116,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20140506133203) do
     t.datetime "time_trade"
     t.string   "cname"
     t.string   "cmobile"
-    t.string   "cadddress"
+    t.string   "caddress"
     t.integer  "service_order_id"
     t.integer  "user_id"
     t.string   "province"

@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
 
   def import_sites file_name
     read(file_name,SITE_MAP).each do |site|
-      p site
-     sites.create(site)
+      site[:phone]=site[:phone].to_i if site[:phone]
+      sites.create(site)
     end 
   end
 
@@ -49,5 +49,6 @@ private
     s.default_sheet = s.sheets.last
     tb_trade_list = s.parse(map)
     tb_trade_list.shift
+    tb_trade_list
   end
 end
