@@ -1,3 +1,14 @@
+<style>
+	input[type="email"],input[type="password"]{
+		height: 30px;
+		margin: 5px auto;
+	}
+	input[type="checkbox"]{
+		margin:0;
+	}
+
+</style>
+
 <h2>登录</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>

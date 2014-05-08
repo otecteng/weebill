@@ -27,10 +27,11 @@ class User < ActiveRecord::Base
   def import_tb_trades file_name
     time_base = Date.new(1900,1,1)
     read(file_name,TB_TRADE_MAP).each do |tb_trade|
+      tb_trade[:cname].gsub!(/ /,"") unless tb_trade[:cname].blank?
       tb_trade[:time_trade]=time_base+tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
       tb_trade[:title]="#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
       tb_trade[:cmobile]=tb_trade[:cmobile].to_i if tb_trade[:cmobile]
-      addr=tb_trade[:caddress].split(/省|市|自治区/,3) if tb_trade[:caddress] 
+      addr=tb_trade[:caddress].gsub!(/ /,"").split(/省|市|自治区/,3) unless tb_trade[:caddress].blank?
       tb_trade[:province],tb_trade[:city],tb_trade[:caddress]=*addr if addr && addr.length==3 
       tb_trade.delete :title_header
       tb_trade.delete :title_footer
