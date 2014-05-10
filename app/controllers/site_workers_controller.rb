@@ -1,6 +1,6 @@
 class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :authenticate_user!,:only=>[:wx_create,:new,:register]
+  skip_before_filter :authenticate_user!,:only=>[:wx_index,:wx_create,:new,:register]
 
   # before_filter :confirm_worker,:only=>[:on_event,:on_text,:on_image]
 
@@ -102,7 +102,7 @@ class SiteWorkersController < ApplicationController
       args = params[:xml][:EventKey].split('_')
         case args[0]
         when "REGIST"
-          @content = I18n.t("register") + '<a href="http://weebill.goxplanet.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&user='+args[1]+'">register</a>'
+          @content = I18n.t("register") + '<a href="http://weebill.gps400.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&user='+args[1]+'">register</a>'
         when "REPORT"
           @content = I18n.t("tip_upload_pix")+ "_" + args[1]
         end

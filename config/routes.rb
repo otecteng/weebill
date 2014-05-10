@@ -1,4 +1,9 @@
 Weebill::Application.routes.draw do
+  get  'site_workers/wx' => 'site_workers#wx_index'
+  get  'tb_customers/wx' => 'tb_customers#wx_index'
+  post 'site_workers/wx' => 'site_workers#wx_create'
+  post 'tb_customers/wx' => 'tb_customers#wx_create'
+
   devise_for :users
   resources  :tb_customers
 
@@ -32,12 +37,7 @@ Weebill::Application.routes.draw do
     end
   end
 
-  resources :brands
-  
+  resources :brands  
   root :to => 'users#welcome'
-  get  'site_workers/wx' => 'site_workers#wx_index'
-  get  'tb_customers/wx' => 'tb_customers#wx_index'
-  post 'site_workers/wx' => 'site_workers#wx_create'
-  post 'tb_customers/wx' => 'tb_customers#wx_create'
 
 end
