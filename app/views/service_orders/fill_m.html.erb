@@ -7,15 +7,14 @@
   <div class="main-content">
     <div class="form-content">
 
-<%=form_tag '/service_orders/report',:method=>'post' do%>
+<%=form_tag '/service_orders/install_m',:method=>'post' do%>
 <input id="" name="site_worker[site_worker_id]" type="hidden" value="<%=params[:worker]%>">
-<input id="" name="site_worker[site_id]" type="hidden" value="<%=params[:site]%>">
 <div class="field  " data-api-code="field_3">
 <div class="control-group ">
   <div class="field_content">
-    <div class="help-block">联系人</div>
+    <div class="help-block">服务预约号</div>
     <div class="controls">
-      <input id="customer_name" name="service_order[cname]" size="30" value="">
+      <input id="customer_name" name="service_order[uid]" size="30" value="">
     </div>
   </div>
 </div>
@@ -30,6 +29,17 @@
   </div>
 </div>
 </div>
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">备注</div>
+    <div class="controls">
+      <input id="customer_name" name="service_order[memo]" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+
 
 <div class="field submit-field">
 <input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="提交">

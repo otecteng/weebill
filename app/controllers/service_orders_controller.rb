@@ -1,5 +1,6 @@
+# encoding: utf-8
 class ServiceOrdersController < ApplicationController
-	skip_before_filter :authenticate_user!,:only=>[:fill,:report]
+	skip_before_filter :authenticate_user!,:only=>[:fill_m,:install_m]
 
 	def index
 		if params[:site_id] then
@@ -96,8 +97,10 @@ class ServiceOrdersController < ApplicationController
 		@service_order = ServiceOrder.find_by_uid(params[:uid])
 		if @service_order then
 		# @service_order.update_attributes(params[:service_order])
-		@service_order.install
+			@service_order.install
+			@message = "服务预约号识别成功<p>辛苦啦，我们将尽快完成确认"
 		else
+			@message = "无效的服务预约号"
 		end
 	    render layout:"m_form"
 	end
