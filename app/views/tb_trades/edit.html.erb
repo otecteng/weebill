@@ -55,7 +55,7 @@
                       <select id="tb_trade_city" name="tb_trade[city]" class="city form-control input-small"></select>
                    </div>
                   </div>
-                  
+
                   <div class="form-actions">
                     <%= submit_tag 'Save',:class => "btn btn-primary btn-small" %>
                     or <a class="text-danger" href="/tb_trades">Cancel</a>
@@ -68,6 +68,10 @@
 $(document).ready(function(){
   $().CitySelector();
   $('.datepicker').datepicker();
+  var p=$("#tb_trade_province");
+  var c=$("#tb_trade_city");
+  p.find("option[value=<%=@tb_trade.province%>]").attr("selected",true).trigger("change");
+  c.find("option[value=<%=@tb_trade.city%>]").attr("selected",true);
 });
 
 </script>

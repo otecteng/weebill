@@ -5,8 +5,10 @@ class Site < ActiveRecord::Base
   has_many :service_orders
   has_many :site_workers
   belongs_to :user
-  
+  scope :city, lambda {|city| where(:city => city)}
+
   def summary
   	"#{name},地址:#{address},电话:#{phone},联系人:#{contactor}"
   end
+
 end

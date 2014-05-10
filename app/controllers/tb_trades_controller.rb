@@ -46,4 +46,10 @@ class TbTradesController < ApplicationController
 		current_user.import_tb_trades file_name		
 		redirect_to '/tb_trades'
 	end
+
+	def assign
+		trade = TbTrade.find params[:id]
+		@service_order = ServiceOrder.create_from_trade trade
+		redirect_to service_order_path(@service_order)
+	end	
 end

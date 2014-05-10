@@ -1,26 +1,21 @@
 <!--   attr_accessible :alipay_id, :alipay_pix, :cmobile, :cname, :price, :site_id, 
   					:site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
   					:time_service -->
-<table class="table" cellspacing="0px">
-	<thead>
-	<tr>
-		<td>安装工</td>
-	<td>状态</td>
-	<td>客户</td>	
-	<td>电话</td>
-	<td>上传照片</td>	
-	<td>操作</td>
-	</tr>
-	</thead><tdody>
 
-<tr> 
-	<td><%= @service_order.site_worker_id%></td>
-	<td><%= @service_order.status%></td>
-	<td><%= @service_order.cname%></td>	
-	<td><%= @service_order.cmobile%></td>
-	<td><%= @service_order.site_pix%></td>	
-	<td><%= link_to 'Pass', @service_order %></td>
-</tr>
-<tr>
-</tdody>
+<table class="table" cellspacing="0px">
+	<tr><td>状态</td><td><%= @service_order.status%></td></tr>
+	<tr><td>任务网点</td><td><%= @service_order.site.summary%></td></tr>
+	<tr><td>客户</td>	<td><%= @service_order.cname%></td></tr>
+	<tr><td>电话</td><td><%= @service_order.cmobile%></td></tr>
+	<tr><td>完成照片</td>	<td><%= @service_order.site_pix%></td></tr>
 </table>
+<div class="widget-box">
+	<div class="widget-content">
+	<p>
+		<%=link_to "取消",cancle_service_order_path(@service_order),class: "btn btn-inverse btn-small" if @service_order.can_cancle?%>
+		<%=link_to "确认支付",pay_service_order_path(@service_order),class: "btn btn-danger btn-small" if @service_order.can_pay?%>
+		<%=link_to "完成施工",install_service_order_path(@service_order),class: "btn btn-default btn-small" if @service_order.can_install?%>
+		<%=link_to "指派网点",edit_service_order_path(@service_order),class: "btn btn-primary btn-small" if @service_order.can_assign?%>
+	</p>
+	</div>
+</div>

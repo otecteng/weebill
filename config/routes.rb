@@ -5,7 +5,7 @@ Weebill::Application.routes.draw do
   resources :tb_trades do
     get  'import',:on=>:collection
     post  'upload',:on=>:collection
-
+    get  'assign',:on=>:member
   end
 
   resources :site_workers do 
@@ -16,9 +16,13 @@ Weebill::Application.routes.draw do
   resources :service_orders do
     get "new_mobile", :on=>:collection
     get "send_sms", :on=>:member
-    get "fill", :on=>:member
-    post "report", :on=>:member
+    get "cancle", :on=>:member
+    get "pay", :on=>:member
+    get "install", :on=>:member
+    get "assign", :on=>:member
 
+    get "fill_m", :on=>:member
+    post "install_m", :on=>:member
   end
 
   resources :sites do

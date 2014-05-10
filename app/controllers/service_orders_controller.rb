@@ -11,17 +11,10 @@ class ServiceOrdersController < ApplicationController
 
 	def new
 		@service_order = ServiceOrder.new
-		if params[:id_tb_trade] then
-			trade = TbTrade.find params[:id_tb_trade]
-			@service_order.cname = trade.cname
-			@service_order.cmobile = trade.cmobile
-			@service_order.tb_trade_id = trade.id
-		end
 	end
 
 	def create
 		@obj = current_user.service_orders.build(params[:service_order])
-
 		@obj.price = 0
 		if params[:time_service] then
 	      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
@@ -35,15 +28,24 @@ class ServiceOrdersController < ApplicationController
   			render action: "new"
   		end
 	end
-	
+
 	def edit
 		@service_order = ServiceOrder.find(params[:id])
 	end
 
 	def update
 		@obj = ServiceOrder.find(params[:id])
+		site_old = @obj.site.clone
+		p site_old.inspect
 		if @obj.update_attributes(params[:service_order])
-			@service_order.assign
+			if params[:time_service] then
+		      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
+		      	args_time_hour = params[:time_service][:time_time][:hour].to_i
+		      	args_time_minute = params[:time_service][:time_time][:minute].to_i
+				@obj.time_service = DateTime.new(args_date[0],args_date[1],args_date[2],args_time_hour,args_time_minute)
+				@obj.save!
+			end
+			@obj.assign site_old, @obj.site
 			redirect_to '/service_orders'
 		else
 			format.html { render action: "edit" }
@@ -65,27 +67,38 @@ class ServiceOrdersController < ApplicationController
 		render :layout=>false
 	end
 
-	def confirm_pay
-		@obj = ServiceOrder.find(params[:id])
-		@service_order.pay
-		current_user.pay(@obj.site,price)
-	end
 
 	def send_sms
 		@obj = ServiceOrder.find(params[:id])
-		@obj.send_sms 
+		@obj.assign 
 		redirect_to '/service_orders'
 	end
 
-	def fill
+	def install
+		@service_order = ServiceOrder.find(params[:id])
+		@service_order.install
+		redirect_to :back
+	end
+
+	def pay
+		@service_order = ServiceOrder.find(params[:id])
+		@service_order.pay
+		current_user.pay(@obj.site,price)
+		redirect_to :back
+	end
+
+	def fill_m
 		@service_order = ServiceOrder.find(params[:id])
 	    render layout:"m_form"
 	end
 
-	def report
-		@service_order = ServiceOrder.find(params[:id])
-		@service_order.update_attributes(params[:service_order])
+	def install_m
+		@service_order = ServiceOrder.find_by_uid(params[:uid])
+		if @service_order then
+		# @service_order.update_attributes(params[:service_order])
 		@service_order.install
+		else
+		end
 	    render layout:"m_form"
 	end
 

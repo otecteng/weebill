@@ -4,7 +4,7 @@
 		<span class="icon">
 			<i class="glyphicon glyphicon-th"></i>
 		</span>
-		<h5>网点列表</h5>
+		<h5>任务列表</h5>
 	</div>
 	<div class="widget-content nopadding">
 		<table class="table table-bordered table-striped hover data-table">
@@ -12,7 +12,7 @@
 				<th width="200px">预约时间</th>
 				<th width="100px">客户</th>
 				<th width="100px">电话</th>
-				<th width="150px">订单</th>
+				<th width="150px">key</th>
 				<th width="100px">网点</th>
 				<th width="100px">状态</th>
 				<th width="100px">操作</th>
@@ -21,14 +21,18 @@
 <tdody>
 <% @service_orders.each do |service_order|  %>
 <tr>
-	<td><%=l service_order.time_service%></td>	 
+	<td><%=l service_order.time_service if service_order.time_service%></td>	 
 	<td><%= service_order.cname%></td>
 	<td><%= service_order.cmobile%></td>
-	<td><%= service_order.tb_trade.title if service_order.tb_trade%></td>
+	<td><%= service_order.uid%></td>
 	<td><%= service_order.site.name%></td>	
 	<td><%= service_order.status%></td>
 	<td>
 		<div>
+				<%= link_to service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"查看" do %>
+                <i class="glyphicon glyphicon-eye-open"></i>
+                <% end %>
+
 				<%= link_to edit_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
                 <i class="glyphicon glyphicon-pencil"></i>
                 <% end %>
