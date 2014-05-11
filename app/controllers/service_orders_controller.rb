@@ -94,7 +94,7 @@ class ServiceOrdersController < ApplicationController
 	end
 
 	def install_m
-		@service_order = ServiceOrder.find_by_uid(params[:uid])
+		@service_order = ServiceOrder.find_by_uid(params[:service_order][:uid])
 		if @service_order then
 		# @service_order.update_attributes(params[:service_order])
 			@service_order.install

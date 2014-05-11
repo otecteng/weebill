@@ -1,5 +1,5 @@
 <%= form_tag({:action => 'upload'}, :multipart => true) do %>  
 
-Upload your file: <%= link_to "模板下载", "/assets/Template_tb_trade.xls" %><%= file_field("file", "file") %>  
+Upload your file: <%= link_to "模板下载", "/system/template_tb_trade.xls" %><%= file_field("file", "file") %>  
 <%= submit_tag("上传") %>  
 <% end %>  

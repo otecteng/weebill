@@ -7,7 +7,7 @@
   <div class="main-content">
     <div class="form-content">
 
-<%=form_tag '/service_orders/install_m',:method=>'post' do%>
+<%=form_tag "/service_orders/#{@service_order.id}/install_m",:method=>'post' do%>
 <input id="" name="site_worker[site_worker_id]" type="hidden" value="<%=params[:worker]%>">
 <div class="field  " data-api-code="field_3">
 <div class="control-group ">
