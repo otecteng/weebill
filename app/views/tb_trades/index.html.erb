@@ -9,13 +9,13 @@
 		</span>
 		<h5>订单</h5>
 	</div>
-	<div class="widget-content">
-		<table class="table table-bordered table-striped table-hover with-check">
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table">
 			<thead>
-				<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
-				<th width="120px">电话</th>
+				<!-- <th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th> -->
+				<th width="120px">客户</th>
 				<th width="160px">电话</th>
-				<th width="160px">电话</th>
+				<th width="160px">省市</th>
 				<th width="200px">订单日期</th>
 				<th width="200px">订单</th>
 				<th width="100px">安装网点</th>
@@ -25,7 +25,7 @@
 			<tbody>
 <% @tb_trades.each do |tb_trade|  %>
 <tr> 
-	<td><input type="checkbox"></td>
+	<!-- <td><input type="checkbox"></td> -->
 	<td><%= tb_trade.cname%></td>
 	<td><%= tb_trade.cmobile%></td>
 	<td><%= "#{tb_trade.province}_#{tb_trade.city}"%></td>
