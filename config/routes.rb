@@ -33,6 +33,7 @@ Weebill::Application.routes.draw do
   resources :sites do
     get  'import',:on=>:collection
     post  'upload',:on=>:collection
+    post  'delete_all',:on=>:collection
     resources :service_orders do
     end
   end

@@ -31,7 +31,11 @@ class SitesController < ApplicationController
 
 	def import
 	end
-
+	def delete_all
+		@objs = Site.where(:id =>params[:ids])
+		@objs.delete_all
+		redirect_to :back
+	end
 	def upload
 		file_name="#{Rails.root}/public/uploads/sites#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
 		File.open(file_name, "wb") { |f| f.write(params[:file]['file'].read) }
@@ -42,7 +46,7 @@ class SitesController < ApplicationController
 	def destroy
 		@obj = Site.find(params[:id])
 		@obj.destroy
-		redirect_to '/sites'
+		redirect_to :back
 	end	
 
 end

@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/assets/css/select2.css" />		
+<link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
 
-
+<%=form_tag '/sites/delete_all',:method=>"post", :id=>"frm_main" do%>
  <style>
  	.btn-default {
  		color:#474749;
@@ -19,13 +20,16 @@
 <div class="widget-box">
 	<div class="widget-title">
 		<span class="icon">
-			<i class="glyphicon glyphicon-th"></i>
+			<i class="glyphicon glyphicon-remove" id="btn_delete"></i>
 		</span>
 		<h5>网点列表</h5>
+		
+
 	</div>
 	<div class="widget-content nopadding">
-		<table class="table table-bordered table-striped hover data-table">
+		<table class="table table-bordered table-striped hover data-table with-check">
 			<thead>
+              	<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
 				<th width="200px">名称</th>
 				<th width="80px">省</th>
 				<th width="100px">市</th>
@@ -37,14 +41,12 @@
 			<tbody>
 				<% @sites.each do |site|  %>
 				<tr>
+	                <td><%=check_box_tag("ids[]",site.id)%></td>
 					<td><%= site.name%></td>
 					<td><%= site.province%></td>
 					<td><%= site.city%></td>
 					<td><%= site.address%></td>
 					<td><%= site.cert%></td>
-
-
-
 					<td>
 					<div>
 						<%= link_to edit_site_path(site),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
@@ -67,6 +69,12 @@
 		</table>
 	</div>
 </div>
+<%end%>
+<script type="text/javascript">
+$( "#btn_delete").click(function() {
+  $("#frm_main").submit();
+});
+</script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/unicorn.tables.js"></script>
 
