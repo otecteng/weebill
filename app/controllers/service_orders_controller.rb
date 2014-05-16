@@ -8,6 +8,7 @@ class ServiceOrdersController < ApplicationController
 		else
 			@service_orders = current_user.service_orders
 		end
+		@service_orders=@service_orders.status(params[:status]) if params[:status]
 	end
 
 	def new
@@ -104,5 +105,10 @@ class ServiceOrdersController < ApplicationController
 		end
 	    render layout:"m_form"
 	end
-
+	
+	def delete_all
+		@objs = ServiceOrder.where(:id =>params[:ids])
+		@objs.delete_all
+		redirect_to :back
+	end
 end

@@ -6,6 +6,11 @@ class Site < ActiveRecord::Base
   has_many :site_workers
   belongs_to :user
   scope :city, lambda {|city| where(:city => city)}
+  
+  def self.get_region(name)
+    @regions = File.open("#{Rails.root}/config/regions.yml") { |file| YAML.load(file) }
+    p @regions
+  end
 
   def self.confirm_city(city)
     unless @sites 

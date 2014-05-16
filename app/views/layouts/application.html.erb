@@ -39,21 +39,46 @@
             </ul>
         </div>
 <%
-@menus=	{
-	'/sites'=>{text:'网点管理',icon:'glyphicon-home'},
-	'/service_orders'=>{text:'任务管理',icon:'glyphicon-hand-right'},
-	'/tb_trades'=>{text:'订单管理',icon:'glyphicon-tasks'},
-	'/brands'=>{text:'车型列表',icon:'glyphicon-tag'},
-		}
+@menus=	[
+	{url:'/sites',text:'网点管理',icon:'glyphicon-home'},
+	{url:'/service_orders',text:'任务管理',icon:'glyphicon-hand-right',submenus:[
+		{url:'/service_orders/',text:'全部任务',icon:'glyphicon-tasks'},
+		{url:'/service_orders/?status=pending',text:'待分派',icon:'glyphicon-tasks'},
+		{url:'/service_orders/?status=assigned',text:'待完成',icon:'glyphicon-tasks'},
+		{url:'/service_orders/?status=installation',text:'待付款',icon:'glyphicon-tasks'},
+		{url:'/service_orders/?status=payed',text:'已付款',icon:'glyphicon-tasks'},
+		]
+	},
+	{url:'/tb_trades',text:'订单管理',icon:'glyphicon-tasks',submenus:[
+		{url:'/tb_trades/',text:'全部订单',icon:'glyphicon-tasks'},
+		{url:'/tb_trades/?status=error',text:'导入失败订单',icon:'glyphicon-tasks'},
+		{url:'/tb_trades/?status=pending',text:'已预分配订单',icon:'glyphicon-tasks'},
+		]
+	},
+	{url:'/brands',text:'车型列表',icon:'glyphicon-tag'},
+]
 %>
             
 		<div id="sidebar">
 			<!--<a href="#" class="hide"><i class="glyphicon glyphicon-home"></i> Dashboard</a>-->
 			<ul>
 
-<%  @menus.each do |k,v|%>
-<li <%="class=active" if request.path =~ /#{k}/ %>><a href="<%=k%>"><i class="glyphicon <%=v[:icon]%>"></i> <span><%=v[:text]%></span></a></li>
+<%  @menus.each do |menu|%>
+<li>
+	<a href="<%=menu[:url]%>"><i class="glyphicon <%=menu[:icon]%>"></i> <span><%=menu[:text]%></span></a>
+	<%if menu[:submenus]%>
+	<ul style="display: block;">
+	<%menu[:submenus].each do |m|%>
+		<li><a href="<%=m[:url]%>"><i class="glyphicon <%=m[:icon]%>"></i> <span><%=m[:text]%></span></a></li>
+	<%end%>
+	</ul>
+	<%end%>
+</li>
 <%end%>				
+<li class="submenu open">
+					<a href="#"><i class="icon icon-file"></i> <span>Sample pages</span> <span class="label">4</span></a>
+				</li>
+
 						
 			</ul>
 		
@@ -64,8 +89,8 @@
 				<h1>Weebill</h1>
 				<div class="btn-group">
 					<% if params[:action]=="index"%>
-						<a class="btn" href=<%= "#{params[:controller]}/new" %> ><i class="glyphicon glyphicon-plus"></i></a>
-						<a class="btn" href=<%= "#{params[:controller]}/import" %> ><i class="glyphicon glyphicon-upload"></i></a>
+						<a class="btn" href=<%= "/#{params[:controller]}/new" %> ><i class="glyphicon glyphicon-plus"></i></a>
+						<a class="btn" href=<%= "/#{params[:controller]}/import" %> ><i class="glyphicon glyphicon-upload"></i></a>
 					<%end%>
 					
 				</div>
@@ -91,7 +116,11 @@
 		</div>
 	</body>
 
+<script type="text/javascript">
+  var url = $('a[href="'+window.location["pathname"]+window.location["search"]+'"]');
+  url.parent().attr("class","active");
 
+</script>
 
 	
 </html>

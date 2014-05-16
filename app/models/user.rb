@@ -38,17 +38,22 @@ class User < ActiveRecord::Base
       begin
         if tb_trade[:cadddress][0..2] =~ /北京|天津|上海/ then
           a2 = tb_trade[:cadddress][2..-1].split(/区/)[0]
-          if city=Site.confirm_city(a2)
-            db_trade.update_attributes(:province=>city[:province],:city=>city[:city])
+          if city = Site.confirm_city(a2)
+            db_trade.update_attributes(:province=>city[:province],:city=>city[:city],:status=>"pending")
+          else
+            db_trade.update_attributes(:status=>"error")
           end
         else
           addr = tb_trade[:cadddress].gsub!(/ /,"").split(/省|市|自治区/,3) unless tb_trade[:cadddress].blank?
-          if addr && addr.length==3 && city=Site.confirm_city(addr[1]) then
-            db_trade.update_attributes(:province=>city[:province],:city=>city[:city])
+          if addr && addr.length>2 && city = Site.confirm_city(addr[1]) then
+            db_trade.update_attributes(:province=>city[:province],:city=>city[:city],:status=>"pending")
+          else
+            db_trade.update_attributes(:status=>"error")
           end
         end
         # p tb_trade[:cadddress]
       rescue=>e
+        db_trade.update_attributes(:status=>"error")
         p e
       end
     end
@@ -63,7 +68,8 @@ private
           Roo::Excelx.new(file_name)
     end
     s.default_sheet = s.sheets.last
-    tb_trade_list = s.parse(map)
+    x = s.parse(map)
+    tb_trade_list = x
     tb_trade_list.shift
     tb_trade_list
   end

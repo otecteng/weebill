@@ -1,6 +1,8 @@
  # encoding: utf-8
 
 class SiteWorker < ActiveRecord::Base
+  default_scope order('created_at DESC')
+  
   attr_accessible :name, :nickname, :phone, :wid,:wuid,:site_id,:state,
                   :picture_uploaded
   belongs_to :site

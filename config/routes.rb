@@ -11,6 +11,7 @@ Weebill::Application.routes.draw do
     get  'import',:on=>:collection
     post  'upload',:on=>:collection
     get  'assign',:on=>:member
+    post  'delete_all',:on=>:collection
   end
 
   resources :site_workers do 
@@ -28,6 +29,8 @@ Weebill::Application.routes.draw do
 
     get "fill_m", :on=>:member
     post "install_m", :on=>:member
+    post  'delete_all',:on=>:collection
+
   end
 
   resources :sites do

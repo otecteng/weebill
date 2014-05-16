@@ -1,18 +1,20 @@
 <link rel="stylesheet" href="/assets/css/select2.css" />		
 <link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
+<%=form_tag '/tb_trades/delete_all',:method=>"post", :id=>"frm_main" do%>
 
 
 <div class="widget-box">
 	<div class="widget-title">
 		<span class="icon">
-			<i class="glyphicon glyphicon-th"></i>
+			<i class="glyphicon glyphicon-remove" id="btn_delete"></i>
 		</span>
 		<h5>订单</h5>
 	</div>
 	<div class="widget-content nopadding">
-		<table class="table table-bordered table-striped hover data-table">
+		<table class="table table-bordered table-striped hover data-table with-check">
+		
 			<thead>
-				<!-- <th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th> -->
+				<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
 				<th width="120px">客户</th>
 				<th width="160px">电话</th>
 				<th width="160px">省市</th>
@@ -25,42 +27,44 @@
 			<tbody>
 <% @tb_trades.each do |tb_trade|  %>
 <tr> 
-	<!-- <td><input type="checkbox"></td> -->
+	<td><%=check_box_tag("ids[]",tb_trade.id)%></td>
 	<td><%= tb_trade.cname%></td>
 	<td><%= tb_trade.cmobile%></td>
 	<td><%= "#{tb_trade.province}_#{tb_trade.city}"%></td>
 	<td><%= tb_trade.time_trade ? tb_trade.time_trade.localtime.to_s(:db) : ""%></td>
 	<td><%= tb_trade.title%></td>
 	<td>
-		<%if tb_trade.service_order then%>
-		<%= link_to "#{tb_trade.service_order.site.name}","/service_orders/#{tb_trade.service_order.id}/edit"%>
+		<%if tb_trade.service_order && tb_trade.service_order.site then%>
+			<%= link_to "#{tb_trade.service_order.site.name}","/service_orders/#{tb_trade.service_order.id}/edit"%>
 		<%else%>
-		<%= "未指定"%>
+			<%= "未指定"%>
 		<%end%>
 	</td>
 	<td>
-					<div>
-						<%= link_to edit_tb_trade_path tb_trade,:class => "btn-mini tip-bottom",:title=>"编辑" do %>
-                        <i class="glyphicon glyphicon-pencil"></i>
-                        <% end %>
-
-						<%= link_to tb_trade.service_order ? "/service_orders/#{tb_trade.service_order.id}/edit" : assign_tb_trade_path(tb_trade), :class => "btn-mini tip-bottom",:title=>"指派" do %>
-                        <i class="glyphicon glyphicon-wrench"></i>
-                        <% end %>
-
-						<%= link_to tb_trade, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
-                        <i class="glyphicon glyphicon-remove"></i>
-                        <% end %>
-					</div>	
+	<div>
+		<%= link_to edit_tb_trade_path tb_trade,:class => "btn-mini tip-bottom",:title=>"编辑" do %>
+        <i class="glyphicon glyphicon-pencil"></i>
+        <% end %>
+		<%= link_to tb_trade.service_order ? "/service_orders/#{tb_trade.service_order.id}/edit" : assign_tb_trade_path(tb_trade), :class => "btn-mini tip-bottom",:title=>"指派" do %>
+        <i class="glyphicon glyphicon-wrench"></i>
+        <% end %>
+		<%= link_to tb_trade, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+        <i class="glyphicon glyphicon-remove"></i>
+        <% end %>
+	</div>	
 
 
 	</td>
-
 </tr>
 <% end%>
-
 </table>
-	</div>
+</div>
 </div> 
+<%end%>
+<script type="text/javascript">
+$( "#btn_delete").click(function() {
+  $("#frm_main").submit();
+});
+</script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/unicorn.tables.js"></script>

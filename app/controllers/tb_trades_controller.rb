@@ -1,6 +1,8 @@
 class TbTradesController < ApplicationController
 	def index
 		@tb_trades = current_user.tb_trades
+		@tb_trades = @tb_trades.status(params[:status]) if params[:status]
+
 		respond_to do |format|
         	format.html 
         	format.json { render json: @tb_trades }
@@ -24,6 +26,7 @@ class TbTradesController < ApplicationController
 	
 	def update
 		@tb_trade = TbTrade.find(params[:id])
+		params[:tb_trade][:status]="pending" if(@tb_trade.status=="error")
 		if @tb_trade.update_attributes(params[:tb_trade])
 			redirect_to '/tb_trades'
 		else
@@ -39,7 +42,11 @@ class TbTradesController < ApplicationController
 
 	def import
 	end
-
+	def delete_all
+		@objs = TbTrade.where(:id =>params[:ids])
+		@objs.delete_all
+		redirect_to :back
+	end
 	def upload
 		file_name="#{Rails.root}/public/uploads/trades#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
 		File.open(file_name, "wb") { |f| f.write(params[:file]['file'].read) }

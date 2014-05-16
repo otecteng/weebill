@@ -1,6 +1,8 @@
  # encoding: utf-8
 require "securerandom"
 class ServiceOrder < ActiveRecord::Base
+  default_scope order('created_at DESC')
+
   attr_accessible :alipay_id, :alipay_pix, :cmobile, :cname, :price, :site_id, 
   					:site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
   					:time_service,:memo
@@ -51,7 +53,7 @@ class ServiceOrder < ActiveRecord::Base
     #tb_trade->site
     user = tb_trade.user
     site = user.sites.city(tb_trade.city).order(:cert).last || Site.find_near(tb_trade.city)
-    service_order = user.service_orders.build(:uid=>SecureRandom.random_number(1000000000000),
+    service_order = user.service_orders.build(:uid=>"%012d" % SecureRandom.random_number(1000000000000),
                                 :cname=>tb_trade.cname,:cmobile=>tb_trade.cmobile,
                                 :status=>:pending)
     service_order.tb_trade = tb_trade

@@ -5,7 +5,7 @@
 <table class="table" cellspacing="0px">
 	<tr><td>状态</td><td><%= @service_order.status%></td></tr>
 	<tr><td>任务网点</td><td><%= @service_order.site.summary%></td></tr>
-	<tr><td>客户</td>	<td><%= @service_order.cname%></td></tr>
+	<tr><td>客户</td>	<td><%= @service_order.tb_trade.summary%></td></tr>
 	<tr><td>电话</td><td><%= @service_order.cmobile%></td></tr>
 	<tr><td>完成照片</td>	<td><%= @service_order.site_pix%></td></tr>
 </table>
