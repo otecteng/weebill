@@ -12,6 +12,7 @@ Weebill::Application.routes.draw do
     post  'upload',:on=>:collection
     get  'assign',:on=>:member
     post  'delete_all',:on=>:collection
+    get  'error',:on=>:collection
   end
 
   resources :site_workers do 
@@ -21,7 +22,7 @@ Weebill::Application.routes.draw do
   
   resources :service_orders do
     get "new_mobile", :on=>:collection
-    get "send_sms", :on=>:member
+    get "inform", :on=>:member
     get "cancle", :on=>:member
     get "pay", :on=>:member
     get "install", :on=>:member

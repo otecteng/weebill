@@ -3217,7 +3217,7 @@
       zip_code: '314000'
       level: 4
       districts:
-        秀城区:
+        南湖区:
           pinyin: xiucheng
           pinyin_abbr: xc
         秀洲区:
@@ -7602,13 +7602,13 @@
         彭水苗族土家族自治县:
           pinyin: pengshuimiaozutujiazu
           pinyin_abbr: psmztjz
-        江津市:
+        江津区:
           pinyin: jiangjin
           pinyin_abbr: jj
         合川市:
           pinyin: hechuan
           pinyin_abbr: hc
-        永川市:
+        永川区:
           pinyin: yongchuan
           pinyin_abbr: yc
         南川市:
@@ -7816,7 +7816,7 @@
       zip_code: '628000'
       level: 4
       districts:
-        市中区:
+        利州区:
           pinyin: zhong
           pinyin_abbr: z
         元坝区:
@@ -8922,7 +8922,7 @@
         开远市:
           pinyin: kaiyuan
           pinyin_abbr: ky
-        蒙自县:
+        蒙自市:
           pinyin: mengzi
           pinyin_abbr: mz
         屏边苗族自治县:

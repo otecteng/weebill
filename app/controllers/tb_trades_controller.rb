@@ -8,6 +8,7 @@ class TbTradesController < ApplicationController
         	format.json { render json: @tb_trades }
       	end
 	end
+	
 	def new
 		@tb_trade = TbTrade.new
 	end
@@ -26,9 +27,14 @@ class TbTradesController < ApplicationController
 	
 	def update
 		@tb_trade = TbTrade.find(params[:id])
-		params[:tb_trade][:status]="pending" if(@tb_trade.status=="error")
 		if @tb_trade.update_attributes(params[:tb_trade])
-			redirect_to '/tb_trades'
+			if(@tb_trade.status=="error" && (@tb_trade.confirm_address || @tb_trade.city))
+				ServiceOrder.create_from_trade(@tb_trade)
+				@tb_trade.status = "assigned"
+				@tb_trade.save
+			end
+			ret = current_user.tb_trades.status('error').length > 0 ? '/tb_trades/error' : '/service_orders'
+			redirect_to ret
 		else
 			format.html { render action: "edit" }
 		end
@@ -40,6 +46,11 @@ class TbTradesController < ApplicationController
 		redirect_to '/tb_trades'
 	end	
 
+	def error
+		@tb_trades = current_user.tb_trades.status('error')
+		render :action=>"index"
+	end
+
 	def import
 	end
 	def delete_all
@@ -50,8 +61,9 @@ class TbTradesController < ApplicationController
 	def upload
 		file_name="#{Rails.root}/public/uploads/trades#{Time.now.strftime('%Y%m%d%H%M%S')}-#{params[:file]['file'].original_filename}"
 		File.open(file_name, "wb") { |f| f.write(params[:file]['file'].read) }
-		current_user.import_tb_trades file_name		
-		redirect_to '/tb_trades'
+		current_user.import_tb_trades file_name
+		ret = current_user.tb_trades.status('error').length > 0 ? '/tb_trades/error' : '/service_orders'
+		redirect_to ret
 	end
 
 	def assign

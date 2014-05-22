@@ -37,17 +37,17 @@
                   <div class="form-group">
                     <label class="control-label">门店</label>
                     <div class="controls">
-                      <%= collection_select "service_order","site_id", Site.all, :id, :name , :class =>"form-control input-small" %>
+                      <%= collection_select "service_order","site_id", Site.city(@service_order.tb_trade.city), :id, :name , :class =>"form-control input-small" %>
 <!--                       <input type="text" class="form-control input-small" placeholder="This is a placeholder..." />
  -->                    </div>
                   </div>
-                  <div class="form-group">
+<!--                   <div class="form-group">
                     <label class="control-label">订单</label>
                     <div class="controls">
                       <%= collection_select("service_order","tb_trade_id", TbTrade.all, :id, :cname ,:class =>"form-control input-small") %>
                     </div>
                   </div>
-                  <div class="form-actions">
+ -->                  <div class="form-actions">
                     <%= submit_tag '保存',:class => "btn btn-primary btn-small" %>
                     or <a class="text-danger" href="/service_orders">取消</a>
                   </div>

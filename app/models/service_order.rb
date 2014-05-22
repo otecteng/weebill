@@ -7,11 +7,11 @@ class ServiceOrder < ActiveRecord::Base
   					:site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
   					:time_service,:memo
 
-  has_one :tb_trade
+  belongs_to :tb_trade
   belongs_to :site
   belongs_to :user
   scope :status, lambda {|status| where(:status => status)}
-
+  
   state_machine :status, :initial => :pending do
     
     # pending #地址不正确，等待修改   
@@ -22,9 +22,12 @@ class ServiceOrder < ActiveRecord::Base
     # event :reassign  do
     #   transition []=>:assigned #客服重新指派
     # end
+    event :inform  do
+      transition [:informed,:assigned]=>:informed #安装
+    end
 
     event :install  do
-      transition :assigned=>:installation #安装
+      transition :informed=>:installation #安装
     end
 
     event :pay  do
@@ -36,30 +39,36 @@ class ServiceOrder < ActiveRecord::Base
     end
 
     after_transition :pending => :assigned do |service_order,transition|
-      service_order.send_assign_sms
+      # service_order.send_assign_sms
     end
 
-    after_transition :assigned => :assigned do |service_order,transition|
-      service_order.send_cancle transition.args[0]
-      service_order.send_assign_sms
+    after_transition :assigned => :informed do |service_order,transition|
+      # service_order.send_cancle transition.args[0]
+      # service_order.send_assign_sms
     end
 
     after_transition :assigned => :cancled do |service_order,transition|
-      service_order.send_cancle
+      # service_order.send_cancle
     end
   end
 
   def self.create_from_trade tb_trade 
     #tb_trade->site
     user = tb_trade.user
-    site = user.sites.city(tb_trade.city).order(:cert).last || Site.find_near(tb_trade.city)
     service_order = user.service_orders.build(:uid=>"%012d" % SecureRandom.random_number(1000000000000),
                                 :cname=>tb_trade.cname,:cmobile=>tb_trade.cmobile,
-                                :status=>:pending)
-    service_order.tb_trade = tb_trade
-    service_order.site = site
-    service_order.save!
+                                :status=>:pending,:tb_trade_id=>tb_trade.id)
     tb_trade.service_order = service_order
+    # site = user.sites.city(tb_trade.city).order(:cert).last || Site.find_near(tb_trade.city)
+    site = user.find_site(tb_trade)
+    if site then
+      service_order.site = site
+      service_order.status = "assigned"
+      service_order.save!
+      tb_trade.status = "assigned"
+    else
+      tb_trade.status = "imported"
+    end
     tb_trade.save!
     return service_order
   end
@@ -75,6 +84,29 @@ class ServiceOrder < ActiveRecord::Base
   	SmsWorker.new.perform site.phone,message_s
   	# SmsWorker.perform_async cmobile,message_c
     SmsWorker.new.perform cmobile,message_c
+  end
+
+  def site_sms
+    "感谢您选择与航睿导航合作安装！客户订单号(#{tb_trade.tid})客户信息:#{cname}(#{cmobile})"
+  end
+
+  def assign_sms
+    template = "感谢您选购航睿导航！收货后请提前预约免费安装体验店,订单号#{tb_trade.tid}，地址:#{site.address},电话:#{site.phone},[#{site.name}]-#{site.contactor},投诉建议拨打18666688652祝您购物愉快！"
+  end
+
+  def txt_status
+    case status
+    when "pending"
+      "待分配"
+    when "assigned"
+      "待通知"
+    when "informed"
+      "待安装"
+    when "installation"
+      "待付款"
+    when "payed"
+      "已付款"
+    end 
   end
 
 end

@@ -6,10 +6,11 @@ class Site < ActiveRecord::Base
   has_many :site_workers
   belongs_to :user
   scope :city, lambda {|city| where(:city => city)}
+  scope :county, lambda {|city,county| where(:city => city,:county=>county)}
+  scope :need_update, lambda {where(:star => "*")}
   
   def self.get_region(name)
     @regions = File.open("#{Rails.root}/config/regions.yml") { |file| YAML.load(file) }
-    p @regions
   end
 
   def self.confirm_city(city)
@@ -43,6 +44,57 @@ class Site < ActiveRecord::Base
     return nil unless confirm_city(city)
     xx = @matrix.select{|x| x[:start]==city}.sort{|x,y| x[:distance]<=>y[:distance]}
     xx[1]
+  end
+  
+  def self.format_city city
+    if city.level == 3
+      return [city["father"]["father"]["name"],city["father"]["name"],city["name"]]
+    elsif city.level == 2
+      return [city["father"]["name"],city["name"],""]
+    else
+      return [city["name"],"",""]
+    end
+  end
+
+  def self.confirm_region address
+    address = address.gsub /[( )]/,''
+    args = address.split(/(?<=[省市区县])\s*/)
+    x = args.index{|x| x=~/市|区/ && x.length > 5}
+    if x && args[x+1] then
+      args[x] = args[x] + args[x+1] 
+      args.delete_at(x+1)
+    end
+    if args.length >=4 then #best format
+      # province = Region.get_region(args[0])
+      city = Region.get_region(args[1])
+      county = Region.get_region(args[2],city)
+      return nil if !(city && county)
+      return format_city(county)
+      # return [city["father"]["name"],city["name"],county["name"]]      
+    end
+    if args.length ==3 then #try the 
+      if args[0]=~/省/ then  # xx省xx市xxx
+        city = Region.get_region(args[1])
+        return nil if !city
+        return format_city(city)
+      end
+      if args[0]=~/市/ then # xx市xx区xxx
+        city = Region.get_region(args[0])
+        county = Region.get_region(args[1],city)
+        return nil if !(city && county)
+        return format_city(county)
+      end
+    end
+    if args.length ==2 then #try to fit with county, if not try city
+      city = Region.get_region(args[0])
+      return nil if !city
+      return format_city(city)
+    end
+    return nil
+  end
+
+  def summary_address
+    "#{province}-#{city}-#{county}"
   end
 
   def summary

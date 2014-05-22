@@ -42,21 +42,37 @@
 @menus=	[
 	{url:'/sites',text:'网点管理',icon:'glyphicon-home'},
 	{url:'/service_orders',text:'任务管理',icon:'glyphicon-hand-right',submenus:[
+		
+		{url:'/service_orders/?status=pending',text:'待分派',icon:'glyphicon-tasks',key:'service_orders-pending',v:0},
+		{url:'/service_orders/?status=assigned',text:'待通知',icon:'glyphicon-tasks',key:'service_orders-assigned',v:0},
+		{url:'/service_orders/?status=informed',text:'待安装',icon:'glyphicon-tasks',key:'service_orders-informed',v:0},
+		{url:'/service_orders/?status=installation',text:'待付款',icon:'glyphicon-tasks',key:'service_orders-installation',v:0},
+		{url:'/service_orders/?status=payed',text:'已付款',icon:'glyphicon-tasks',key:'service_orders-payed',v:0},
 		{url:'/service_orders/',text:'全部任务',icon:'glyphicon-tasks'},
-		{url:'/service_orders/?status=pending',text:'待分派',icon:'glyphicon-tasks'},
-		{url:'/service_orders/?status=assigned',text:'待完成',icon:'glyphicon-tasks'},
-		{url:'/service_orders/?status=installation',text:'待付款',icon:'glyphicon-tasks'},
-		{url:'/service_orders/?status=payed',text:'已付款',icon:'glyphicon-tasks'},
 		]
 	},
 	{url:'/tb_trades',text:'订单管理',icon:'glyphicon-tasks',submenus:[
-		{url:'/tb_trades/',text:'全部订单',icon:'glyphicon-tasks'},
-		{url:'/tb_trades/?status=error',text:'导入失败订单',icon:'glyphicon-tasks'},
-		{url:'/tb_trades/?status=pending',text:'已预分配订单',icon:'glyphicon-tasks'},
+		{url:'/tb_trades/error',text:'导入失败订单',icon:'glyphicon-tasks',key:'tb_trades-error',v:0},
+		{url:'/tb_trades/',text:'全部订单',icon:'glyphicon-tasks',key:'pending',v:0},
+		# {url:'/tb_trades/?status=pending',text:'已预分配订单',icon:'glyphicon-tasks'},
 		]
 	},
 	{url:'/brands',text:'车型列表',icon:'glyphicon-tag'},
 ]
+if current_user then 
+  idx1 = current_user.service_orders.group(:status).count
+  idx1.each do |k,v| 
+  	next if !k
+  	menu = @menus[1][:submenus].select{|x|x[:url]=="/service_orders/?status="+k}.first
+  	menu[:v]=v if menu
+  end
+  idx2 = current_user.tb_trades.group(:status).count
+  p "--------->>>>>>"
+  p idx2
+  menu = @menus[2][:submenus].select{|x|x[:url]=="/tb_trades/error"}.first
+  p menu
+  menu[:v]=idx2["error"] if menu
+end
 %>
             
 		<div id="sidebar">
@@ -69,7 +85,9 @@
 	<%if menu[:submenus]%>
 	<ul style="display: block;">
 	<%menu[:submenus].each do |m|%>
-		<li><a href="<%=m[:url]%>"><i class="glyphicon <%=m[:icon]%>"></i> <span><%=m[:text]%></span></a></li>
+		<li><a href="<%=m[:url]%>" id="menu_#{m[:key]}"><i class="glyphicon <%=m[:icon]%>"></i><span><%=m[:text]%></span>
+		<%=raw "<span class='label'>#{m[:v]}</span>" if m[:v] && m[:v]>0%>
+		</a></li>
 	<%end%>
 	</ul>
 	<%end%>

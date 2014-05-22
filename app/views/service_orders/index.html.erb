@@ -27,12 +27,12 @@
 <% @service_orders.each do |service_order|  %>
 <tr>
 	<td><%=check_box_tag("ids[]",service_order.id)%></td>
-	<td><%=l service_order.time_service if service_order.time_service%></td>	 
+	<td><%=service_order.tb_trade.address if service_order.tb_trade%></td>	 
 	<td><%= service_order.cname%></td>
 	<td><%= service_order.cmobile%></td>
 	<td><%= service_order.uid%></td>
-	<td><%= service_order.site.name if service_order.site%></td>	
-	<td><%= service_order.status%></td>
+	<td><%= "#{service_order.site.name}(#{service_order.site.summary_address})" if service_order.site%></td>	
+	<td><%= service_order.txt_status%></td>
 	<td>
 		<div>
  		<%= link_to service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"查看" do %>
@@ -42,7 +42,7 @@
  		<%= link_to edit_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
           <i class="glyphicon glyphicon-pencil"></i>
         <% end %>
- 		<%= link_to send_sms_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"发送短信" do %>
+ 		<%= link_to inform_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"发送短信" do %>
           <i class="glyphicon glyphicon-envelope"></i>
         <% end %>
  		<%= link_to service_order, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>

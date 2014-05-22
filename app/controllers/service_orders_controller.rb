@@ -37,8 +37,7 @@ class ServiceOrdersController < ApplicationController
 
 	def update
 		@obj = ServiceOrder.find(params[:id])
-		site_old = @obj.site.clone
-		p site_old.inspect
+		site_old = @obj.site.clone if @obj.site
 		if @obj.update_attributes(params[:service_order])
 			if params[:time_service] then
 		      	args_date = params[:time_service][:time_date].split('-').map{|i| i.to_i}
@@ -47,7 +46,9 @@ class ServiceOrdersController < ApplicationController
 				@obj.time_service = DateTime.new(args_date[0],args_date[1],args_date[2],args_time_hour,args_time_minute)
 				@obj.save!
 			end
-			@obj.assign site_old, @obj.site
+			if @obj.status == "pending" && @obj.site then
+			  @obj.assign site_old, @obj.site
+			end
 			redirect_to '/service_orders'
 		else
 			format.html { render action: "edit" }
@@ -69,12 +70,17 @@ class ServiceOrdersController < ApplicationController
 		render :layout=>false
 	end
 
-
-	def send_sms
+	def inform
 		@obj = ServiceOrder.find(params[:id])
-		@obj.assign 
+		@obj.inform 
 		redirect_to '/service_orders'
 	end
+
+	# def send_sms
+	# 	@obj = ServiceOrder.find(params[:id])
+	# 	@obj.assign 
+	# 	redirect_to '/service_orders'
+	# end
 
 	def install
 		@service_order = ServiceOrder.find(params[:id])

@@ -12,7 +12,8 @@ module ApplicationHelper
 		"index"=>"列表",
 		"new"=>"新建",
 		"edit"=>"编辑",
-		"import"=>"导入"
+		"import"=>"导入",
+		"error"=>"失败订单"
 	}	
 	def breadcrumb
 		ret = "<div id='breadcrumb'>\

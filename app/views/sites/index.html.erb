@@ -31,8 +31,7 @@
 			<thead>
               	<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
 				<th width="200px">名称</th>
-				<th width="80px">省</th>
-				<th width="100px">市</th>
+				<th width="180px">市</th>
 				<th width="200px">地点</th>
 				<th width="60px">星级</th>
 				<th width="100px">操作</th>
@@ -43,8 +42,7 @@
 				<tr>
 	                <td><%=check_box_tag("ids[]",site.id)%></td>
 					<td><%= site.name%></td>
-					<td><%= site.province%></td>
-					<td><%= site.city%></td>
+					<td><%= site.summary_address%></td>
 					<td><%= site.address%></td>
 					<td><%= site.cert%></td>
 					<td>

@@ -11,15 +11,22 @@ class User < ActiveRecord::Base
   has_many :sites
   has_many :tb_trades
   has_many :service_orders
-  SITE_MAP={:name=>"名称",:address=>"地址",:contactor=>"联系人",:phone=>"电话",:province=>"省",:city=>"市",:cert=>"星级"}
+  SITE_MAP={:name=>"店名",:address=>"地址",:contactor=>"联系人",:phone=>"电话"} #,:cert=>"星级"
   TB_TRADE_MAP={:time_trade=>"日期",:tid=>"订单号",:cname=>"姓名",:cmobile=>"联系方式",:cadddress=>"车主所在地",:title_header=>"车型",:title_footer=>"安装明细"}
+
   def pay site,account
   	logger.info "#{user.name}--->pay--->#{site.name}---->#{account}"
   end
 
   def import_sites file_name
     read(file_name,SITE_MAP).each do |site|
-      site[:phone]=site[:phone].to_i if site[:phone]
+      site[:phone] = site[:phone].to_i if site[:phone]
+      addr = Site.confirm_region(site[:address])
+      if addr
+        site[:province],site[:city],site[:county]=addr[0],addr[1],addr[2]
+      else
+        site[:star]="*"
+      end
       sites.create(site)
     end 
   end
@@ -28,34 +35,31 @@ class User < ActiveRecord::Base
     time_base = Date.new(1900,1,1)
     read(file_name,TB_TRADE_MAP).each do |tb_trade|
       tb_trade[:cname].gsub!(/ /,"") unless tb_trade[:cname].blank?
-      tb_trade[:time_trade] = time_base+tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
+      # tb_trade[:time_trade] = time_base + tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
       tb_trade[:title] = "#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
-      tb_trade[:cmobile] = tb_trade[:cmobile].to_i if tb_trade[:cmobile]
+      
+      if tb_trade[:cmobile] then
+        tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | /).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/}.first
+      end
       tb_trade[:cadddress] = tb_trade[:cadddress] if tb_trade[:cmobile]
       tb_trade.delete :title_header
       tb_trade.delete :title_footer
+      return if tb_trades.find_by_tid(tb_trade[:tid])
       db_trade = tb_trades.create(tb_trade)
-      begin
-        if tb_trade[:cadddress][0..2] =~ /北京|天津|上海/ then
-          a2 = tb_trade[:cadddress][2..-1].split(/区/)[0]
-          if city = Site.confirm_city(a2)
-            db_trade.update_attributes(:province=>city[:province],:city=>city[:city],:status=>"pending")
-          else
-            db_trade.update_attributes(:status=>"error")
-          end
-        else
-          addr = tb_trade[:cadddress].gsub!(/ /,"").split(/省|市|自治区/,3) unless tb_trade[:cadddress].blank?
-          if addr && addr.length>2 && city = Site.confirm_city(addr[1]) then
-            db_trade.update_attributes(:province=>city[:province],:city=>city[:city],:status=>"pending")
-          else
-            db_trade.update_attributes(:status=>"error")
-          end
-        end
-        # p tb_trade[:cadddress]
-      rescue=>e
-        db_trade.update_attributes(:status=>"error")
-        p e
+      db_trade.confirm_address
+    end
+    tb_trades.status("pending").each do |tb_trades|
+      ServiceOrder.create_from_trade(tb_trades)
+    end
+  end
+
+  def find_site tb_trade
+    ret = nil
+    if tb_trade.city then
+      if tb_trade.county then
+        ret = sites.county(tb_trade.city,tb_trade.county).first
       end
+      ret ||= sites.city(tb_trade.city).first
     end
   end
 

@@ -3,15 +3,17 @@
   					:time_service -->
 
 <table class="table" cellspacing="0px">
-	<tr><td>状态</td><td><%= @service_order.status%></td></tr>
-	<tr><td>任务网点</td><td><%= @service_order.site.summary%></td></tr>
-	<tr><td>客户</td>	<td><%= @service_order.tb_trade.summary%></td></tr>
+	<tr><td>状态</td><td><%= @service_order.txt_status%></td></tr>
+	<tr><td>安装短信</td><td><%= @service_order.site_sms%></td></tr>
+	<tr><td>客户短信</td>	<td><%= @service_order.assign_sms%></td></tr>
 	<tr><td>电话</td><td><%= @service_order.cmobile%></td></tr>
 	<tr><td>完成照片</td>	<td><%= @service_order.site_pix%></td></tr>
 </table>
 <div class="widget-box">
 	<div class="widget-content">
 	<p>
+		<%=link_to "发送通知短信",inform_service_order_path(@service_order),class: "btn btn-default btn-small" %>
+
 		<%=link_to "取消",cancle_service_order_path(@service_order),class: "btn btn-inverse btn-small" if @service_order.can_cancle?%>
 		<%=link_to "确认支付",pay_service_order_path(@service_order),class: "btn btn-danger btn-small" if @service_order.can_pay?%>
 		<%=link_to "完成施工",install_service_order_path(@service_order),class: "btn btn-default btn-small" if @service_order.can_install?%>
