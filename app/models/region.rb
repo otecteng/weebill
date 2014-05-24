@@ -1,6 +1,16 @@
  # encoding: utf-8
 class Region 
-  RegionData = Struct.new(:name,:pinyin,:pinyin_abbr,:position,:level,:father,:sub_regions)
+  RegionData = Struct.new(:name,:pinyin,:pinyin_abbr,:position,:level,:father,:sub_regions) do
+    def distance_to dst
+      p self.name
+      
+      d1 = (self.position[:lat] - dst.position[:lat]).abs
+      d2 = (self.position[:lng] - dst.position[:lng]).abs
+      ret = Math.sqrt(d1*d1 + d2*d2)
+      p ret 
+      ret
+    end
+  end
 
   def self.get_region(name,father=nil)
     unless @regions
@@ -17,7 +27,7 @@ class Region
           @regions << city
           
           c["districts"].each do |k,d|
-            districts << RegionData.new(k,d["pinyin"],d["pinyin_abbr"],[],3,city)
+            districts << RegionData.new(k,d["pinyin"],d["pinyin_abbr"],{:lat=>d["lat"],:lng=>d["lng"]},3,city)
             @regions << districts.last
           end
 
@@ -43,11 +53,13 @@ class Region
   def self.confirm(province,city,district)
   end
 
-  def self.find_near(city)
-    return nil unless confirm_city(city)
-    xx = @matrix.select{|x| x[:start]==city}.sort{|x,y| x[:distance]<=>y[:distance]}
-    xx[1]
-  end
+  # def self.find_near(county,counties)
+    
+  #   county
+  #   return nil unless confirm_city(city)
+  #   xx = matrix.select{|x| x[:start]==city}.sort{|x,y| x[:distance]<=>y[:distance]}
+  #   xx[1]
+  # end
 
   def summary
   	"#{name},地址:#{address},电话:#{phone},联系人:#{contactor}"

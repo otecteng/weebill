@@ -32,4 +32,13 @@ describe User do
   	# obj.province.should == "广东"
     # p obj.inspect
   end
+
+  it "find nearest site" do
+    user = User.create(:email=>"wjj@wjj.com",:password=>"password",:password_confirmation=>"password")   
+    user.sites.create(:province=>"上海市",:city=>"上海市",:county=>"浦东新区",:location=>"{lng:121.638481,lat: 31.230895}")
+    user.sites.create(:province=>"上海市",:city=>"上海市",:county=>"黄浦区",:location=>"{lng: 121.496072,lat: 31.227203}")
+    # user.sites.create(:province=>"上海市",:city=>"上海市",:county=>"长宁区",:location=>{"lng: 121.387616，lat: 31.213301}")
+    tb_trade = user.tb_trades.create(:province=>"上海市",:city=>"上海市",:county=>"长宁区")
+    p user.find_site(tb_trade)
+  end
 end

@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :tb_trades
   has_many :service_orders
   has_many :sms_logs
-  
+
   SITE_MAP={:name=>"店名",:address=>"地址",:contactor=>"联系人",:phone=>"电话"} #,:cert=>"星级"
   TB_TRADE_MAP={:time_trade=>"日期",:tid=>"订单号",:cname=>"姓名",:cmobile=>"联系方式",:cadddress=>"车主所在地",:title_header=>"车型",:title_footer=>"安装明细"}
 
@@ -60,6 +60,11 @@ class User < ActiveRecord::Base
     if tb_trade.city then
       if tb_trade.county then
         ret = sites.county(tb_trade.city,tb_trade.county).first
+        return ret if ret
+        regions = sites.city(tb_trade.city).uniq{|x| x.tb_trade.county}.map{ |s| {site:s,region:Region.get_region(s.county,s.city)}}
+        region = Region.get_region(tb_trade.county,regions[0]["father"])
+        region = regions.sort{|x,y| x[:region].distance_to(region)<=>y[:region].distance_to(region)}.first
+        return region[:site]
       end
       ret ||= sites.city(tb_trade.city).first
     end
