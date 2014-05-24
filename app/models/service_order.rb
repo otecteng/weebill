@@ -42,9 +42,9 @@ class ServiceOrder < ActiveRecord::Base
       # service_order.send_assign_sms
     end
 
-    after_transition :assigned => :informed do |service_order,transition|
+    after_transition [:informed,:assigned] => :informed do |service_order,transition|
       # service_order.send_cancle transition.args[0]
-      # service_order.send_assign_sms
+      service_order.send_assign_sms
     end
 
     after_transition :assigned => :cancled do |service_order,transition|
@@ -79,11 +79,16 @@ class ServiceOrder < ActiveRecord::Base
   end
 
   def send_assign_sms
-  	message_s = "服务预约时间:#{time_service.strftime("%F %H")}，客户:#{cname}，联系电话:#{cmobile},订单信息:"  	
-  	message_c = "#{cname}，服务预约时间:#{time_service.strftime("%F %H点")},#{site.summary}"
-  	SmsWorker.new.perform site.phone,message_s
-  	# SmsWorker.perform_async cmobile,message_c
-    SmsWorker.new.perform cmobile,message_c
+  	# message_s = "服务预约时间:#{time_service.strftime("%F %H")}，客户:#{cname}，联系电话:#{cmobile},订单信息:"  	
+  	# message_c = "#{cname}，服务预约时间:#{time_service.strftime("%F %H点")},#{site.summary}"
+  	# SmsWorker.new.perform site.phone,message_s
+  	# # SmsWorker.perform_async cmobile,message_c
+   #  SmsWorker.new.perform cmobile,message_c
+    if Setting[:sms_send] then
+      SmsWorker.perform_async user.id,cmobile,assign_sms
+    else
+      logger.info "sms #{cmobile}--->>>#{assign_sms}"
+    end
   end
 
   def site_sms
@@ -91,7 +96,7 @@ class ServiceOrder < ActiveRecord::Base
   end
 
   def assign_sms
-    template = "感谢您选购航睿导航！收货后请提前预约免费安装体验店,订单号#{tb_trade.tid}，地址:#{site.address},电话:#{site.phone},[#{site.name}]-#{site.contactor},投诉建议拨打18666688652祝您购物愉快！"
+    template = "感谢选购航睿导航！收货后请致电体验店预约,电话:#{site.phone}(#{site.contactor}),预约号#{tb_trade.tid},地址:#{site.address}-[#{site.name}],投诉建议请拨打18666688652,祝您购物愉快！"
   end
 
   def txt_status

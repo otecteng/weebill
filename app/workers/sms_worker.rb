@@ -1,10 +1,10 @@
  # encoding: utf-8
 class SmsWorker
   include Sidekiq::Worker
-  def perform(fans,msg)
-    # ChinaSMS.use :smsbao, username: 'raymond_nj', password: '88888888'
-    # x = ChinaSMS.to fans,msg
-    # p x # ChinaSMS.message
-    p "send sms #{fans} #{msg}"
+  def perform(user_id,fans,msg)
+    ChinaSMS.use :smsbao, username:Setting.sms_user, password:Setting.sms_password
+    # ret = ChinaSMS.to fans,msg
+    ret={:success=>true}
+    SmsLog.create(:user_id=>user_id,:message=>msg,:amount=>(msg.length/64).ceil) if ret[:success]
   end  
 end

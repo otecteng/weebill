@@ -1,0 +1,16 @@
+defaults: &defaults
+  sms_send: false
+  sms_user: ''
+  sms_passwrod: ''
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  sms_send: true
+
+

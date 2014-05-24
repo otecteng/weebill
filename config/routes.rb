@@ -5,7 +5,7 @@ Weebill::Application.routes.draw do
   post 'tb_customers/wx' => 'tb_customers#wx_create'
 
   devise_for :users
-  resources  :tb_customers
+  resources  :tb_customers,:sms_logs
 
   resources :tb_trades do
     get  'import',:on=>:collection

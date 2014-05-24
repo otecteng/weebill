@@ -4,6 +4,7 @@ gem 'rails', '3.2.17'
 gem 'state_machine'
 gem 'unicorn'
 gem 'devise'
+gem 'settingslogic'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'thin'
