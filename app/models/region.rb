@@ -13,6 +13,8 @@ class Region
   end
 
   def self.get_region(name,father=nil)
+    p "name=#{name}"
+    p "father=#{father.name}" if father
     unless @regions
       @regions = []    
       data = File.open("#{Rails.root}/config/regions.yml") { |file| YAML.load(file) }

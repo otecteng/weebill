@@ -61,8 +61,9 @@ class User < ActiveRecord::Base
       if tb_trade.county then
         ret = sites.county(tb_trade.city,tb_trade.county).first
         return ret if ret
-        regions = sites.city(tb_trade.city).uniq{|x| x.tb_trade.county}.map{ |s| {site:s,region:Region.get_region(s.county,s.city)}}
-        region = Region.get_region(tb_trade.county,regions[0]["father"])
+        city = Region.get_region(tb_trade.city)
+        regions = sites.city(tb_trade.city).uniq{|x| x.tb_trade.county}.map{ |s| {site:s,region:Region.get_region(s.county,city)}}
+        region = Region.get_region(tb_trade.county,city)
         region = regions.sort{|x,y| x[:region].distance_to(region)<=>y[:region].distance_to(region)}.first
         return region[:site]
       end
