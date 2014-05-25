@@ -57,7 +57,7 @@
 		# {url:'/tb_trades/?status=pending',text:'已预分配订单',icon:'glyphicon-tasks'},
 		]
 	},
-	{url:'/brands',text:'车型列表',icon:'glyphicon-tag'},
+	{url:'/sms_logs',text:'短信发送记录',icon:'glyphicon-tag'},
 ]
 if current_user then 
   idx1 = current_user.service_orders.group(:status).count
@@ -67,10 +67,7 @@ if current_user then
   	menu[:v]=v if menu
   end
   idx2 = current_user.tb_trades.group(:status).count
-  p "--------->>>>>>"
-  p idx2
   menu = @menus[2][:submenus].select{|x|x[:url]=="/tb_trades/error"}.first
-  p menu
   menu[:v]=idx2["error"] if menu
 end
 %>
@@ -93,10 +90,6 @@ end
 	<%end%>
 </li>
 <%end%>				
-<li class="submenu open">
-					<a href="#"><i class="icon icon-file"></i> <span>Sample pages</span> <span class="label">4</span></a>
-				</li>
-
 						
 			</ul>
 		

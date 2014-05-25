@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="/assets/css/select2.css" />		
+<link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
+
+<%=form_tag '/sites/delete_all',:method=>"post", :id=>"frm_main" do%>
+ <style>
+ 	.btn-default {
+ 		color:#474749;
+ 	}
+
+ 	.btn:hover {
+ 		background-color:#575759;
+ 		background-position: 0 -38px;
+ 	}
+ 	.btn:focus {
+ 		background-color:#404343;
+ 		background-position: 0 -38px;
+ 	}
+ </style>
+
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			
+		</span>
+		<h5>短信发送列表</h5>
+		
+
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table with-check">
+			<thead>
+				<th >时间</th>
+				<th>接收号码</th>
+				<th>内容</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+				<% @sms_logs.each do |site|  %>
+				<tr>
+	                <td style="width:160px"><%=l site.created_at%></td>
+					<td style="width:160px"><%= site.recv%></td>
+					<td ><%= site.message%></td>
+					<td><%= site.amount%></td>
+					<td><%= site.status%></td>
+<!-- 					<td>
+					<div>
+	
+					</div>	</td>
+ -->				</tr>
+				<% end%>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%end%>
+<script type="text/javascript">
+$( "#btn_delete").click(function() {
+  $("#frm_main").submit();
+});
+</script>
+<script src="/assets/js/select2.min.js"></script>
+<script src="/assets/js/unicorn.tables.js"></script>
+
+
+

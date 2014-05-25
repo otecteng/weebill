@@ -5,6 +5,7 @@ class Site < ActiveRecord::Base
   has_many :service_orders
   has_many :site_workers
   belongs_to :user
+  default_scope order('created_at DESC')
   scope :city, lambda {|city| where(:city => city)}
   scope :county, lambda {|city,county| where(:city => city,:county=>county)}
   scope :need_update, lambda {where(:star => "*")}
