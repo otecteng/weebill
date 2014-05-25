@@ -32,6 +32,9 @@ Weebill::Application.routes.draw do
     post "install_m", :on=>:member
     post  'delete_all',:on=>:collection
 
+    get "search_key_m", :on=>:collection
+    get "search_tid_m", :on=>:collection
+
   end
 
   resources :sites do

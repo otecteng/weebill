@@ -1,6 +1,6 @@
 # encoding: utf-8
 class ServiceOrdersController < ApplicationController
-	skip_before_filter :authenticate_user!,:only=>[:fill_m,:install_m]
+	skip_before_filter :authenticate_user!,:only=>[:fill_m,:install_m,:search_key_m,:search_tid_m]
 
 	def index
 		if params[:site_id] then
@@ -94,6 +94,26 @@ class ServiceOrdersController < ApplicationController
 		current_user.pay(@obj.site,price)
 		redirect_to :back
 	end
+
+	def search_key_m
+		if params[:key] then
+			@service_order = ServiceOrder.find_by_uid(params[:key])
+		else
+			@show_form=true
+		end
+	    render layout:"m_form"
+	end
+
+	def search_tid_m
+		if params[:tid] then
+			@tb_trade = TbTrade.find_by_tid(params[:tid])
+			@service_order = ServiceOrder.find_by_tb_trade_id(@tb_trade.id) if @tb_trade
+		else
+			@show_form=true
+		end
+	    render layout:"m_form"
+	end
+
 
 	def fill_m
 		@service_order = ServiceOrder.find(params[:id])

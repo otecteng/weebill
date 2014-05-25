@@ -11,7 +11,7 @@
 		<h5>订单</h5>
 	</div>
 	<div class="widget-content nopadding">
-		<table class="table table-bordered table-striped hover data-table with-check">
+		<table id="tb-data" class="table table-bordered table-striped hover data-table with-check">
 		
 			<thead>
 				<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
@@ -68,3 +68,10 @@ $( "#btn_delete").click(function() {
 </script>
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/unicorn.tables.js"></script>
+	<script type="text/javascript" charset="utf-8">
+	$(function(){
+		var oTable = $('#tb-data').dataTable();
+		oTable.fnSort([[4,'desc']]);
+	});
+	</script>
+

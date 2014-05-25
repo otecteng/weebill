@@ -1,0 +1,43 @@
+<header data-role="header" class="">
+      <h1>
+        安装查询
+      </h1>
+</header>
+  <div class="main" data-role="content">
+  <div class="main-content">
+    <div class="form-content">
+<%if @show_form then%>
+
+  <%=form_tag "/service_orders/search_key_m",:method=>"get" do%>
+  <div class="field  " data-api-code="field_3">
+  <div class="control-group ">
+    <div class="field_content">
+      <div class="help-block">请输入验证码</div>
+      
+      <div class="controls">
+        <input id="customer_name" name="key" size="30" value="">
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="field submit-field">
+  <input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="查询">
+  </div>
+  <%end%>
+
+
+<%else%>
+  <div class="field  " data-api-code="field_3">
+  <div class="control-group ">
+    <div class="field_content">
+      <div class="help-block">服务验证码<%=@service_order ? "有效,客户信息:#{@service_order.cname},#{@service_order.cmobile}": '无效，请同服务中心联系(18666688652)'%></div>
+    </div>
+  </div>
+  </div>
+<%end%>
+</div>
+</div>
+</div>
+</div>
+
+
