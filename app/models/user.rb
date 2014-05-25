@@ -36,19 +36,28 @@ class User < ActiveRecord::Base
   def import_tb_trades file_name
     time_base = Date.new(1900,1,1)
     read(file_name,TB_TRADE_MAP).each do |tb_trade|
-      tb_trade[:cname].gsub!(/ /,"") unless tb_trade[:cname].blank?
-      # tb_trade[:time_trade] = time_base + tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
-      tb_trade[:title] = "#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
-      
-      if tb_trade[:cmobile] then
-        tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | /).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/}.first
+      begin
+        tb_trade[:cname].gsub!(/ /,"") unless tb_trade[:cname].blank?
+        # tb_trade[:time_trade] = time_base + tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
+        tb_trade[:title] = "#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
+        
+        if tb_trade[:cmobile] then
+          tb_trade[:cmobile] = tb_trade[:cmobile].to_i.to_s if tb_trade[:cmobile].is_a?(Float) || tb_trade[:cmobile].is_a?(Integer)
+          tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | /).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/}.first
+        end
+        tb_trade[:cadddress] = tb_trade[:cadddress] if tb_trade[:cmobile]
+        tb_trade[:cadddress].gsub! '北京北京','北京'
+        tb_trade[:cadddress].gsub! '重庆重庆','重庆'
+        tb_trade[:cadddress].gsub! '上海上海','上海'
+        tb_trade[:cadddress].gsub! '天津天津','天津'
+        tb_trade.delete :title_header
+        tb_trade.delete :title_footer
+        return if tb_trades.find_by_tid(tb_trade[:tid])
+        db_trade = tb_trades.create(tb_trade)
+        db_trade.confirm_address
+      rescue Exception => e
+        logger.error tb_trade
       end
-      tb_trade[:cadddress] = tb_trade[:cadddress] if tb_trade[:cmobile]
-      tb_trade.delete :title_header
-      tb_trade.delete :title_footer
-      return if tb_trades.find_by_tid(tb_trade[:tid])
-      db_trade = tb_trades.create(tb_trade)
-      db_trade.confirm_address
     end
     tb_trades.status("pending").each do |tb_trades|
       ServiceOrder.create_from_trade(tb_trades)
@@ -65,7 +74,9 @@ class User < ActiveRecord::Base
         regions = sites.city(tb_trade.city).uniq{|x| x.tb_trade.county}.map{ |s| {site:s,region:Region.get_region(s.county,city)}}
         region = Region.get_region(tb_trade.county,city)
         region = regions.sort{|x,y| x[:region].distance_to(region)<=>y[:region].distance_to(region)}.first
-        return region[:site]
+        if region
+          return region[:site]
+        end
       end
       ret ||= sites.city(tb_trade.city).first
     end
