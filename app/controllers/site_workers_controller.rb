@@ -69,7 +69,7 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_text 
-    return if !confirm_worker
+    # return if !confirm_worker
     msg = params[:xml]
     content = msg[:Content]
     if @worker == content then
@@ -81,8 +81,9 @@ class SiteWorkersController < ApplicationController
   end
 
   def on_image 
-    return if !confirm_worker
-    @content = @worker.upload_image params[:xml][:MediaId]
+    confirm_worker
+    @worker.upload_image params[:xml][:MediaId]
+    @content = I18n.t(:tip_upload_pix) + "http://weebill.gps400.com/service_orders/search_key_m?worker=#{@worker.id}"
   end
 
   def on_location 
@@ -102,7 +103,7 @@ class SiteWorkersController < ApplicationController
       args = params[:xml][:EventKey].split('_')
         case args[0]
         when "REGIST"
-          @content = I18n.t("register") + '<a href="http://weebill.gps400.com/site_workers/new?wid='+params[:xml][:FromUserName]+'&user='+args[1]+'">register</a>'
+          @content = I18n.t("search") + 'http://weebill.gps400.com/service_orders/search_key_m'
         when "REPORT"
           @content = I18n.t("tip_upload_pix")+ "_" + args[1]
         end
@@ -135,14 +136,14 @@ class SiteWorkersController < ApplicationController
     def confirm_worker 
       param = params[:xml] 
       @worker = SiteWorker.find_or_create_by_wid(param[:FromUserName])
-      unless @worker.site
-        if param[:EventKey] == "reg" then
-          @content = I18n.t("register")
-        else
-          @content = I18n.t("need_confirmed")
-        end
-      end
-      return @worker.site
+      # unless @worker.site
+      #   if param[:EventKey] == "reg" then
+      #     @content = I18n.t("register")
+      #   else
+      #     @content = I18n.t("need_confirmed")
+      #   end
+      # end
+      # return @worker.site
     end
 
     def confirm_session

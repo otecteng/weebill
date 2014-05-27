@@ -23,8 +23,9 @@ class SiteWorker < ActiveRecord::Base
 
   def upload_image media_id
     self.update_attributes(:picture_uploaded=>media_id)
-    site.service_orders.status(:assigned).map{|o|
-      "#{o.cname}:点击链接填写工单：http://weebill.gps400.com/service_orders/#{o.id}/fill_m?worker=#{id}\n"
-    }.join(" , ") 
+    
+    # site.service_orders.status(:assigned).map{|o|
+    #   "#{o.cname}:点击链接填写工单：http://weebill.gps400.com/service_orders/#{o.id}/fill_m?worker=#{id}\n"
+    # }.join(" , ") 
   end
 end

@@ -8,5 +8,6 @@ en:
 
   hello: "Hello world"
   need_confirmed: "you are waiting for being confirmed, or you can use regsiter menu to reg"
-  register: "please input your mobile to register:" 
-  tip_upload_pix: "please upload a picture of your work"
+  search: "请点击链接验证预约号:" 
+  tip_upload_pix: "请上传施工图片:"
+  report: "请点击链接填写施工单"

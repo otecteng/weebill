@@ -1,0 +1,10 @@
+<%if !@service_order %>
+$('#msg').text("无效的客户验证码，请重新输入");
+<%else%>
+$('#msg').text("系统已经确认，辛苦啦！");
+$('#dlg-report').hide();
+$('#dlg-search').hide();
+
+
+
+<%end%>

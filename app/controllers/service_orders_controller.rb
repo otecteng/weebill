@@ -96,8 +96,9 @@ class ServiceOrdersController < ApplicationController
 	end
 
 	def search_key_m
-		if params[:key] then
+		if params[:key] && params[:tid] then
 			@service_order = ServiceOrder.find_by_uid(params[:key])
+			@service_order if @service_order.tb_trade_id.to_s != params[:tid]
 		else
 			@show_form=true
 		end
@@ -114,6 +115,21 @@ class ServiceOrdersController < ApplicationController
 	    render layout:"m_form"
 	end
 
+	def search_tid # search by mobile
+	    @tb_trade = TbTrade.find_by_tid(params[:tid])
+	    respond_to do |format|
+	      format.html { redirect_to @tb_trade }
+	      format.js 
+	    end
+	end
+
+	def search_uid # search by mobile
+	    @service_order = ServiceOrder.find_by_uid(params[:uid])
+	    respond_to do |format|
+	      format.html { redirect_to @service_order }
+	      format.js 
+	    end
+	end
 
 	def fill_m
 		@service_order = ServiceOrder.find(params[:id])

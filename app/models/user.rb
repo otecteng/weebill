@@ -23,8 +23,7 @@ class User < ActiveRecord::Base
   def import_sites file_name
     read(file_name,SITE_MAP).each do |site|
       site[:phone] = site[:phone].to_i if site[:phone]
-      addr = Site.confirm_region(site[:address])
-      if addr
+      if site[:address] && addr = Site.confirm_region(site[:address])
         site[:province],site[:city],site[:county]=addr[0],addr[1],addr[2]
       else
         site[:star]="*"

@@ -3,41 +3,68 @@
         安装查询
       </h1>
 </header>
-  <div class="main" data-role="content">
+<div class="main" data-role="content">
   <div class="main-content">
     <div class="form-content">
-<%if @show_form then%>
-
-  <%=form_tag "/service_orders/search_key_m",:method=>"get" do%>
-  <div class="field  " data-api-code="field_3">
-  <div class="control-group ">
-    <div class="field_content">
-      <div class="help-block">请输入验证码</div>
-      
-      <div class="controls">
-        <input id="customer_name" name="key" size="30" value="">
+      <div id="dlg-search">
+      <%=form_tag '/service_orders/search_tid.js',:remote=>true,:method=>'post' do%>
+      <div class="field" data-api-code="field_3">
+        <div class="control-group ">
+          <div class="field_content">
+              <div class="help-block">请输入安装预约号:</div>
+            <div class="controls">
+              <input id="entry_field_3" name="tid" size="30" type="tel" value="">
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  </div>
-  <div class="field submit-field">
-  <input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="查询">
-  </div>
-  <%end%>
+      <div class="field submit-field">
+        <input id="btn_search" name="commit" type="submit" value="验证预约号">
+      </div>
+      <%end%>
+      </div>
+
+      <div id="dlg-message">
+        <div class="field  " data-api-code="field_3">
+        <div class="control-group ">
+          <div class="field_content">
+            <div class="help-block" id="msg"></div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div id="dlg-report" class="">
+        <%=form_tag "/service_orders/search_uid.js",:remote=>true,:method=>"post" do%>
+
+        <div class="field  " data-api-code="field_3">
+        <div class="control-group ">
+          <div class="field_content">
+            <div class="help-block"></div>
+            <div class="controls">
+              <input id="customer_name" name="uid" size="30" value="">
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="field submit-field">
+          <input id="key_" name="commit" type="hidden" value="查询">
+        <input class="submit" data-disabled-with="提交中..." name="commit" type="submit" value="提交">
+        </div>
+        <%end%>
+      </div>
 
 
-<%else%>
-  <div class="field  " data-api-code="field_3">
-  <div class="control-group ">
-    <div class="field_content">
-      <div class="help-block">服务验证码<%=@service_order ? "有效,客户信息:#{@service_order.cname},#{@service_order.cmobile}": '无效，请同服务中心联系(18666688652)'%></div>
-    </div>
-  </div>
-  </div>
-<%end%>
 </div>
 </div>
 </div>
 </div>
+<script type="text/javascript">
+  $(function(){
+    $('#dlg-report').hide();
+    $('#dlg-report-confirm').hide();
+  })
+</script>
 
 

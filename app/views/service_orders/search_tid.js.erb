@@ -1,0 +1,8 @@
+<%if @tb_trade %>
+$('#dlg-message').show();
+$('#msg').text("预约号有效.请在完成施工后提交工程照片和客户验证码");
+$('#dlg-report').show();
+<%else%>
+$('#dlg-message').show();
+$('#msg').val("无效的预约号，请重新输入");
+<%end%>

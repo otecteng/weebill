@@ -12,14 +12,13 @@ describe WeechatClient do
   it "can update menu" do
   	w = WeechatClient.get_instance :siteworker
   	p w.api_get_menu
-
-	menu = {
-	    "button"=>
-	    [
-			{"type" => "click","name"=> "REG","key"=> "REGIST_5"},
-			{"type" => "click","name"=> "REPORT","key"=> "REPORT_5"},
-	    ]
-	}
-	p w.api_set_menu menu
+ #  	menu = {
+ #  	    "button"=>
+ #  	    [
+ #  			{"type" => "click","name"=> "查询预约","key"=> "REGIST_1"},
+ #  			{"type" => "click","name"=> "照片上传","key"=> "REPORT_1"},
+ #  	    ]
+ #  	}
+ # p w.api_set_menu menu
   end
 end

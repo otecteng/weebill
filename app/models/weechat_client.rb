@@ -52,7 +52,7 @@ class WeechatClient
 	end
 
 	def api_set_menu(menu)
-	  api_post(:menu,menu.to_json)
+	  api_post(:menu,menu.to_json.gsub!(/\\u([0-9a-z]{4})/) {|s| [$1.to_i(16)].pack("U")})
 	end
 
 	def api_get_menu
@@ -97,7 +97,6 @@ class WeechatClient
 	def api_post(url,body)
 	    get_api_token unless @access_token
 	    conn = Faraday.new(:url => @@host_api)
-	    
 		response = conn.post "#{URL_ADVANCED[url]}?access_token=#{@access_token}" do |req|
 		    req.body = body
 		end
