@@ -17,7 +17,7 @@
 		<%=link_to "取消",cancle_service_order_path(@service_order),class: "btn btn-inverse btn-small" if @service_order.can_cancle?%>
 		<%=link_to "确认支付",pay_service_order_path(@service_order),class: "btn btn-danger btn-small" if @service_order.can_pay?%>
 		<%=link_to "完成施工",install_service_order_path(@service_order),class: "btn btn-default btn-small" if @service_order.can_install?%>
-		<%=link_to "指派网点",edit_service_order_path(@service_order),class: "btn btn-primary btn-small" if @service_order.can_assign?%>
+		<%=link_to "修改网点",edit_service_order_path(@service_order),class: "btn btn-primary btn-small" if @service_order.can_assign?%>
 	</p>
 	</div>
 </div>
