@@ -2,13 +2,9 @@
 class Region 
   RegionData = Struct.new(:name,:pinyin,:pinyin_abbr,:position,:level,:father,:sub_regions) do
     def distance_to dst
-      p self.name
-      
       d1 = (self.position[:lat] - dst.position[:lat]).abs
       d2 = (self.position[:lng] - dst.position[:lng]).abs
-      ret = Math.sqrt(d1*d1 + d2*d2)
-      p ret 
-      ret
+      d1*d1 + d2*d2
     end
   end
 

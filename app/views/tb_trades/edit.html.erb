@@ -9,13 +9,17 @@
     <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
     <script src="/assets/js/bootstrap-datepicker.js"></script>
 
-
+ <div id="flash_notice">
+  <% if flash[:notice] %>
+      <p class="notice"><%= flash[:notice] %></p>
+  <% end %>
+</div>
 <div class="widget-box">
               <div class="widget-title">
                 <span class="icon">
                   <i class="glyphicon glyphicon-align-justify"></i>                 
                 </span>
-                <h5>New tb_trade</h5>
+                <h5>edit trade</h5>
               </div>
               <div class="widget-content nopadding">
                 <%= form_for @tb_trade,:html=>{:class=>"form-horizontal"} do |f| %>
@@ -50,7 +54,7 @@
                       <%= f.text_field :cadddress , :class => "form-control input-small"%>
                     </div>
                   </div>                  
-                  <div class="form-group">
+<!--                   <div class="form-group">
                     <label class="control-label">省份/直辖市</label>
                     <div class="controls">
                       <select id="tb_trade_province" name="tb_trade[province]" class="province form-control input-small"></select>
@@ -62,7 +66,7 @@
                       <select id="tb_trade_city" name="tb_trade[city]" class="city form-control input-small"></select>
                    </div>
                   </div>
-
+ -->
                   <div class="form-actions">
                     <%= submit_tag 'Save',:class => "btn btn-primary btn-small" %>
                     or <a class="text-danger" href="/tb_trades">Cancel</a>
@@ -73,12 +77,12 @@
 
         <script type="text/javascript">
 $(document).ready(function(){
-  $().CitySelector();
+  // $().CitySelector();
   $('.datepicker').datepicker();
-  var p=$("#tb_trade_province");
-  var c=$("#tb_trade_city");
-  p.find("option[value=<%=@tb_trade.province%>]").attr("selected",true).trigger("change");
-  c.find("option[value=<%=@tb_trade.city%>]").attr("selected",true);
+  // var p=$("#tb_trade_province");
+  // var c=$("#tb_trade_city");
+  // p.find("option[value=<%=@tb_trade.province%>]").attr("selected",true).trigger("change");
+  // c.find("option[value=<%=@tb_trade.city%>]").attr("selected",true);
 });
 
 </script>

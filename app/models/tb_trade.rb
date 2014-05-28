@@ -34,8 +34,8 @@ class TbTrade < ActiveRecord::Base
         end
       end
     rescue=>e
-        self.update_attributes(:status=>"error")
-        return false
+      self.update_attributes(:status=>"error")
+      return false
     end
     return false
   end

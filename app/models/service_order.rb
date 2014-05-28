@@ -73,6 +73,12 @@ class ServiceOrder < ActiveRecord::Base
     return service_order
   end
 
+  def set_site site
+    self.site_id = site.id
+    self.save!
+  end
+
+
   def send_cancle site
     message_s = "服务预约取消:#{time_service.strftime("%F %H")}，客户:#{cname}，联系电话:#{cmobile},订单信息:"
     SmsWorker.new.perform site.phone,message_s

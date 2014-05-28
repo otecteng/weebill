@@ -1,3 +1,4 @@
+# encoding: utf-8
 class TbTradesController < ApplicationController
 	def index
 		@tb_trades = current_user.tb_trades
@@ -28,10 +29,17 @@ class TbTradesController < ApplicationController
 	def update
 		@tb_trade = TbTrade.find(params[:id])
 		if @tb_trade.update_attributes(params[:tb_trade])
-			if(@tb_trade.status=="error" && (@tb_trade.confirm_address || @tb_trade.city))
-				ServiceOrder.create_from_trade(@tb_trade)
-				@tb_trade.status = "assigned"
-				@tb_trade.save
+			if(@tb_trade.confirm_address)
+			  if service_order=@tb_trade.service_order
+			  	service_order.set_site(current_user.find_site(@tb_trade))
+			  else
+			  	ServiceOrder.create_from_trade(@tb_trade) 
+			  end
+			  @tb_trade.status = "assigned"
+			  @tb_trade.save
+			else
+			  flash[:notice] = "地址解析错误，请检查后重填"
+			  return redirect_to :back
 			end
 			ret = current_user.tb_trades.status('error').length > 0 ? '/tb_trades/error' : '/service_orders'
 			redirect_to ret
@@ -67,8 +75,10 @@ class TbTradesController < ApplicationController
 	end
 
 	def assign
-		trade = TbTrade.find params[:id]
-		@service_order = ServiceOrder.create_from_trade trade
-		redirect_to service_order_path(@service_order)
+		@trade = TbTrade.find params[:id]
+		@trade.status = "error"
+		# @trade.service_order.delete if @trade.service_order && (!@trade.service_order.assigned?)
+		@trade.save
+		redirect_to :back
 	end	
 end

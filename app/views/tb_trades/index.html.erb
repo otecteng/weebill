@@ -45,8 +45,8 @@
 		<%= link_to edit_tb_trade_path tb_trade,:class => "btn-mini tip-bottom",:title=>"编辑" do %>
         <i class="glyphicon glyphicon-pencil"></i>
         <% end %>
-		<%= link_to tb_trade.service_order ? "/service_orders/#{tb_trade.service_order.id}/edit" : assign_tb_trade_path(tb_trade), :class => "btn-mini tip-bottom",:title=>"指派" do %>
-        <i class="glyphicon glyphicon-wrench"></i>
+		<%= link_to assign_tb_trade_path(tb_trade), :class => "btn-mini tip-bottom",:title=>"设为无效" do %>
+        <i class="glyphicon glyphicon-random"></i>
         <% end %>
 		<%= link_to tb_trade, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
         <i class="glyphicon glyphicon-remove"></i>
