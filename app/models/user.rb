@@ -51,11 +51,12 @@ class User < ActiveRecord::Base
         tb_trade[:cadddress].gsub! '天津天津','天津'
         tb_trade.delete :title_header
         tb_trade.delete :title_footer
-        return if tb_trades.find_by_tid(tb_trade[:tid])
+        next if tb_trades.find_by_tid(tb_trade[:tid])
         db_trade = tb_trades.create(tb_trade)
         db_trade.confirm_address
       rescue Exception => e
-        logger.error tb_trade
+        logger.info e
+        logger.info tb_trade
       end
     end
     tb_trades.status("pending").each do |tb_trades|

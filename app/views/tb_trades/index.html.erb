@@ -31,7 +31,7 @@
 	<td><%= tb_trade.cname%></td>
 	<td><%= tb_trade.cmobile%></td>
 	<td><%= "#{tb_trade.address}"%></td>
-	<td><%= tb_trade.time_trade ? tb_trade.time_trade.localtime.to_s(:db) : ""%></td>
+	<td><%= tb_trade.time_trade if tb_trade.time_trade%></td>
 	<td><%= tb_trade.title%></td>
 	<td>
 		<%if tb_trade.service_order && tb_trade.service_order.site then%>

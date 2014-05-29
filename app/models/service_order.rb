@@ -74,7 +74,11 @@ class ServiceOrder < ActiveRecord::Base
   end
 
   def set_site site
-    self.site_id = site.id
+    if site then
+      self.site_id = site.id
+    else
+      self.status = "pending"
+    end
     self.save!
   end
 

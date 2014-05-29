@@ -30,11 +30,13 @@ class TbTradesController < ApplicationController
 		@tb_trade = TbTrade.find(params[:id])
 		if @tb_trade.update_attributes(params[:tb_trade])
 			if(@tb_trade.confirm_address)
-			  if service_order=@tb_trade.service_order
-			  	service_order.set_site(current_user.find_site(@tb_trade))
+			  if service_order = @tb_trade.service_order
+			  	site = current_user.find_site(@tb_trade)
+			  	service_order.set_site(site)
 			  else
-			  	ServiceOrder.create_from_trade(@tb_trade) 
+			  	service_order = ServiceOrder.create_from_trade(@tb_trade) 
 			  end
+			  #@tb_trade.status = service_order.site ? "assigned" : "pending"
 			  @tb_trade.status = "assigned"
 			  @tb_trade.save
 			else
