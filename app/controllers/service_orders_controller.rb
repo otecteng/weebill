@@ -91,7 +91,7 @@ class ServiceOrdersController < ApplicationController
 	def pay
 		@service_order = ServiceOrder.find(params[:id])
 		@service_order.pay
-		current_user.pay(@obj.site,price)
+		current_user.pay(@service_order.site,1)
 		redirect_to :back
 	end
 

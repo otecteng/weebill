@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   TB_TRADE_MAP={:time_trade=>"日期",:tid=>"订单号",:cname=>"姓名",:cmobile=>"联系方式",:cadddress=>"车主所在地",:title_header=>"车型",:title_footer=>"安装明细"}
 
   def pay site,account
-  	logger.info "#{user.name}--->pay--->#{site.name}---->#{account}"
+  	logger.info "#{name}--->pay--->#{site.name}---->#{account}"
   end
 
   def import_sites file_name
