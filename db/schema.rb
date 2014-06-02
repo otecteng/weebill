@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140525130510) do
+ActiveRecord::Schema.define(:version => 20140602043409) do
 
   create_table "brands", :force => true do |t|
     t.string   "name"
@@ -106,6 +106,16 @@ ActiveRecord::Schema.define(:version => 20140525130510) do
     t.datetime "updated_at", :null => false
     t.string   "recv"
     t.string   "status"
+  end
+
+  create_table "sms_templates", :force => true do |t|
+    t.string   "title"
+    t.string   "sms_type"
+    t.text     "content"
+    t.string   "signature"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tb_customers", :force => true do |t|

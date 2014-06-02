@@ -106,7 +106,10 @@ class ServiceOrder < ActiveRecord::Base
   end
 
   def assign_sms
-    template = "感谢选购航睿导航！收货后请致电体验店预约,电话:#{site.phone}(#{site.contactor}),预约号#{tb_trade.tid},地址:#{site.address}-[#{site.name}],投诉建议请拨打18666688652,祝您购物愉快！"
+    vars = {phone:site.phone,contactor:site.contactor,tid:tb_trade.tid,address:site.address,name:site.name}
+    template = user.sms_templates.where(:sms_type=>"inform").first
+    template = template ? '<%="'+template.content+'"%>' : '<%="感谢选购航睿导航！收货后请致电体验店预约,电话:#{phone}(#{contactor}),预约号#{tid},地址:#{address}-[#{name}],投诉建议请拨打18666688652,祝您购物愉快!"%>'
+    ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
   end
 
   def txt_status
