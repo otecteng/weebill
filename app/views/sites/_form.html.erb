@@ -104,7 +104,7 @@ $(document).ready(function(){
         myGeo.getLocation(point, function(result){    
           if (result){    
             args = result.address.split(/省|市|区|县|州|自治区/);        
-            $("#site_province").val(args[2]);
+            $("#site_county").val(args[2]);
           }    
         });  
       }    
