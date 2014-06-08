@@ -45,7 +45,7 @@
                   <div class="form-group">
                     <label class="control-label">市/区</label>
                     <div class="controls">
-                      <select id="site_city" name="site[city]" class="city form-control input-small"></select>
+                      <%= f.text_field :city , :class => "form-control input-small"%>
                    </div>
                   </div>
                   <div class="form-group">
@@ -101,13 +101,18 @@ $(document).ready(function(){
         l.val(point.lng+","+point.lat);    
         map.centerAndZoom(point, 16);    
         map.addOverlay(new BMap.Marker(point));  
-        console.log(point);  
+        myGeo.getLocation(point, function(result){    
+          if (result){    
+            args = result.address.split(/省|市|区|县|州|自治区/);        
+            $("#site_province").val(args[2]);
+          }    
+        });  
       }    
-    }, p.val()); 
+    },p.val()); 
   });
 <% if params[:action]=="edit"%>
   p.find("option[value=<%=@site.province%>]").attr("selected",true).trigger("change");
-  c.find("option[value=<%=@site.city%>]").attr("selected",true);
+  // c.find("option[value=<%=@site.city%>]").attr("selected",true);
 <% end %>
 });
 
