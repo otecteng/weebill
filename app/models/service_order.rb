@@ -96,9 +96,9 @@ class ServiceOrder < ActiveRecord::Base
    #  SmsWorker.new.perform cmobile,message_c
     if Setting[:sms_send] then
       msg_c = assign_sms_c
-      SmsWorker.perform_async user.id,cmobile,msg_c if msg_c && cmobile
+      SmsWorker.perform_async user.id,cmobile,msg_c if msg_c.length>0 && cmobile
       msg_s = assign_sms_s
-      SmsWorker.perform_async user.id,site.phone,msg_s if msg_s && site.phone
+      SmsWorker.perform_async user.id,site.phone,msg_s if msg_s.length>0 && site.phone
     else
       logger.info "sms #{cmobile}--->>>#{assign_sms}"
     end
@@ -108,9 +108,13 @@ class ServiceOrder < ActiveRecord::Base
     assign_sms_s
   end
 
+  def assign_sms
+    assign_sms_c
+  end
+
   def assign_sms_c
     template = user.sms_templates.where(:sms_type=>"inform").first
-    return nil if !template  
+    return "" if !template  
     template = '<%="'+template.content+'"%>' 
     vars = {phone:site.phone,contactor:site.contactor,tid:tb_trade.tid,address:site.address,name:site.name}
     ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
@@ -118,7 +122,7 @@ class ServiceOrder < ActiveRecord::Base
 
   def assign_sms_s
     template = user.sms_templates.where(:sms_type=>"site").first  
-    return nil if !template  
+    return "" if !template  
     template = '<%="'+template.content+'"%>' 
     vars = {phone:tb_trade.cmobile,contactor:tb_trade.cname,product:tb_trade.title}
     ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
