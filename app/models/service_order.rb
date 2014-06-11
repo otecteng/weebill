@@ -95,20 +95,32 @@ class ServiceOrder < ActiveRecord::Base
   	# # SmsWorker.perform_async cmobile,message_c
    #  SmsWorker.new.perform cmobile,message_c
     if Setting[:sms_send] then
-      SmsWorker.perform_async user.id,cmobile,assign_sms
+      msg_c = assign_sms_c
+      SmsWorker.perform_async user.id,cmobile,msg_c if msg_c && cmobile
+      msg_s = assign_sms_s
+      SmsWorker.perform_async user.id,site.phone,msg_s if msg_s && site.phone
     else
       logger.info "sms #{cmobile}--->>>#{assign_sms}"
     end
   end
 
   def site_sms
-    "感谢您选择与航睿导航合作安装！客户订单号(#{tb_trade.tid})客户信息:#{cname}(#{cmobile})"
+    assign_sms_s
   end
 
-  def assign_sms
-    vars = {phone:site.phone,contactor:site.contactor,tid:tb_trade.tid,address:site.address,name:site.name}
+  def assign_sms_c
     template = user.sms_templates.where(:sms_type=>"inform").first
-    template = template ? '<%="'+template.content+'"%>' : '<%="感谢选购航睿导航！收货后请致电体验店预约,电话:#{phone}(#{contactor}),预约号#{tid},地址:#{address}-[#{name}],投诉建议请拨打18666688652,祝您购物愉快!"%>'
+    return nil if !template  
+    template = '<%="'+template.content+'"%>' 
+    vars = {phone:site.phone,contactor:site.contactor,tid:tb_trade.tid,address:site.address,name:site.name}
+    ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
+  end
+
+  def assign_sms_s
+    template = user.sms_templates.where(:sms_type=>"site").first  
+    return nil if !template  
+    template = '<%="'+template.content+'"%>' 
+    vars = {phone:tb_trade.cmobile,contactor:tb_trade.cname,product:tb_trade.title}
     ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
   end
 
