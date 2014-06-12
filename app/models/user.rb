@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
         tb_trade[:cname].gsub!(/ /,"") unless tb_trade[:cname].blank?
         # tb_trade[:time_trade] = time_base + tb_trade[:time_trade].to_i-2 if tb_trade[:time_trade]
         tb_trade[:title] = "#{tb_trade[:title_header] || '无车型信息'},#{tb_trade[:title_footer] || '无安装信息'}"
-        
+        cmobile = tb_trade[:cmobile]
         if tb_trade[:cmobile] then
           tb_trade[:cmobile] = tb_trade[:cmobile].to_i.to_s if tb_trade[:cmobile].is_a?(Float) || tb_trade[:cmobile].is_a?(Integer)
-          tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | /).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/}.first
+          tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | |,|，/).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/}.first          
         end
         tb_trade[:cadddress] = tb_trade[:cadddress] if tb_trade[:cmobile]
         tb_trade[:cadddress].gsub! '北京北京','北京'
@@ -54,7 +54,11 @@ class User < ActiveRecord::Base
         tb_trade.delete :title_footer
         next if tb_trades.find_by_tid(tb_trade[:tid])
         db_trade = tb_trades.create(tb_trade)
-        db_trade.confirm_address
+        if db_trade[:cmobile]
+          db_trade.confirm_address
+        else          
+          db_trade.update_attributes(:status=>"error",:cmobile=>cmobile)
+        end
       rescue Exception => e
         logger.info e
         logger.info tb_trade

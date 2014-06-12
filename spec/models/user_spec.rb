@@ -5,7 +5,7 @@ require 'spec_helper'
 describe User do
   it "import site excel file" do 
     user = User.create(:email=>"wjj@wjj.com",:password=>"password",:password_confirmation=>"password")   
-  	user.import_sites "/Users/tli/Downloads/航睿安装点每日更新(1).xlsx"
+  	user.import_sites "/Users/tli/Downloads/航睿安装点每日更新(2).xlsx"
   	(user.sites-user.sites.need_update).each do |s|
       p s.summary_address
     end
@@ -16,7 +16,7 @@ describe User do
 
   it "import tb_trade excel file" do
     user = User.create(:email=>"lt@wjj.com",:password=>"password",:password_confirmation=>"password") 
-  	user.import_tb_trades "/Users/tli/Downloads/ad.xls"
+  	user.import_tb_trades "/Users/tli/Downloads/x.xlsx"
   	p user.tb_trades.length
     p user.tb_trades.status("error").length
     user.tb_trades.status("pending").each{|x| p x.address}
