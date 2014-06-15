@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :service_orders
   has_many :sms_logs
   has_many :sms_templates
+  has_many :wx_templates
 
   SITE_MAP={:name=>"店名",:address=>"地址",:contactor=>"联系人",:phone=>"电话"} #,:cert=>"星级"
   TB_TRADE_MAP={:time_trade=>"日期",:tid=>"订单号",:cname=>"姓名",:cmobile=>"联系方式",:cadddress=>"车主所在地",:title_header=>"车型",:title_footer=>"安装明细"}

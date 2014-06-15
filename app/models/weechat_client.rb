@@ -7,13 +7,7 @@ class WeechatClient
 	HOST_API = 'https://api.weixin.qq.com'
 	DOWNLOAD_DIR="/home/tli" #set the dir of the download file here
 
-	MAP = {
-		"customer_appid"=>"wxea2ce7f47689a346",
-		"customer_secret"=>"6768e51d3dbd253e264de342847067d2",
-		"siteworker_appid"=>"wxea2ce7f47689a346",
-		"siteworker_secret"=>"6768e51d3dbd253e264de342847067d2"
-	}
-
+	@CLIENTS = {}
 	CLIENT_MAP={
 		:customer => @@client_customer,
 		:siteworker => @@client_siteworker
@@ -31,13 +25,12 @@ class WeechatClient
   	}
 
 	def self.get_instance name
-		CLIENT_MAP[name] = WeechatClient.new name if !CLIENT_MAP[name]
-		CLIENT_MAP[name]
+	  @CLIENTS[name] ||= WeechatClient.new(Setting["#{name}_appid".to_sym],Setting["#{name}_secret".to_sym])
 	end
 
-	def initialize type
-		@appid = MAP["#{type}_appid"]
-		@secret = MAP["#{type}_secret"]
+	def initialize (appid,secret)
+		@appid = appid
+		@secret = secret
 		@access_token = nil
 	end
 
@@ -109,6 +102,8 @@ class WeechatClient
 
     def get_api_token
       conn = Faraday.new(:url =>@@host_api) 
+      p @appid
+      p @secret
       response = conn.get "/cgi-bin/token?grant_type=client_credential" do |req|
         req.params['appid'] = @appid
         req.params['secret'] = @secret

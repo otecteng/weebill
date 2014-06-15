@@ -70,20 +70,23 @@ class SiteWorkersController < ApplicationController
 
   def on_text 
     # return if !confirm_worker
-    msg = params[:xml]
-    content = msg[:Content]
-    if @worker == content then
-      SiteWorker.find_or_create_by_wid(msg[:FromUserName])
-      @content = "ok registered!" # we need a reg session here
-    else
-      site_session_text
-    end
+    # msg = params[:xml]
+    # content = msg[:Content]
+    # if @worker == content then
+    #   SiteWorker.find_or_create_by_wid(msg[:FromUserName])
+    #   @content = "ok registered!" # we need a reg session here
+    # else
+    #   site_session_text
+    # end
+    @content = "对不起，系统维护中，您的消息会稍后处理!"
   end
 
   def on_image 
-    confirm_worker
-    @worker.upload_image params[:xml][:MediaId]
-    @content = I18n.t(:tip_upload_pix) + "http://weebill.gps400.com/service_orders/search_key_m?worker=#{@worker.id}"
+    user = confirm_user
+    worker = confirm_worker
+    worker.upload_image params[:xml][:MediaId]
+    # url:"http://weebill.gps400.com/service_orders/search_key_m?worker=#{@worker.id}"
+    @content = user.wx_templates.source_type("image").first.render(worker:worker)
   end
 
   def on_location 
@@ -98,7 +101,11 @@ class SiteWorkersController < ApplicationController
 
   def on_event
     user = confirm_user
-    if params[:xml][:EventKey] == "REPORT" then
+    template = WxTemplate.find params[:xml][:EventKey].split('_').last.to_i
+    if template
+      @content = template.ret_content
+    else
+      @content = "not support it"
     end
 
     # if params[:xml][:EventKey] =~ /^http/ then

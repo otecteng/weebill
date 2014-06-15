@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="/assets/css/select2.css" />		
+<link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
+
+<%=form_tag '/wx_templates/delete_all',:method=>"post", :id=>"frm_main" do%>
+ <style>
+ 	.btn-default {
+ 		color:#474749;
+ 	}
+
+ 	.btn:hover {
+ 		background-color:#575759;
+ 		background-position: 0 -38px;
+ 	}
+ 	.btn:focus {
+ 		background-color:#404343;
+ 		background-position: 0 -38px;
+ 	}
+ </style>
+
+<div class="widget-box">
+	<div class="widget-title">
+		<span class="icon">
+			<i class="glyphicon glyphicon-remove" id="btn_delete"></i>
+		</span>
+		<h5>微信模板列表</h5>
+		
+
+	</div>
+	<div class="widget-content nopadding">
+		<table class="table table-bordered table-striped hover data-table with-check">
+			<thead>
+              	<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
+              	<th>id</th>
+				<th>类别</th>
+				<th>内容</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+				<% @wx_templates.each do |wx_template|  %>
+				<tr>
+	                <td ><%=check_box_tag("ids[]",wx_template.id)%></td>
+	                <td style="width:10%"><%= wx_template.id%></td>
+					<td style="width:10%"><%= wx_template.ret_type%></td>
+					<td style="width:70%"><%= wx_template.ret_content[0..32]%></td>
+					<td>
+					<div>
+						<%= link_to edit_wx_template_path(wx_template),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <% end %>
+
+						<%= link_to wx_template, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <% end %>
+					</div>	</td>
+				</tr>
+				<% end%>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%end%>
+<script type="text/javascript">
+$( "#btn_delete").click(function() {
+  $("#frm_main").submit();
+});
+</script>
+<script src="/assets/js/select2.min.js"></script>
+<script src="/assets/js/unicorn.tables.js"></script>
+
+
+

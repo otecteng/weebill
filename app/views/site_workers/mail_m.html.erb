@@ -1,0 +1,50 @@
+<header data-role="header" class="">
+      <h1>
+        升级(需验证手机)
+      </h1>
+</header>
+  <div class="main" data-role="content">
+  <div class="main-content">
+    <div class="form-content">
+<%if @uid then%>
+<%=form_tag "/site_workers/send_mail",:method=>"post" do%>
+<input id="hidden" name="uid" size="30" value="<%=@uid%>">
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">请输入订单手机</div>
+    <div class="controls">
+      <input id="customer_name" name="cid" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+<div class="field  " data-api-code="field_3">
+<div class="control-group ">
+  <div class="field_content">
+    <div class="help-block">请输入接收邮箱</div>
+    <div class="controls">
+      <input id="customer_mail" name="mail" size="30" value="">
+    </div>
+  </div>
+</div>
+</div>
+<div class="field submit-field">
+<input class="submit" name="commit" type="button" value="提交">
+</div>
+<%end%>
+<%else%>
+  <div class="field  " data-api-code="field_3">
+  <div class="control-group ">
+    <div class="field_content">
+      <div class="help-block">邮件已发送，请注意查收</div>
+    </div>
+  </div>
+  </div>
+<%end%>
+</div>
+</div>
+</div>
+</div>
+
+

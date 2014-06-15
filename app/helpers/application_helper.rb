@@ -4,6 +4,7 @@ module ApplicationHelper
 		"sites"=>"网点",
 		"site_workers"=>"网点员工",
 		"sms_templates"=>"短信模板",
+		"wx_templates"=>"微信模板",
 		"service_orders"=>"安装任务",
 		"tb_trades"=>"订单",
 		"devise/registrations"=>"用户资料",
