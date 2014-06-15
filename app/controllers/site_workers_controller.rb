@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
   skip_before_filter :authenticate_user!,:only=>[:wx_index,:wx_create,:new,:register,:send_mail]
