@@ -18,6 +18,7 @@ Weebill::Application.routes.draw do
   resources :site_workers do 
     post 'register',:on=>:collection
     get 'lock_worker',:on=>:member
+    post 'send_mail',:on=>:collection
   end
   
   resources :service_orders do

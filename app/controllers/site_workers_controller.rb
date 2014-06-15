@@ -1,6 +1,6 @@
 class SiteWorkersController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :authenticate_user!,:only=>[:wx_index,:wx_create,:new,:register]
+  skip_before_filter :authenticate_user!,:only=>[:wx_index,:wx_create,:new,:register,:send_mail]
 
   # before_filter :confirm_worker,:only=>[:on_event,:on_text,:on_image]
 
@@ -97,17 +97,21 @@ class SiteWorkersController < ApplicationController
   end       
 
   def on_event
-    if params[:xml][:EventKey] =~ /^http/ then
-      @content = "not support it"
-    else
-      args = params[:xml][:EventKey].split('_')
-        case args[0]
-        when "REGIST"
-          @content = I18n.t("search") + 'http://weebill.gps400.com/service_orders/search_key_m'
-        when "REPORT"
-          @content = I18n.t("tip_upload_pix")+ "_" + args[1]
-        end
-    end 
+    user = confirm_user
+    if params[:xml][:EventKey] == "REPORT" then
+    end
+
+    # if params[:xml][:EventKey] =~ /^http/ then
+    #   @content = "not support it"
+    # else
+    #   args = params[:xml][:EventKey].split('_')
+    #   case args[0]
+    #   when "REGIST"
+    #     @content = I18n.t("search") + 'http://weebill.gps400.com/service_orders/search_key_m'
+    #   when "REPORT"
+    #     @content = I18n.t("tip_upload_pix")+ "_" + args[1]
+    #   end
+    # end 
   end
 
   def site_session_text 
@@ -123,14 +127,27 @@ class SiteWorkersController < ApplicationController
     end
   end
 
-  # def send_text msg
-  #   client=WeechatClient.get_instance "siteworker"
-  #   client.send_message msg
-  # end
+  def send_mail
+    if params[:uid] then
+      @user = User.find(params[:uid])
+      reciever = params[:mail]
+      sms = @user.sms_templates.sms_type("mail").first
+      @user.send_sms_mail reciever,sms if sms
+    else
+      @uid = confirm_user.id
+    end
+    render layout:"m_form"
+  end
+  
   private
     def check_weixin_legality
       array = ['gentek', params[:timestamp], params[:nonce]].sort
       render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+    end
+
+    def confirm_user
+      request.fullpath.split("/")
+      @user = User.find(args[2].to_i)
     end
 
     def confirm_worker 

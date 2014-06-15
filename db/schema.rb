@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140602043409) do
+ActiveRecord::Schema.define(:version => 20140615115619) do
 
   create_table "brands", :force => true do |t|
     t.string   "name"
@@ -170,9 +170,21 @@ ActiveRecord::Schema.define(:version => 20140602043409) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "mail_account"
+    t.string   "mail_password"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "wx_templates", :force => true do |t|
+    t.string   "name"
+    t.string   "menu_id"
+    t.string   "ret_type"
+    t.text     "ret_content"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end

@@ -30,6 +30,19 @@
                     </div>
                   </div>
                   
+                  <div class="form-group">
+                    <label class="control-label">邮箱账户</label>
+                    <div class="controls">
+                      <%= f.text_field :mail_account%>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">邮箱密码</label>
+                    <div class="controls">
+                      <%= f.text_field :mail_password%>
+                    </div>
+                  </div>
+
                   <div class="form-actions">
                     <%= submit_tag '保存',:class => "btn btn-primary btn-small" %>
                     or <a class="text-danger" href="/">取消</a>

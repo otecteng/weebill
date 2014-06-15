@@ -117,6 +117,10 @@ class ServiceOrdersController < ApplicationController
 
 	def search_tid # search by mobile
 	    @tb_trade = TbTrade.find_by_tid(params[:tid])
+	    if @tb_trade then
+		    @worker = Worker.find(params[:worker_id])
+		    @worker.confirm_trade(@tb_trade)
+		end
 	    respond_to do |format|
 	      format.html { redirect_to @tb_trade }
 	      format.js 

@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me,:mail_account,:mail_password
   attr_accessible :name, :password, :phone, :username
   has_many :sites
   has_many :tb_trades
@@ -85,6 +85,10 @@ class User < ActiveRecord::Base
       end
       ret ||= sites.city(tb_trade.city).first
     end
+  end
+
+  def send_sms_mail reciever,sms # a trick , we send sms by mail
+    MailWorker.perform_async(mail_account,mail_password,reciever,sms.signature,sms.content)
   end
 
 private
