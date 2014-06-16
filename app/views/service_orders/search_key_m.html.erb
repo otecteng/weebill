@@ -17,8 +17,8 @@
 
       <%unless @result then%>
       <%=form_tag '/service_orders/search_key_m',:method=>'post' do%>
-      <input id="" name="worker_id" size="30" type="tel" value="<%=params[:worker]%>">
-      <input id="" name="user_id" size="30" type="tel" value="<%=params[:user]%>">
+      <input type=hidden name="worker_id" size="30" type="tel" value="<%=params[:worker]%>">
+      <input type=hidden name="user_id" size="30" type="tel" value="<%=params[:user]%>">
       <div class="field" data-api-code="field_3">
         <div class="control-group ">
           <div class="field_content">

@@ -109,11 +109,10 @@ class ServiceOrdersController < ApplicationController
 	  else
 		@result=false
 		@message="错误的订单编号"
-		
-        
 	  end
-	  render layout:"m_form"
 	end
+	  render layout:"m_form"
+  end
 
 	def search_tid_m
 		if params[:tid] then
