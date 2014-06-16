@@ -7,8 +7,18 @@
   <div class="main-content">
     <div class="form-content">
       <div id="dlg-search">
-      <%=form_tag '/service_orders/search_tid.js',:remote=>true,:method=>'post' do%>
-      <input id="" name="worker_id" size="30" type="tel" value="<%=params[worker]%>">
+        <div class="field  " data-api-code="field_3">
+        <div class="control-group ">
+          <div class="field_content">
+            <div class="help-block"><%=@message if @message%></div>
+          </div>
+        </div>
+        </div>
+
+      <%unless @result then%>
+      <%=form_tag '/service_orders/search_key_m',:method=>'post' do%>
+      <input id="" name="worker_id" size="30" type="tel" value="<%=params[:worker]%>">
+      <input id="" name="user_id" size="30" type="tel" value="<%=params[:user]%>">
       <div class="field" data-api-code="field_3">
         <div class="control-group ">
           <div class="field_content">
@@ -22,6 +32,9 @@
       <div class="field submit-field">
         <input id="btn_search" name="commit" type="submit" value="验证预约号">
       </div>
+      <%end%>
+
+
       <%end%>
       </div>
 

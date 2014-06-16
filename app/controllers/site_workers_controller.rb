@@ -87,7 +87,7 @@ class SiteWorkersController < ApplicationController
     worker = confirm_worker
     worker.upload_image params[:xml][:MediaId]
     # url:"http://weebill.gps400.com/service_orders/search_key_m?worker=#{@worker.id}"
-    @content = user.wx_templates.source_type("image").first.render(worker:worker)
+    @content = user.wx_templates.source_type("image").first.render(worker:worker,user:user)
   end
 
   def on_location 

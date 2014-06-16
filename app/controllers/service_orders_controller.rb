@@ -95,14 +95,24 @@ class ServiceOrdersController < ApplicationController
 		redirect_to :back
 	end
 
-	def search_key_m
-		if params[:key] && params[:tid] then
-			@service_order = ServiceOrder.find_by_uid(params[:key])
-			@service_order if @service_order.tb_trade_id.to_s != params[:tid]
-		else
-			@show_form=true
-		end
-	    render layout:"m_form"
+  def search_key_m
+    if params[:tid] then
+      @tb_trade = TbTrade.find_by_tid(params[:tid]) # this is trick , we use tb_trade but not servce order
+      if @tb_trade then
+		@result=true
+		@message="订单号已提交，我们将尽快确认"
+		@user = User.find(params[:user_id])
+		@worker = SiteWorker.find_by_wid(params[:worker_id])
+		logger.info @tb_trade
+		logger.info @worker
+		@user.confirm_trade(@tb_trade,@worker)
+	  else
+		@result=false
+		@message="错误的订单编号"
+		
+        
+	  end
+	  render layout:"m_form"
 	end
 
 	def search_tid_m

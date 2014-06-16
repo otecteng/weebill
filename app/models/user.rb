@@ -92,6 +92,14 @@ class User < ActiveRecord::Base
     MailWorker.perform_async(mail_account,mail_password,reciever,sms.signature,sms.content)
   end
 
+  def confirm_trade worker,trade
+    service_order = trade.service_order
+    if service_order then
+      service_order.install
+      worker.download_image
+    end
+  end
+
 private
   def read file_name,map
     s = case file_name.split(".").last 

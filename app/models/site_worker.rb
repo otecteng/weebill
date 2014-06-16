@@ -24,4 +24,9 @@ class SiteWorker < ActiveRecord::Base
   def upload_image media_id
     self.update_attributes(:picture_uploaded=>media_id)    
   end
+
+  def download_image
+    logger.info "<<<<------download #{media_id}----->>>>>"
+  end
+
 end
