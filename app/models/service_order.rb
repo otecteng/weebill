@@ -54,6 +54,7 @@ class ServiceOrder < ActiveRecord::Base
 
   def self.create_from_trade tb_trade 
     #tb_trade->site
+    logger.info "create_from_trade--#{tb_trade.id}--start"
     user = tb_trade.user
     service_order = user.service_orders.build(:uid=>"%012d" % SecureRandom.random_number(1000000000000),
                                 :cname=>tb_trade.cname,:cmobile=>tb_trade.cmobile,
@@ -61,6 +62,7 @@ class ServiceOrder < ActiveRecord::Base
     tb_trade.service_order = service_order
     # site = user.sites.city(tb_trade.city).order(:cert).last || Site.find_near(tb_trade.city)
     site = user.find_site(tb_trade)
+    logger.info "create_from_trade--#{tb_trade.id}--find site"
     if site then
       service_order.site = site
       service_order.status = "assigned"
@@ -69,7 +71,9 @@ class ServiceOrder < ActiveRecord::Base
     else
       tb_trade.status = "imported"
     end
+    logger.info "create_from_trade--#{tb_trade.id}--save again"
     tb_trade.save!
+    logger.info "create_from_trade--#{tb_trade.id}--out"
     return service_order
   end
 

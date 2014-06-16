@@ -8,7 +8,7 @@
     <div class="form-content">
 <%if @uid then%>
 <%=form_tag "/site_workers/send_mail",:method=>"post" do%>
-<input id="hidden" name="uid" size="30" value="<%=@uid%>">
+<input type="hidden" name="uid" size="30" value="<%=@uid%>">
 <div class="field  " data-api-code="field_3">
 <div class="control-group ">
   <div class="field_content">
@@ -30,7 +30,7 @@
 </div>
 </div>
 <div class="field submit-field">
-<input class="submit" name="commit" type="button" value="提交">
+<input class="submit" name="commit" type="submit" value="提交">
 </div>
 <%end%>
 <%else%>

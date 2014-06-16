@@ -72,8 +72,8 @@ class ServiceOrdersController < ApplicationController
 
 	def inform
 		@obj = ServiceOrder.find(params[:id])
-		@obj.inform 
-		redirect_to '/service_orders'
+		@obj.inform if @obj
+		redirect_to '/service_orders/?status=assigned'
 	end
 
 	# def send_sms

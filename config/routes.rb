@@ -1,8 +1,8 @@
 Weebill::Application.routes.draw do
-  get  'site_workers/wx' => 'site_workers#wx_index'
-  get  'tb_customers/wx' => 'tb_customers#wx_index'
-  post 'site_workers/wx' => 'site_workers#wx_create'
-  post 'tb_customers/wx' => 'tb_customers#wx_create'
+  get  'site_workers/wx/:id' => 'site_workers#wx_index'
+  get  'tb_customers/wx/:id' => 'tb_customers#wx_index'
+  post 'site_workers/wx/:id' => 'site_workers#wx_create'
+  post 'tb_customers/wx/:id' => 'tb_customers#wx_create'
 
   devise_for :users
   resources  :tb_customers,:sms_logs,:sms_templates,:wx_templates
@@ -18,6 +18,7 @@ Weebill::Application.routes.draw do
   resources :site_workers do 
     post 'register',:on=>:collection
     get 'lock_worker',:on=>:member
+    get 'send_mail',:on=>:collection
     post 'send_mail',:on=>:collection
   end
   

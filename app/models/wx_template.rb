@@ -3,7 +3,7 @@ class WxTemplate < ActiveRecord::Base
   scope :source_type, lambda {|menu_id| where(:menu_id => menu_id)}
 
   def render vars
-    template = '<%="'+ret_content.content+'"%>' 
+    template = '<%="'+ret_content+'"%>' 
     ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
   end
 end

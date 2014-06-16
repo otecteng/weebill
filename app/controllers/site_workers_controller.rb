@@ -64,7 +64,7 @@ class SiteWorkersController < ApplicationController
     msg_type,create_time,mediaId,msgId = msg[:MsgType],Time.at(msg[:CreateTime].to_i),msg[:MediaId],msg[:MsgId]
     self.send "on_#{msg_type}" 
     respond_to do |format|
-      format.html { return render :text=>@content }
+      # format.html { return render :text=>@content }
       format.xml { return render :text,:formats => :xml  }
     end
   end
@@ -104,22 +104,10 @@ class SiteWorkersController < ApplicationController
     user = confirm_user
     template = WxTemplate.find params[:xml][:EventKey].split('_').last.to_i
     if template
-      @content = template.ret_content
+      @content = template.render(user:user)
     else
       @content = "not support it"
     end
-
-    # if params[:xml][:EventKey] =~ /^http/ then
-    #   @content = "not support it"
-    # else
-    #   args = params[:xml][:EventKey].split('_')
-    #   case args[0]
-    #   when "REGIST"
-    #     @content = I18n.t("search") + 'http://weebill.gps400.com/service_orders/search_key_m'
-    #   when "REPORT"
-    #     @content = I18n.t("tip_upload_pix")+ "_" + args[1]
-    #   end
-    # end 
   end
 
   def site_session_text 
@@ -142,7 +130,7 @@ class SiteWorkersController < ApplicationController
       sms = @user.sms_templates.sms_type("mail").first
       @user.send_sms_mail reciever,sms if sms
     else
-      @uid = confirm_user.id
+      @uid = params[:user]
     end
     render layout:"m_form"
   end
@@ -154,8 +142,8 @@ class SiteWorkersController < ApplicationController
     end
 
     def confirm_user
-      request.fullpath.split("/")
-      @user = User.find(args[2].to_i)
+      args = request.fullpath.split("/")
+      @user = User.find(args[3].to_i)
     end
 
     def confirm_worker 
