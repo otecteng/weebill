@@ -26,7 +26,7 @@ class SiteWorker < ActiveRecord::Base
   end
 
   def download_image
-    logger.info "<<<<------download #{media_id}----->>>>>"
+    logger.info "<<<<------download #{picture_uploaded}----->>>>>"
   end
 
 end
