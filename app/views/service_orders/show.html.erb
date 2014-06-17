@@ -7,7 +7,7 @@
 	<tr><td>安装短信</td><td><%= @service_order.site_sms%></td></tr>
 	<tr><td>客户短信</td>	<td><%= @service_order.assign_sms%></td></tr>
 	<tr><td>电话</td><td><%= @service_order.cmobile%></td></tr>
-	<tr><td>完成照片</td>	<td><%= @service_order.site_pix%></td></tr>
+	<tr><td>完成照片</td>	<td><%=image_tag(@service_order.site_pix, size: "128")%></td></tr>
 </table>
 <div class="widget-box">
 	<div class="widget-content">

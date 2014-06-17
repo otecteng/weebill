@@ -37,6 +37,7 @@ class WeechatClient
 	  get_api_token
 	  cmd = "wget 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=#{@access_token}&media_id=#{media_id}' -O '#{Rails.root}/public/downloads/#{media_id}.jpg'"
 	  system(cmd)
+	  system("chmod +wrx '#{Rails.root}/public/downloads/#{media_id}.jpg'")
 	end
 
 	def send_message body
