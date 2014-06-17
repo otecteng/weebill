@@ -26,7 +26,10 @@ class SiteWorker < ActiveRecord::Base
   end
 
   def download_image
-    logger.info "<<<<------download #{picture_uploaded}----->>>>>"
+    return "" if !picture_uploaded
+    w = WeechatClient.get_instance :siteworker
+    w.download_media picture_uploaded
+    return "/downloads/#{picture_uploaded}.jpg"
   end
 
 end

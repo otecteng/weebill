@@ -96,7 +96,8 @@ class User < ActiveRecord::Base
     service_order = trade.service_order
     if service_order then
       service_order.install
-      worker.download_image
+      service_order.site_pix = worker.download_image
+      service_order.save!
     end
   end
 

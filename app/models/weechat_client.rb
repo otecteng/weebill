@@ -5,7 +5,6 @@ class WeechatClient
 	@@client_customer = nil
 	@@client_siteworker = nil
 	HOST_API = 'https://api.weixin.qq.com'
-	DOWNLOAD_DIR="/home/tli" #set the dir of the download file here
 
 	@CLIENTS = {}
 	CLIENT_MAP={
@@ -35,8 +34,9 @@ class WeechatClient
 	end
 
 	def download_media media_id
-		res = api_get(:media,{"media_id"=>media_id})
-		open("#{DOWNLOAD_DIR}#{res.headers["content-disposition"].split("\"")[1]}","w+"){ |f| f.write(res.body)} if res	
+	  get_api_token
+	  cmd = "wget 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=#{@access_token}&media_id=#{media_id}' -O '#{Rails.root}/public/downloads/#{media_id}.jpg'"
+	  system(cmd)
 	end
 
 	def send_message body
@@ -60,7 +60,7 @@ class WeechatClient
       data["data"]["openid"]
     end
 
-    def api_get(url,args={})
+    def api_get(url,args={},save_as=nil)
         fire_update = false
         url = "#{URL_ADVANCED[url]}?"
         args.each{|k,v| url = url + "&#{k.to_s}=#{v.to_s}"}
@@ -71,11 +71,9 @@ class WeechatClient
         end
     
         conn = Faraday.new(:url =>@@host_api) 
-        req = url + "&access_token=#{@access_token}"
-        p req
-        response = conn.get req
+        req = url + "&access_token=#{@access_token}"        
+        response = conn.get req        
         ret = JSON.parse(response.body)
-        p ret
         if ret["errcode"] then #expired
           if "42001"==ret["errcode"] then
             return nil unless get_api_token
