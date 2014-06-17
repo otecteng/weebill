@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
         cmobile = tb_trade[:cmobile]
         if tb_trade[:cmobile] then
           tb_trade[:cmobile] = tb_trade[:cmobile].to_i.to_s if tb_trade[:cmobile].is_a?(Float) || tb_trade[:cmobile].is_a?(Integer)
-          tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | |,|，/).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/}.first          
+          tb_trade[:cmobile] = tb_trade[:cmobile].split(/ | |,|，/).map{|i| i.gsub(' ',"")}.select{|x| x =~ /^(1(([385][0-9])|(47)|[8][01236789]))\d{8}$/}.first          
         end
         tb_trade[:cadddress] = tb_trade[:cadddress] if tb_trade[:cmobile]
         tb_trade[:cadddress].gsub! '北京北京','北京'

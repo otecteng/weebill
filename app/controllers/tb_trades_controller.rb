@@ -15,7 +15,7 @@ class TbTradesController < ApplicationController
 	end
 	def edit
 		@tb_trade = TbTrade.find(params[:id])
-		flash[:notice] = "用户手机解析错误，请检查后重填" unless @tb_trade.cmobile =~ /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/
+		flash[:notice] = "用户手机解析错误，请检查后重填" unless @tb_trade.cmobile =~ /^(1(([385][0-9])|(47)|[8][01236789]))\d{8}$/
 	end
 
 	def create
@@ -31,7 +31,7 @@ class TbTradesController < ApplicationController
 		@tb_trade = TbTrade.find(params[:id])
 		if params[:tb_trade][:cmobile] then
 			params[:tb_trade][:cmobile] = params[:tb_trade][:cmobile].gsub(' ',"")
-			unless params[:tb_trade][:cmobile] =~ /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/
+			unless params[:tb_trade][:cmobile] =~ /^(1(([385][0-9])|(47)|[8][01236789]))\d{8}$/
 			  flash[:notice] = "用户手机解析错误，请检查后重填"
 			  return redirect_to :back			 	
 			end 
