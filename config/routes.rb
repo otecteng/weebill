@@ -6,7 +6,9 @@ Weebill::Application.routes.draw do
 
   devise_for :users
   resources  :tb_customers,:sms_logs,:sms_templates,:wx_templates
-
+  resources :reports do
+    get  'trades',:on=>:collection
+  end
   resources :tb_trades do
     get  'import',:on=>:collection
     post  'upload',:on=>:collection

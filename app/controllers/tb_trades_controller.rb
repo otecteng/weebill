@@ -1,7 +1,7 @@
 # encoding: utf-8
 class TbTradesController < ApplicationController
 	def index
-		@tb_trades = current_user.tb_trades
+		@tb_trades = current_user.tb_trades.order('time_trade DESC')
 		@tb_trades = @tb_trades.status(params[:status]) if params[:status]
 
 		respond_to do |format|

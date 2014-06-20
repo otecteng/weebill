@@ -101,6 +101,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def count_trades_this_month
+    tb_trades.where("created_at>=?",DateTime.now.beginning_of_month).count
+  end
+
+  def count_trades_all
+    tb_trades.count
+  end
+
 private
   def read file_name,map
     s = case file_name.split(".").last 

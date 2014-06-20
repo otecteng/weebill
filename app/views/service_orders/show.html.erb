@@ -5,8 +5,8 @@
 <table class="table" cellspacing="0px">
 	<tr><td>状态</td><td><%= @service_order.txt_status%></td></tr>
 	<tr><td>安装短信</td><td><%= @service_order.site_sms%></td></tr>
-	<tr><td>客户短信</td>	<td><%= @service_order.assign_sms%></td></tr>
-	<tr><td>电话</td><td><%= @service_order.cmobile%></td></tr>
+	<tr><td>客户短信</td>	<td><%= @service_order.cmobile%>:<%= @service_order.assign_sms%></td></tr>
+	<tr><td>安装点支付账号</td><td><%= @service_order.site.alipay_account if @service_order.site%></td></tr>
 	<tr><td>完成照片</td>	<td><img src=<%=@service_order.site_pix%> width="128px" height="128px"></td></tr>
 </table>
 <div class="widget-box">

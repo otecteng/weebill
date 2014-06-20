@@ -8,7 +8,8 @@ class ServiceOrdersController < ApplicationController
 		else
 			@service_orders = current_user.service_orders
 		end
-		@service_orders=@service_orders.status(params[:status]) if params[:status]
+		@service_orders = @service_orders.status(params[:status]) if params[:status]
+		@service_orders.order('updated_at DESC')
 	end
 
 	def new

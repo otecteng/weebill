@@ -1,7 +1,5 @@
 # encoding: utf-8
 class TbTrade < ActiveRecord::Base
-  default_scope order('time_trade DESC')
-
   attr_accessible :memo, :num_iid, :price, :status, :tb_customer_id, :tid, :title,
   					:time_trade,:cname,:cmobile,:cadddress,:province,:city,:county
 
