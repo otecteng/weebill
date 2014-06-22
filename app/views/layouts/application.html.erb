@@ -35,7 +35,7 @@
 
 	<body>
 		<div id="header">
-			<h1><a href="./dashboard.html">网点通</a></h1>	
+		  <h1 ><a href="./dashboard.html">网点通</a></h1>	
 		</div>
     	<div id="user-nav">
             <ul class="btn-group">
@@ -49,6 +49,7 @@
         </div>
 <%
 @menus=	[
+	{url:'/',text:'主页',icon:'glyphicon-user'},
 	{url:'/sites',text:'网点管理',icon:'glyphicon-home'},
 	{url:'/service_orders',text:'任务管理',icon:'glyphicon-hand-right',submenus:[
 		
@@ -72,11 +73,11 @@ if current_user then
   idx1 = current_user.service_orders.group(:status).count
   idx1.each do |k,v| 
   	next if !k
-  	menu = @menus[1][:submenus].select{|x|x[:url]=="/service_orders/?status="+k}.first
+  	menu = @menus[2][:submenus].select{|x|x[:url]=="/service_orders/?status="+k}.first
   	menu[:v]=v if menu
   end
   idx2 = current_user.tb_trades.group(:status).count
-  menu = @menus[2][:submenus].select{|x|x[:url]=="/tb_trades/error"}.first
+  menu = @menus[3][:submenus].select{|x|x[:url]=="/tb_trades/error"}.first
   menu[:v]=idx2["error"] if menu
 end
 %>
