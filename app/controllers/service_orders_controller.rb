@@ -8,8 +8,19 @@ class ServiceOrdersController < ApplicationController
 		else
 			@service_orders = current_user.service_orders
 		end
-		@service_orders = @service_orders.status(params[:status]) if params[:status]
-		@service_orders.order('updated_at DESC')
+		if params[:status]
+			@service_orders = @service_orders.status(params[:status])
+			@flag = ''
+			case params[:status]
+			when 'payed'
+				@flag = 'time_pay'
+			when 'installation'
+				@flag = 'time_service'
+			else
+				@flag = 'updated_at'
+			end
+		end
+		@service_orders.order(@flag + ' DESC')
 	end
 
 	def new
@@ -65,6 +76,14 @@ class ServiceOrdersController < ApplicationController
 	def show
 		@service_order = ServiceOrder.find(params[:id])
 	end
+
+	def export
+	  @service_orders = current_user.service_orders
+	  @service_orders = @service_orders.status(params[:status]) if params[:status]
+	  respond_to do |format|  
+	    format.csv { render text: @service_orders.to_csv }
+	  end
+  	end
 
 	def new_mobile
 		@service_order = ServiceOrder.new

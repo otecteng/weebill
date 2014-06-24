@@ -17,7 +17,7 @@
 				<th width="200px">区域</th>
 				<th width="100px">客户</th>
 				<th width="100px">电话</th>
-				<th width="150px">更新时间</th>
+				<th width="150px"><%=t(@flag)%></th>
 				<th width="100px">网点</th>
 				<th width="100px">状态</th>
 				<th width="100px">操作</th>
@@ -30,7 +30,7 @@
 	<td><%=service_order.tb_trade.address if service_order.tb_trade%></td>	 
 	<td><%= service_order.cname%></td>
 	<td><%= service_order.cmobile%></td>
-	<td><%=l service_order.updated_at%></td>
+	<td><%=l service_order.time(@time_flag)%></td>
 	<td><%= "#{service_order.site.name}(#{service_order.site.summary_address})" if service_order.site%></td>	
 	<td><%= service_order.txt_status%></td>
 	<td>

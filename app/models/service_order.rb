@@ -1,9 +1,10 @@
  # encoding: utf-8
 require "securerandom"
+require "csv"
 class ServiceOrder < ActiveRecord::Base
   attr_accessible :alipay_id, :alipay_pix, :cmobile, :cname, :price, :site_id, 
   					:site_pix, :site_worker_id, :status, :tb_trade_id, :uid, :user_id,
-  					:time_service,:memo
+  					:time_service,:memo,:time_pay
 
   belongs_to :tb_trade
   belongs_to :site
@@ -34,6 +35,19 @@ class ServiceOrder < ActiveRecord::Base
 
     event :cancle  do
       transition [:assigned,:installation]=>:cancled #取消
+    end
+
+    event :revert  do
+      transition :payed=>:installation,:installation=>:informed,:informed=>:assigned,:assigned=>:pending
+    end
+
+    after_transition :informed => :installation do |service_order,transition|
+      service_order.time_service = DateTime.now
+      service_order.save!
+    end
+    after_transition :installation => :payed do |service_order,transition|
+      service_order.time_pay = DateTime.now
+      service_order.save!
     end
 
     after_transition :pending => :assigned do |service_order,transition|
@@ -130,6 +144,17 @@ class ServiceOrder < ActiveRecord::Base
     ERB.new(template).result(OpenStruct.new(vars).instance_eval{binding})
   end
 
+  def time flag=nil
+    case flag
+    when :pay
+      return time_pay
+    when :service
+      return time_service
+    else
+      return updated_at
+    end
+  end
+
   def txt_status
     case status
     when "pending"
@@ -143,6 +168,16 @@ class ServiceOrder < ActiveRecord::Base
     when "payed"
       "已付款"
     end 
+  end
+
+  def self.to_csv
+    column_names = ["uid","cname","cmobile","time_service","time_pay","memo"]
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |product|
+        csv << product.attributes.values_at(*column_names)
+      end
+    end
   end
 
 end

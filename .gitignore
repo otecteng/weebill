@@ -18,3 +18,4 @@ dump.rdb
 /public/uploads/*
 /public/upload/*
 /public/.DS_Store
+.DS_Store

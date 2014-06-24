@@ -112,6 +112,7 @@ end
 					<% if params[:action]=="index"%>
 						<a class="btn" href=<%= "/#{params[:controller]}/new" %> ><i class="glyphicon glyphicon-plus"></i></a>
 						<a class="btn" href=<%= "/#{params[:controller]}/import" %> ><i class="glyphicon glyphicon-upload"></i></a>
+						<a class="btn" href=<%= "/#{params[:controller]}/export.csv?status=#{params[:status]}" %> ><i class="glyphicon glyphicon-download"></i></a>						
 					<%end%>
 				</div>
 			</div>
@@ -130,7 +131,7 @@ end
 		</div>
 		<div class="row">
 			<div id="footer" class="col-12">
-				2012 - 2013 &copy; Unicorn Admin. Brought to you by <a href="https://wrapbootstrap.com/user/diablo9983">diablo9983</a>
+			
 			</div>
 		</div>
 	</body>

@@ -41,6 +41,8 @@ Weebill::Application.routes.draw do
     get "search_tid_m", :on=>:collection
     post "search_tid", :on=>:collection
     post "search_uid", :on=>:collection
+
+    get "export", :on=>:collection
   end
 
   resources :sites do

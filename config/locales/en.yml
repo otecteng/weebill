@@ -11,3 +11,6 @@ en:
   search: "请点击链接验证预约号:" 
   tip_upload_pix: "请上传施工图片:"
   report: "请点击链接填写施工单"
+  time_service: '安装时间'
+  time_pay: '付款时间'
+  updated_at: '更新时间'
