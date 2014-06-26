@@ -1,6 +1,6 @@
 /**
  * Unicorn Admin Template
- * Version 2.0.1
+ * Version 2.2.0
  * Diablo9983 -> diablo9983@gmail.com
 **/
 
@@ -35,11 +35,10 @@ $(document).ready(function(){
 		errorClass: "help-inline",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
-			$(element).parents('.form-group').addClass('has-error');
+			$(element).parents('.form-group').removeClass('has-success').addClass('has-error');
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			$(element).parents('.form-group').removeClass('has-error');
-			$(element).parents('.form-group').addClass('has-success');
+			$(element).parents('.form-group').removeClass('has-error').addClass('has-success');
 		}
 	});
 	

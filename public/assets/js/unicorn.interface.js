@@ -1,27 +1,10 @@
 /**
  * Unicorn Admin Template
- * Version 2.0.1
+ * Version 2.2.0
  * Diablo9983 -> diablo9983@gmail.com
 **/
 
 $(document).ready(function(){
-	
-	// === jQuery Peity === //
-	/*$.fn.peity.defaults.line = {
-		strokeWidth: 1,
-		delimeter: ",",
-		height: 24,
-		max: null,
-		min: 0,
-		width: 50
-	};
-	$.fn.peity.defaults.bar = {
-		delimeter: ",",
-		height: 24,
-		max: null,
-		min: 0,
-		width: 50
-	};*/
 	
 	$(".sparkline_line_good span").sparkline("html", {
 		type: "line",
@@ -96,6 +79,15 @@ $(document).ready(function(){
 			sticky: false
 		});		
 	});
+
+	$('#gritter-notify .light').click(function(){
+		$.gritter.add({
+			title:	'Normal notification',
+			text:	'This is a normal notification',
+			sticky: false,
+			class_name: 'light'
+		});
+	})
     
     
     // === Popovers === //
@@ -128,102 +120,47 @@ $(document).ready(function(){
        html: html   
     });
 
-    // === jQuery UI Components === //
-     $("#dialog").dialog({
-		autoOpen: false,
-		width: 600,
-		buttons: {
-			"Ok": function () {
-				$(this).dialog("close");
-			},
-			"Cancel": function () {
-				$(this).dialog("close");
-			}
-		},
-		show: {
-			effect: "fade",
-			duration: 500
-		},
-		hide: {
-			effect: "fade",
-			duration: 500
-		}
-	});
-
-     // Dialog message
-	$("#modal-dialog").dialog({
-		autoOpen: false,
-		modal: true,
-		buttons: {
-			Ok: function () {
-				$(this).dialog("close");
-			}
-		}
-	});
-	$("#open-dialog").click(function(){
-		$("#dialog").dialog("open");
-		return false;
-	});
-	$("#open-modal").click(function(){
-		$("#modal-dialog").dialog("open");
-		return false;
-	})
-
-	// Datepicker
-	$('#ui-datepicker').datepicker({
-		inline: true
-	});
-
-	// Horizontal Slider
-	$('#h-slider').slider({
-		range: true,
-		values: [17, 67]
-	});
-
-	// Vertical slider
-    $("#v-slider").slider({
-	    orientation: "vertical",
-	    range: "min",
-	    min: 0,
-	    max: 100,
-	    value: 60,
-	    slide: function (event, ui) {
-		    $("#amount").val(ui.value);
-	    }
+    $('#bootbox-confirm').click(function(e){
+    	e.preventDefault();
+    	bootbox.confirm("Are you sure?", function(result) {
+    		var msg = '';
+    		if(result == true) {
+    			msg = 'Yea! You confirmed this.';
+    		} else {
+    			msg = 'Not confirmed. Don\'t worry.';
+    		}
+			bootbox.dialog({
+				message: msg,
+				title: 'Result',
+				buttons: {
+					main: {
+						label: 'Ok',
+						className: 'btn-default'
+					}
+				}
+			});
+		}); 
     });
-    $("#amount").val($("#v-slider").slider("value"));
-
-    // Autocomplete
-    var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
-     
-    $("#tags").autocomplete({
-    	source: availableTags
+    $('#bootbox-prompt').click(function(e){
+    	e.preventDefault();
+    	bootbox.prompt("What is your name?", function(result) {
+			if (result !== null && result !== '') {
+				bootbox.dialog({
+					message: 'Hi '+result+'!',
+					title: 'Welcome',
+					buttons: {
+						main: {
+							label: 'Close',
+							className: 'btn-danger'
+						}
+					}
+				});
+			}
+		});
     });
-
-    // Menu
-    $("#menu").menu();
-
-    // Spinner
-	var spinner = $( "#spinner" ).spinner();
-	 
-	$( "#disable" ).click(function() {
-		if ( spinner.spinner( "option", "disabled" ) ) {
-			spinner.spinner( "enable" );
-		} else {
-			spinner.spinner( "disable" );
-		}
-	});
-	$( "#destroy" ).click(function() {
-		if ( spinner.data( "ui-spinner" ) ) {
-			spinner.spinner( "destroy" );
-		} else {
-			spinner.spinner();
-		}
-	});
-	$( "#getvalue" ).click(function() {
-		alert( spinner.spinner( "value" ) );
-	});
-	$( "#setvalue" ).click(function() {
-		spinner.spinner( "value", 5 );
-	});
+    $('#bootbox-alert').click(function(e){
+    	e.preventDefault();
+    	bootbox.alert('Hello World!');
+    });
+    
 });

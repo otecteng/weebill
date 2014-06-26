@@ -11,17 +11,18 @@
 		<h5>任务列表</h5>
 	</div>
 	<div class="widget-content nopadding">
-		<table id="tb-data" class="table table-bordered table-striped hover data-table with-check">
+		<table id="tb-data" class="table table-bordered table-striped hover table-hover data-table dataTable with-check">	
 			<thead>
-	            <th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
-				<th width="200px">区域</th>
-				<th width="100px">客户</th>
-				<th width="100px">电话</th>
-				<th width="150px"><%=t(@flag)%></th>
-				<th width="100px">网点</th>
-				<th width="100px">状态</th>
-				<th width="100px">操作</th>
-			</tr>
+			  <tr>
+	            <th class="ui-state-default" style="width: 60px;"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
+				<th class="ui-state-default" style="width: 180px;">区域</th>
+				<th class="ui-state-default" style="width: 100px;">客户</th>
+				<th class="ui-state-default" style="width: 100px;">电话</th>
+				<th class="ui-state-default" style="width: 130px;"><%=t(@flag)%></th>
+				<th class="ui-state-default" style="width: 250px;">网点</th>
+				<th class="ui-state-default" style="width: 80px;">状态</th>
+				<th class="ui-state-default" style="width: 170px;">操作</th>
+			  </tr>
 			</thead>
 <tdody>
 <% @service_orders.each do |service_order|  %>
@@ -35,17 +36,17 @@
 	<td><%= service_order.txt_status%></td>
 	<td>
 		<div>
- 		<%= link_to service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"查看" do %>
+ 		<%= link_to service_order_path(service_order),:class => "btn btn-default tip-bottom",:title =>"查看" do %>
           <i class="glyphicon glyphicon-eye-open"></i>
         <% end %>
 
- 		<%= link_to edit_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
+ 		<%= link_to edit_service_order_path(service_order),:class => "btn btn-default tip-bottom",:title =>"编辑" do %>
           <i class="glyphicon glyphicon-pencil"></i>
         <% end %>
- 		<%= link_to inform_service_order_path(service_order),:class => "btn-mini tip-bottom",:title =>"发送短信" do %>
+ 		<%= link_to inform_service_order_path(service_order),:class => "btn btn-default tip-bottom",:title =>"发送短信" do %>
           <i class="glyphicon glyphicon-envelope"></i>
         <% end %>
- 		<%= link_to service_order, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+ 		<%= link_to service_order, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn btn-default tip-bottom",:title=>"  删除" do %>
           <i class="glyphicon glyphicon-remove"></i>
         <% end %>
 		</div>
@@ -65,9 +66,9 @@ $( "#btn_delete").click(function() {
 
 <script src="/assets/js/select2.min.js"></script>
 <script src="/assets/js/unicorn.tables.js"></script>
-	<script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 	$(function(){
 		var oTable = $('#tb-data').dataTable();
 		oTable.fnSort([[4,'desc']]);
 	});
-	</script>
+</script>

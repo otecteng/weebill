@@ -1,0 +1,5 @@
+upload
+  ->wx_on_image
+    ->open:http://weebill.gps400.com/service_orders/search_key_m?worker=#{worker.wid}&user=#{user.id}
+      ->user.confirm_trade
+        ->service_order.install

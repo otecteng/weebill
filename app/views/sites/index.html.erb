@@ -2,20 +2,6 @@
 <link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
 
 <%=form_tag '/sites/delete_all',:method=>"post", :id=>"frm_main" do%>
- <style>
- 	.btn-default {
- 		color:#474749;
- 	}
-
- 	.btn:hover {
- 		background-color:#575759;
- 		background-position: 0 -38px;
- 	}
- 	.btn:focus {
- 		background-color:#404343;
- 		background-position: 0 -38px;
- 	}
- </style>
 
 <div class="widget-box">
 	<div class="widget-title">
@@ -27,14 +13,15 @@
 
 	</div>
 	<div class="widget-content nopadding">
-		<table class="table table-bordered table-striped hover data-table with-check">
+		<table id="tb-data" class="table table-bordered table-striped hover table-hover data-table dataTable with-check">
 			<thead>
-              	<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
+				<th class="ui-state-default" style="width: 60px;"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
+
 				<th width="200px">名称</th>
-				<th width="180px">市</th>
-				<th width="200px">地点</th>
+				<th width="100px">市</th>
+				<th width="100px">地点</th>
 				<th width="60px">星级</th>
-				<th width="100px">操作</th>
+				<th class="ui-state-default" style="width: 170px;">操作</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -47,17 +34,17 @@
 					<td><%= site.cert%></td>
 					<td>
 					<div>
-						<%= link_to edit_site_path(site),:class => "btn-mini tip-bottom",:title =>"编辑" do %>
+						<%= link_to edit_site_path(site),:class => "btn btn-default tip-bottom",:title =>"编辑" do %>
                         <i class="glyphicon glyphicon-pencil"></i>
                         <% end %>
-						<%= link_to "/site_workers?site_id=#{site.id}",:class => "btn-mini tip-bottom",:title=>"员工列表"  do %>
+						<%= link_to "/site_workers?site_id=#{site.id}",:class => "btn btn-default tip-bottom",:title=>"员工列表"  do %>
                         <i class="glyphicon glyphicon-user"></i>
                         <% end %>
-						<%= link_to site_service_orders_path(:site_id=>site.id),:class => "btn-mini tip-bottom",:title=>"服务单" do %>
+						<%= link_to site_service_orders_path(:site_id=>site.id),:class => "btn btn-default tip-bottom",:title=>"服务单" do %>
                         <i class="glyphicon glyphicon-list"></i>
                         <% end %>
 
-						<%= link_to site, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn-mini tip-bottom",:title=>"  删除" do %>
+						<%= link_to site, method: :delete, data: { confirm: 'Are you sure?' },:class => "btn btn-default tip-bottom",:title=>"  删除" do %>
                         <i class="glyphicon glyphicon-remove"></i>
                         <% end %>
 					</div>	</td>
@@ -77,4 +64,9 @@ $( "#btn_delete").click(function() {
 <script src="/assets/js/unicorn.tables.js"></script>
 
 
-
+<script type="text/javascript" charset="utf-8">
+	$(function(){
+		var oTable = $('#tb-data').dataTable();
+		oTable.fnSort([[2,'desc']]);
+	});
+</script>

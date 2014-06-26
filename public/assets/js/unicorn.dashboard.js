@@ -1,13 +1,12 @@
 /**
  * Unicorn Admin Template
- * Version 2.0.1
+ * Version 2.2.0
  * Diablo9983 -> diablo9983@gmail.com
 **/
 
 $(document).ready(function(){
 	
-	
-	
+
 	// === Prepare sparklines charts === //
 	unicorn.sparkline();
 	
@@ -20,12 +19,13 @@ $(document).ready(function(){
 
 	// === Make chart === //
     var plot = $.plot($(".chart"),
-           [ { data: sin, label: "sin(x)", color: "#BA1E20"}, { data: cos, label: "cos(x)",color: "#459D1C" } ], {
+           [ { data: sin, label: "sin(x)", color: "#4fabd2"}, { data: cos, label: "cos(x)",color: "#459D1C" } ], {
                series: {
                    lines: { show: true },
                    points: { show: true }
                },
-               grid: { hoverable: true, clickable: true },
+               legend: { backgroundOpacity: 0.5 },
+               grid: { hoverable: true, clickable: true, borderColor: "#eeeeee", borderWidth: 1, color: "#AAAAAA" },
                yaxis: { min: -1.6, max: 1.6 }
 		   });
     
@@ -112,35 +112,7 @@ $(document).ready(function(){
 		]
 	});
 
-    // === Popovers === //    
-    var placement = 'bottom';
-    var trigger = 'hover';
-    var html = true;
 
-    $('.popover-visits').popover({
-       placement: placement,
-       content: '<span class="content-big">36094</span> <span class="content-small">Total Visits</span><br /><span class="content-big">220</span> <span class="content-small">Visits Today</span><br /><span class="content-big">200</span> <span class="content-small">Visits Yesterday</span><br /><span class="content-big">5677</span> <span class="content-small">Visits in This Month</span>',
-       trigger: trigger,
-       html: html   
-    });
-    $('.popover-users').popover({
-       placement: placement,
-       content: '<span class="content-big">1433</span> <span class="content-small">Total Users</span><br /><span class="content-big">0</span> <span class="content-small">Registered Today</span><br /><span class="content-big">0</span> <span class="content-small">Registered Yesterday</span><br /><span class="content-big">16</span> <span class="content-small">Registered Last Week</span>',
-       trigger: trigger,
-       html: html   
-    });
-    $('.popover-orders').popover({
-       placement: placement,
-       content: '<span class="content-big">8650</span> <span class="content-small">Total Orders</span><br /><span class="content-big">29</span> <span class="content-small">Pending Orders</span><br /><span class="content-big">32</span> <span class="content-small">Orders Today</span><br /><span class="content-big">64</span> <span class="content-small">Orders Yesterday</span>',
-       trigger: trigger,
-       html: html   
-    });
-    $('.popover-tickets').popover({
-       placement: placement,
-       content: '<span class="content-big">2968</span> <span class="content-small">All Tickets</span><br /><span class="content-big">48</span> <span class="content-small">New Tickets</span><br /><span class="content-big">495</span> <span class="content-small">Solved</span>',
-       trigger: trigger,
-       html: html   
-    });
 });
 
 
@@ -171,13 +143,13 @@ unicorn = {
 			
 			$(".sparkline_bar_good span").sparkline('html',{
 				type: "bar",
-				barColor: "#459D1C",
+				barColor: "#83bd67",
 				barWidth: "5",
 				height: "24"
 			});
 			$(".sparkline_bar_bad span").sparkline('html',{
 				type: "bar",
-				barColor: "#BA1E20",
+				barColor: "#55acd2",
 				barWidth: "5",
 				height: "24"
 			});	

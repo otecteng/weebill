@@ -4,7 +4,7 @@
 en:
   time:
     formats:
-      default: "%Y-%m-%d %H:%M:%S"
+      default: "%Y-%m-%d %H:%M"
 
   hello: "Hello world"
   need_confirmed: "you are waiting for being confirmed, or you can use regsiter menu to reg"

@@ -7,15 +7,20 @@
 		<meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/assets/css/bootstrap-glyphicons.css" />
-		<link rel="stylesheet" href="/assets/css/fullcalendar.css" />	
-		<link rel="stylesheet" href="/assets/css/unicorn.main.css" />
-		<link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" /> 
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/assets/css/font-awesome.css" />
+		<link rel="stylesheet" href="/assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="/assets/css/jquery-ui.css" />
+		<link rel="stylesheet" href="/assets/css/icheck/flat/blue.css" />
+		<link rel="stylesheet" href="/assets/css/select2.css" />		
+		<link rel="stylesheet" href="/assets/css/unicorn.css" />
+
+
 
 <script src="/assets/js/jquery-ui.custom.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.icheck.min.js"></script>
-<script src="/assets/js/jquery.dataTables.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 <script src="/assets/js/jquery.jpanelmenu.min.js"></script>
 
 <script src="/assets/js/unicorn.js"></script>
@@ -32,8 +37,7 @@
 }			
 		</style>
 </head>
-
-	<body>
+<body data-color="grey" class="flat">
 		<div id="header">
 		  <h1 ><a href="./dashboard.html">网点通</a></h1>	
 		</div>
@@ -108,27 +112,25 @@ end
 		<div id="content">
 			<div id="content-header">
 				<h1>Weebill</h1>
-				<div class="btn-group">
+  				<div class="btn-group">
 					<% if params[:action]=="index"%>
 						<a class="btn" href=<%= "/#{params[:controller]}/new" %> ><i class="glyphicon glyphicon-plus"></i></a>
 						<a class="btn" href=<%= "/#{params[:controller]}/import" %> ><i class="glyphicon glyphicon-upload"></i></a>
 						<a class="btn" href=<%= "/#{params[:controller]}/export.csv?status=#{params[:status]}" %> ><i class="glyphicon glyphicon-download"></i></a>						
 					<%end%>
-				</div>
+	 			</div> 
 			</div>
-			<%=breadcrumb%>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-12 center" style="text-align: center;">
-						<%=yield%>
-					</div>	
-				</div>
-			</div>	
-				</div>
-				
+			
+			
+			<div class="row">
+			  <div class="col-xs-12">
+				<%=yield%>
+			  </div>
 			</div>
-
+			
 		</div>
+
+		
 		<div class="row">
 			<div id="footer" class="col-12">
 			

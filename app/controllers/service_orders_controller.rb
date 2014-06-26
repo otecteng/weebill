@@ -8,16 +8,14 @@ class ServiceOrdersController < ApplicationController
 		else
 			@service_orders = current_user.service_orders
 		end
+		@flag = 'updated_at'
 		if params[:status]
 			@service_orders = @service_orders.status(params[:status])
-			@flag = ''
 			case params[:status]
 			when 'payed'
 				@flag = 'time_pay'
 			when 'installation'
 				@flag = 'time_service'
-			else
-				@flag = 'updated_at'
 			end
 		end
 		@service_orders.order(@flag + ' DESC')
